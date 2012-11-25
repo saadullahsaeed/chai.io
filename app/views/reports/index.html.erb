@@ -1,0 +1,37 @@
+<div class="page-header">
+	<h1>Your Reports</h1>
+</div>
+
+<div class="">
+	<table class="table table-striped">
+		
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Type</th>
+				<th>Datasource</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @reports.each do |r|%>
+				<tr>
+					<td>
+						<%= link_to r.title, r %>
+					</td>
+					<td><%= r.report_type %></td>
+					<td><%= r.datasource.name %></td>
+					<td>
+						<%= link_to 'Edit', edit_report_path(r) %>
+					</td>
+					<td>
+						<%= link_to 'Delete', edit_report_path(r) %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,45 @@
+<div class="page-header">
+	<h1>New Report <small>Create a new report</small></h1>
+</div>
+
+<div>
+	<%= form_for @report, :html => {:class => "", :method => "post"} do |f| %>
+	<% @report.errors.full_messages.each do |msg| %>
+	      <p><%= msg %></p>
+	<% end %>
+	
+	  <label class="control-label">Title</label>
+	  <%= f.text_field :title %>
+	
+	  <label class="control-label">Datasource</label>
+	  <%= f.collection_select(:datasource_id, @user.datasources, :id, :name) %>
+		
+	  <%= f.fields_for :config do |c| %>
+	  	  <label class="control-label">Query</label>
+	  	  <%= c.text_area :query, :size => '200x10'%>
+	  <% end %>
+	
+	  <label class="control-label">Title</label>
+	  <div class="form-inline">	
+	  	  <%= f.radio_button(:report_type, "table") %>
+		  <%= label_tag(:table, "Table") %>
+	
+		  <%= f.radio_button(:report_type, "single_value") %>
+		  <%= label_tag(:single_value, "Single Value") %>
+	
+		  <%= f.radio_button(:report_type, "bar_chart") %>
+		  <%= label_tag(:bar_chart, "Bar Chart") %>
+	  </div>  
+	  
+	  <%= f.fields_for :config do |c| %>
+	    <label class="control-label">Cache Time (Seconds)</label>	
+	    <%= c.text_field :cache_time %>
+	  <% end %>
+	  
+	  <div class="form-actions">
+		<%= f.submit "Create", :class => 'btn btn-primary' %>
+		<button type="button" class="btn">Reset</button>
+	  </div>
+	
+	<% end %>
+</div>

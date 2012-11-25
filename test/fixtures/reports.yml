@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  title: MyString
+  type: 
+  datasource_id: 1
+  config: MyText
+
+two:
+  user_id: 1
+  title: MyString
+  type: 
+  datasource_id: 1
+  config: MyText

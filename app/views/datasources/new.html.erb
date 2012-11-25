@@ -1,0 +1,38 @@
+<div class="page-header">
+	<h1>New Datasource <small>Create a new datasource</small></h1>
+</div>
+
+<div>
+	<%= form_for @datasource, :html => {:class => "", :method => "post"} do |f| %>
+	<% @datasource.errors.full_messages.each do |msg| %>
+	      <p><%= msg %></p>
+	<% end %>
+	
+	  <label class="control-label">Name</label>
+	  <%= f.text_field :name %>
+	
+	  <label class="control-label">Type</label>
+	  <%= f.collection_select(:datasource_type_id, DatasourceType.all, :id, :name) %>
+		
+	  <%= f.fields_for :config do |c| %>
+	
+	  	  <label class="control-label">Host</label>
+	  	  <%= c.text_field :host %>
+		
+		  <label class="control-label">User</label>
+		  <%= c.text_field :user %>
+			
+		  <label class="control-label">Password</label>
+		  <%= c.password_field :password %>
+
+		  <label class="control-label">Database</label>
+		  <%= c.text_field :database %>
+	  <% end %>
+	  
+	  <div class="form-actions">
+		<%= f.submit "Create", :class => 'btn btn-primary' %>
+		<button type="button" class="btn">Reset</button>
+	  </div>
+	
+	<% end %>
+</div>

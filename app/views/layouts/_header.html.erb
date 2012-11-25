@@ -1,0 +1,20 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">chai.io</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="<%= @active == 'new_report' ? 'active': ''%>"><a href="/reports/new">New Report</a></li>
+              <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">Reports</a></li>
+              <li class="<%= @active == 'datasources' ? 'active': ''%>"><a href="/datasources">Data Sources</a></li>
+              <li class="<%= @active == 'signout' ? 'active': ''%>"><a href="/sessions/destroy">Sign out</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+</div>

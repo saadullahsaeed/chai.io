@@ -7,6 +7,9 @@ ChaiIo::Application.routes.draw do
     post 'create'
   end
   
+  resources :reports
+  
+  resources :datasources
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

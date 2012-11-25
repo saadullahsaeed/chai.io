@@ -1,0 +1,37 @@
+<div class="page-header">
+	<h1>Your Datasources</h1>
+</div>
+
+<div class="">
+	<table class="table table-striped">
+		
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Config</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @datasources.each do |d|%>
+				<tr>
+					<td>
+						<%= link_to d.name, d %>
+					</td>
+					<td><%= d.datasource_type.name %></td>
+					<td><%= d.config %></td>
+					<td>
+						<%= link_to 'Edit', edit_datasource_path(d) %>
+					</td>
+					<td>
+						<%= link_to 'Delete', edit_datasource_path(d), :method => :delete, :confirm => "Are you sure?" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
