@@ -11,7 +11,13 @@
             <ul class="nav">
               <li class="<%= @active == 'new_report' ? 'active': ''%>"><a href="/reports/new">New Report</a></li>
               <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">Reports</a></li>
-              <li class="<%= @active == 'datasources' ? 'active': ''%>"><a href="/datasources">Data Sources</a></li>
+	          	  <li class="dropdown <%= @active == 'datasources' ? 'active': ''%>">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Datasources <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/datasources/new">New</a></li>
+                    <li><a href="/datasources">Datasources</a></li>
+                  </ul>
+			  </li>
               <li class="<%= @active == 'signout' ? 'active': ''%>"><a href="/sessions/destroy">Sign out</a></li>
             </ul>
           </div><!--/.nav-collapse -->

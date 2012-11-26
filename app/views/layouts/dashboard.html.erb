@@ -11,7 +11,8 @@
 	<%= stylesheet_link_tag    "bootstrap", :media => "all" %>
 	<%= stylesheet_link_tag    "bootstrap-responsive", :media => "all" %>
   	<%= stylesheet_link_tag    "application", :media => "all" %>
-  	<%= javascript_include_tag "application" %>
+  	<%= javascript_include_tag "application", controller_name %>
+    <%= javascript_include_tag "bootstrap" %>
   	<%= csrf_meta_tags %>
 
     <!-- Le styles -->
@@ -60,6 +61,13 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			<%= yield :js_init_code %>
+		});
+	</script>
+	
   </head>
 
   <body>
@@ -67,6 +75,16 @@
 	<%= render :partial => "layouts/header" %>
 	
     <div class="container">
+		
+		<% if flash[:error] -%>
+		  <div class="alert alert-error">
+	    	<%= flash[:error] %>
+	      </div>
+		<% end -%>
+		<% if flash[:notice] -%>
+		  
+		<% end -%>
+	
     	<%= yield %>
     </div> <!-- /container -->
 

@@ -2,8 +2,9 @@
 	<h1>New Report <small>Create a new report</small></h1>
 </div>
 
-<div>
-	<%= form_for @report, :html => {:class => "", :method => "post"} do |f| %>
+<div class="">
+	
+	<%= form_for @report, :html => {:class => "", :method => @report.id ? "put" : "post"} do |f| %>
 	<% @report.errors.full_messages.each do |msg| %>
 	      <p><%= msg %></p>
 	<% end %>
@@ -12,11 +13,11 @@
 	  <%= f.text_field :title %>
 	
 	  <label class="control-label">Datasource</label>
-	  <%= f.collection_select(:datasource_id, @user.datasources, :id, :name) %>
+	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
-	  	  <%= c.text_area :query, :size => '200x10'%>
+	  	  <%= c.text_area :query, :size => '300x10', :value => @report.config['query'] %>
 	  <% end %>
 	
 	  <label class="control-label">Title</label>

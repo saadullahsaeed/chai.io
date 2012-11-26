@@ -1,1 +1,26 @@
-<%= @id %>
+<% content_for :js_init_code do %>
+	
+	<% if !@connection_error && !@query_error %>
+	
+	ChaiIo.initialize();
+	var model = new ChaiIo.Models.Report();
+	model.set({
+		report: <%= @report.to_json.html_safe %>,
+		report_type: '<%=@report.report_type%>',
+		columns: <%= @columns.html_safe %>,
+		data: <%= @data.html_safe %>
+	});
+	
+	window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
+		model: model,
+		el: $('#content')});
+	
+	window.App.render();
+	
+	<% end %>
+	
+<% end %>
+
+<div id="content">
+	<%= render :partial => "report_type_#{@report.report_type}" %>
+</div>

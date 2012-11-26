@@ -12,15 +12,15 @@
 				<th>Config</th>
 				<th></th>
 				<th></th>
-				<th></th>
 			</tr>
 		</thead>
 		
 		<tbody>
 			<% @datasources.each do |d|%>
+				<% d.config['password'] = '****' %>
 				<tr>
 					<td>
-						<%= link_to d.name, d %>
+						<%= d.name %>
 					</td>
 					<td><%= d.datasource_type.name %></td>
 					<td><%= d.config %></td>

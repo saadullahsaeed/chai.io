@@ -14,6 +14,7 @@
   	<%= javascript_include_tag "application" %>
   	<%= csrf_meta_tags %>
 
+
     <!-- Le styles -->
     <style type="text/css">
 
@@ -63,6 +64,13 @@
   </head>
 
   <body>
+	
+	<% if flash[:error] -%>
+	  <p class='error'><%=h flash[:error] %></p>
+	<% end -%>
+	<% if flash[:notice] -%>
+	  <p class='notice'><%=h flash[:notice] %></p>
+	<% end -%>
 
     <div class="container">
     

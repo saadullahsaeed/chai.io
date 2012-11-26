@@ -3,7 +3,7 @@
 </div>
 
 <div>
-	<%= form_for @datasource, :html => {:class => "", :method => "post"} do |f| %>
+	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post"} do |f| %>
 	<% @datasource.errors.full_messages.each do |msg| %>
 	      <p><%= msg %></p>
 	<% end %>
@@ -17,16 +17,16 @@
 	  <%= f.fields_for :config do |c| %>
 	
 	  	  <label class="control-label">Host</label>
-	  	  <%= c.text_field :host %>
+	  	  <%= c.text_field :host, :value => @datasource.config['host']%>
 		
 		  <label class="control-label">User</label>
-		  <%= c.text_field :user %>
+		  <%= c.text_field :user, :value => @datasource.config['user'] %>
 			
 		  <label class="control-label">Password</label>
-		  <%= c.password_field :password %>
+		  <%= c.password_field :password, :value => @datasource.config['password'] %>
 
 		  <label class="control-label">Database</label>
-		  <%= c.text_field :database %>
+		  <%= c.text_field :database, :value => @datasource.config['database'] %>
 	  <% end %>
 	  
 	  <div class="form-actions">
