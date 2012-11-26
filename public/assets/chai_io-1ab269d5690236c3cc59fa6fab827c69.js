@@ -1,0 +1,1 @@
+(function(){window.ChaiIo={Models:{},Collections:{},Views:{},Routers:{},initialize:function(){}}}).call(this);
