@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 
 gem 'mysql2'
+gem 'pg'
 gem 'attr_encrypted'
 gem 'sequel'
 gem 'backbone-on-rails'

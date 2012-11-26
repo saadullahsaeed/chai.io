@@ -19,7 +19,7 @@ test:
   username: root
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: mysql2
+  database: chai_sql
+  host: localhost
+  username: root

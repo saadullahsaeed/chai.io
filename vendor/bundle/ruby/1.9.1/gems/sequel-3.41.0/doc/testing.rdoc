@@ -1,0 +1,169 @@
+= Testing with Sequel
+
+Whether or not you use Sequel in your application, you are usually going to want to have tests that ensure that your code works.  When you are using Sequel, it's helpful to integrate it into your testing framework, and it's generally best to run each test in its own transaction if possible.  That keeps all tests isolated from each other, and it's simple as it handles all of the cleanup for you.  Sequel doesn't ship with helpers for common libraries, as the exact code you need is often application-specific, but this page offers some examples that you can either use directly or build on.
+
+== Transactional tests
+
+These run each test in its own transaction, the recommended way to test.
+
+Make sure you are using Sequel 3.29.0 or above when using these examples, as older versions don't support the <tt>:rollback=>:always</tt> option.
+
+=== RSpec 1
+
+  class Spec::Example::ExampleGroup
+    def execute(*args, &block)
+      result = nil
+      Sequel::Model.db.transaction(:rollback=>:always){result = super(*args, &block)}
+      result
+    end
+  end
+
+=== RSpec 2, <2.8
+
+  class RSpec::Core::ExampleGroup
+    # Setting an around filter globally doesn't appear to work in <2.8,
+    # so set one up for each subclass.
+    def self.inherited(subclass)
+      super
+      subclass.around do |example|
+        Sequel::Model.db.transaction(:rollback=>:always){example.call}
+      end
+    end
+  end
+
+=== RSpec 2, >=2.8
+
+  # Global around filters should work
+  RSpec.configure do |c|
+    c.around(:each) do |example|
+      DB.transaction(:rollback=>:always){example.run}
+    end
+  end
+
+=== Test::Unit
+
+  # Must use this class as the base class for your tests
+  class SequelTestCase < Test::Unit::TestCase
+    def run(*args, &block)
+      result = nil
+      Sequel::Model.db.transaction(:rollback=>:always){result = super}
+      result
+    end
+  end
+
+  # Or you could override the base implementation like this
+  class Test::Unit::TestCase
+    alias_method :_original_run, :run
+
+    def run(*args, &block)
+      result = nil
+      Sequel::Model.db.transaction(:rollback => :always) do
+        result = _original_run(*args, &block)
+      end
+      result
+    end
+  end
+
+=== MiniTest::Unit
+
+  # Add a subclass
+  # Must use this class as the base class for your tests
+  class SequelTestCase < MiniTest::Unit::TestCase
+    def run(*args, &block)
+      result = nil
+      Sequel::Model.db.transaction(:rollback=>:always){result = super}
+      result
+    end
+  end
+
+  # Or you could override the base implementation like this
+  class MiniTest::Unit::TestCase
+    alias_method :_original_run, :run
+
+    def run(*args, &block)
+      result = nil
+      Sequel::Model.db.transaction(:rollback => :always) do
+        result = _original_run(*args, &block)
+      end
+      result
+    end
+  end
+
+== Transactional testing with multiple databases
+
+You can use the Sequel.transaction method to run a transaction on multiple databases, rolling all of them back.  Instead of:
+
+  Sequel::Model.db.transaction(:rollback=>:always)
+
+Use Sequel.transaction with an array of databases:
+
+  Sequel.transaction([DB1, DB2, DB3], :rollback=>:always)
+
+== Nontransactional tests
+
+In some cases, it is not possible to use transactions.  For example, if you are testing a web application that is running in a separate process, you don't have access to that process's database connections, so you can't run your examples in transactions.  In that case, the best way to handle things is to cleanup after each test by deleting or truncating the database tables used in the test.
+
+The order in which you delete/truncate the tables is important if you are using referential integrity in your database (which you probably should be doing).  If you are using referential integrity, you need to make sure to delete in tables referencing other tables before the tables that are being referenced.  For example, if you have an +albums+ table with an +artist_id+ field referencing the +artists+ table, you want to delete/truncate the +albums+ table before the +artists+ table.  Note that if you have cyclic references in your database, you will probably need to write your own custom cleaning code.
+
+=== RSpec
+
+  class Spec::Example::ExampleGroup
+    after do
+      [:table1, :table2].each{|x| Sequel::Model.db.from(x).truncate}
+      # or
+      [:table1, :table2].each{|x| Sequel::Model.db.from(x).delete}
+    end
+  end
+
+=== Test::Unit
+
+  # Must use this class as the base class for your tests
+  class SequelTestCase < Test::Unit::TestCase
+    def teardown
+      [:table1, :table2].each{|x| Sequel::Model.db.from(x).truncate}
+      # or
+      [:table1, :table2].each{|x| Sequel::Model.db.from(x).delete}
+    end
+  end
+
+= Testing Sequel Itself
+
+Sequel has multiple separate test suites.  All test suites run under either RSpec 1 or RSpec 2.
+
+== rake spec
+
+The +spec+ rake task (which is also the default rake task) runs Sequel's core and model specs.  These specs use a mocked database connection, and test for specific SQL used and for generally correct behavior.
+
+== rake spec_plugin
+
+The +spec_plugin+ rake task runs the specs for the plugins and extensions that ship with Sequel.  These also use a mocked database connection, and operate very similarly to the general Sequel core and model specs.
+
+== rake spec_<i>adapter</i> (e.g. rake spec_postgres)
+
+The <tt>spec_<i>adapter</i></tt> specs run against a real database connection with nothing mocked, and test for correct results.  They are slower than the standard specs, but they will catch errors that are mocked out by the default specs, as well as show issues that only occur on a certain database, adapter, or a combination of the two.
+
+These specs are broken down into two parts.  For each database, there are specific specs that only apply to that database, and these are called the adapter specs.  There are also shared specs that apply to all (or almost all) databases, these are called the integration specs.
+
+== Environment variables
+
+Sequel often uses environment variables when testing to specify either the database to be tested or specify how testing should be done.  You can also specify the databases to test by copying spec/spec_config.rb.example to spec/spec_config.rb and modifying it.  See that file for details.  It may be necessary to use spec_config.rb as opposed to an environment variable if your database connection cannot be specified by a connection string.
+
+=== Connection Strings
+
+The following environment variables specify Database connection URL strings:
+
+* SEQUEL_INTEGRATION_URL: integration specs
+* SEQUEL_FB_SPEC_DB: firebird adapter specs
+* SEQUEL_MSSQL_SPEC_DB: mssql adapter specs
+* SEQUEL_PG_SPEC_DB: postgres adapter specs
+* SEQUEL_SQLITE_SPEC_DB: sqlite adapter specs
+* SEQUEL_MY_SPEC_DB: mysql adapter specs
+* SEQUEL_DB2_SPEC_DB: db2 adapter specs
+
+=== Other
+
+* SEQUEL_MSSQL_SPEC_REQUIRE: Separate file to require when running mssql adapter specs
+* SEQUEL_DB2_SPEC_REQUIRE: Separate file to require when running db2 adapter specs
+* SEQUEL_COLUMNS_INTROSPECTION: Whether to run the specs with the columns_introspection extension loaded by default
+* SEQUEL_NO_PENDING: Don't mark any specs as pending, try running all specs
+* SKIPPED_TEST_WARN: Warn when skipping any tests because libraries aren't available
