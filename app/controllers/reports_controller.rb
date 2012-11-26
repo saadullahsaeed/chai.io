@@ -13,30 +13,37 @@ class ReportsController < ApplicationController
     datasource_class.datasource_info = @report.datasource.config
     connected = datasource_class.connect
     
-    @connection_error = true
+    @connection_error = false
+    @query_error = false
     if !connected
       flash.now[:error] = "Error: Cannot connect to the data source!"
       @connection_error = true
     else
       
       datasource_class.query_str = @report.config['query']
-      
       begin 
         
         result = datasource_class.query
-      
         @columns = result.columns.to_json
         @data = []
-        result.each do |row|
         
-          temp = []
-          row.each {|v| temp << v.last}
-          @data.push({:values => temp})
+        case @report.report_type
+          
+          when 'single_value'
+            @name = result.columns.first
+            @single_value = result.first[@name]
+          when 'bar_chart'
+            @data = result
+          else
+            result.each do |row|
+              temp = []
+              row.each {|v| temp << v.last}
+              @data.push({:values => temp})
+            end
         end
         @data = @data.to_json
       
       rescue Sequel::DatabaseError => e
-        
         @data = '[]'
         @columns = '[]'
         @query_error = true

@@ -1,0 +1,23 @@
+<script type="text/html" id="report_table">
+	
+	<table class="table table-striped">
+	
+		<thead>
+			<tr>
+			{{#columns}}
+				<td>{{.}}</td>
+			{{/columns}}
+			</tr>
+		</thead>
+		
+		<tbody>
+			{{#data}}
+				<tr>
+					{{#values}}
+						<td>{{.}}</td>
+					{{/values}}
+				</tr>
+			{{/data}}
+		</tbody>
+	</table>
+</script>

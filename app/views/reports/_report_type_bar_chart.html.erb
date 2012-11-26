@@ -1,0 +1,21 @@
+<% content_for :custom_style_in_head do %>
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.bar {
+	  fill: steelblue;
+	}
+
+	.x.axis path {
+	  display: none;
+	}
+<% end %>
+
+<script type="text/html" id="report_bar_chart">
+	<div id="bar_chart"></div>
+</script>

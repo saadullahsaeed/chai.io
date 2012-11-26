@@ -1,5 +1,4 @@
 <% content_for :js_init_code do %>
-	
 	<% if !@connection_error && !@query_error %>
 	
 	ChaiIo.initialize();
@@ -8,7 +7,9 @@
 		report: <%= @report.to_json.html_safe %>,
 		report_type: '<%=@report.report_type%>',
 		columns: <%= @columns.html_safe %>,
-		data: <%= @data.html_safe %>
+		data: <%= @data.html_safe %>,
+		single_column_name: '<%= @name %>',
+		single_value: '<%= @single_value %>'
 	});
 	
 	window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
@@ -18,9 +19,11 @@
 	window.App.render();
 	
 	<% end %>
-	
 <% end %>
 
-<div id="content">
-	<%= render :partial => "report_type_#{@report.report_type}" %>
-</div>
+<h1><%= @report.title %></h1>
+<hr>
+
+<div id="content"></div>
+
+<%= render :partial => "report_type_#{@report.report_type}" %>

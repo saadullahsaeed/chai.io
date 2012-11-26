@@ -1,0 +1,1 @@
+class ChaiIo.Routers.Reports extends Backbone.Router
