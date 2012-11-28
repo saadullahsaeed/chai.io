@@ -1,5 +1,3 @@
-require 'chai'
-
 class ReportsController < ApplicationController
    layout "dashboard"
    

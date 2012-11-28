@@ -1,4 +1,4 @@
-require 'chai/datasource/base'
+require 'chai_io/datasource/base'
 
 module ChaiIo
   module Datasource  
