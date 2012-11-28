@@ -1,25 +1,23 @@
 <% content_for :custom_style_in_head do %>
+text {
+  font: 12px sans-serif;
+}
 
-	.axis path,
-	.axis line {
-	  fill: none;
-	  stroke: #000;
-	  shape-rendering: crispEdges;
-	}
-
-	.bar {
-	  fill: steelblue;
-	}
-
-	.x.axis path {
-	  display: none;
-	}
-	
-	.text {
-	  fill: white;
-	}
+#bar_chart {
+  height: 500px;
+  margin: 10px;
+  min-width: 100px;
+  min-height: 100px;
+/*
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
 <% end %>
 
 <script type="text/html" id="report_bar_chart">
-	<div id="bar_chart"></div>
+	<div id="bar_chart">
+		<svg></svg>
+	</div>
 </script>

@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
     @id = params[:id]
     @report = current_user.reports.find(@id)
     
-    datasource_class = Chai::Datasource::Mysql.new
+    datasource_class = ChaiIo::Datasource::Mysql.new
     datasource_class.datasource_info = @report.datasource.config
     connected = datasource_class.connect
     

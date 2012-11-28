@@ -17,28 +17,31 @@
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
-	  	  <%= c.text_area :query, :size => '300x10', :value => @report.config['query'] %>
+	  	  <div class="textwrapper">
+			<%= c.text_area :query, :size => '500x10', :class => 'span12 query', :value => @report.config['query'] %>
+		  </div>
 	  <% end %>
 	
-	  <label class="control-label">Title</label>
+	  <label class="control-label">Report Type</label>
 	  <div class="form-inline">	
 	  	  <%= f.radio_button(:report_type, "table") %>
-		  <%= label_tag(:table, "Table") %>
+		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
 	
 		  <%= f.radio_button(:report_type, "single_value") %>
-		  <%= label_tag(:single_value, "Single Value") %>
+		  <%= label_tag(:single_value, "Single Value", :class=>'radio_label') %>
 	
 		  <%= f.radio_button(:report_type, "bar_chart") %>
-		  <%= label_tag(:bar_chart, "Bar Chart") %>
+		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
 	  </div>  
 	  
+	<!--
 	  <%= f.fields_for :config do |c| %>
 	    <label class="control-label">Cache Time (Seconds)</label>	
 	    <%= c.text_field :cache_time %>
 	  <% end %>
-	  
+	-->  
 	  <div class="form-actions">
-		<%= f.submit "Create", :class => 'btn btn-primary' %>
+		<%= f.submit @report.id ? "Save" : "Create", :class => 'btn btn-primary' %>
 		<button type="button" class="btn">Reset</button>
 	  </div>
 	

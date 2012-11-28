@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126005811) do
+ActiveRecord::Schema.define(:version => 20121128072955) do
 
   create_table "datasource_types", :force => true do |t|
     t.string   "name"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20121126005811) do
   create_table "datasources", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.text     "config"
+    t.text     "encrypted_config"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "datasource_type_id"

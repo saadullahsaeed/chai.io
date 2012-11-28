@@ -17,16 +17,16 @@
 	  <%= f.fields_for :config do |c| %>
 	
 	  	  <label class="control-label">Host</label>
-	  	  <%= c.text_field :host, :value => @datasource.config['host']%>
+	  	  <%= c.text_field :host, :value => (@datasource.config['host'] if @datasource.config?)%>
 		
 		  <label class="control-label">User</label>
-		  <%= c.text_field :user, :value => @datasource.config['user'] %>
+		  <%= c.text_field :user, :value => (@datasource.config['user'] if @datasource.config?) %>
 			
 		  <label class="control-label">Password</label>
-		  <%= c.password_field :password, :value => @datasource.config['password'] %>
+		  <%= c.password_field :password, :value => (@datasource.config['password'] if @datasource.config?) %>
 
 		  <label class="control-label">Database</label>
-		  <%= c.text_field :database, :value => @datasource.config['database'] %>
+		  <%= c.text_field :database, :value => (@datasource.config['database'] if @datasource.config?) %>
 	  <% end %>
 	  
 	  <div class="form-actions">
