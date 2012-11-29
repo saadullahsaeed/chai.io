@@ -12,14 +12,17 @@
 	
 	  <label class="control-label">Title</label>
 	  <%= f.text_field :title %>
-	
+
 	  <label class="control-label">Datasource</label>
 	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
+ 
+	  <label class="control-label">Description</label>
+	  <%= f.text_area :description, :size => '200x2'%>
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
 	  	  <div class="textwrapper">
-			<%= c.text_area :query, :size => '500x10', :class => 'span12 query', :value => @report.config['query'] %>
+			<%= c.text_area :query, :size => '500x5', :class => 'span12 query', :value => @report.config['query'] %>
 		  </div>
 	  <% end %>
 	
