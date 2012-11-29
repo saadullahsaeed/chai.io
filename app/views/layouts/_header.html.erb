@@ -18,7 +18,14 @@
                     <li><a href="/datasources">Datasources</a></li>
                   </ul>
 			  </li>
-              <li class="<%= @active == 'signout' ? 'active': ''%>"><a href="/sessions/destroy">Sign out</a></li>
+              
+			  <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<%=edit_user_path(current_user)%>">Settings</a></li>
+                    <li><a href="/sessions/destroy">Sign out</a></li>
+                  </ul>
+			  </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

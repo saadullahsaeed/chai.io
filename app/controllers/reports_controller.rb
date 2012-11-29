@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
    layout "dashboard"
    
    #GET /reports/:id
+   #To-do: Refactor
    def show
     
     @id = params[:id]

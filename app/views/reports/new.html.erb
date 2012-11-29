@@ -1,3 +1,4 @@
+
 <div class="page-header">
 	<h1>New Report <small>Create a new report</small></h1>
 </div>
@@ -33,7 +34,6 @@
 		  <%= f.radio_button(:report_type, "bar_chart") %>
 		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
 	  </div>  
-	  
 
 	  <%= f.fields_for :config do |c| %>
 	    <label class="control-label">Cache Time (Seconds)</label>	
