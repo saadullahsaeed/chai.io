@@ -19,7 +19,8 @@ class ChaiIo.Views.ReportsPie_chart extends ChaiIo.Views.ReportsIndex
 			chart
 	
 	prepareData: ->
-		data = @getData().shift()
+		data = @getData()
+		data = data.shift()
 		columns = @getColumns()
 
 		prepared = []

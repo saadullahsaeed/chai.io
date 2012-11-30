@@ -6,4 +6,6 @@
 //= require_tree ./models
 //= require views/reports/reports_index
 //= require_tree ./views
+//= require ./nvd3/d3.v2.min
+//= require ./nvd3/nv.d3
 //= require_tree ./nvd3
