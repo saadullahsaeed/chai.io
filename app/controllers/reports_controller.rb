@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
           when 'single_value'
             @name = result.columns.first
             @single_value = result.first[@name]
-          when 'bar_chart'
+          when 'bar_chart' || 'pie_chart'
             @data = result
           else
             result.each do |row|

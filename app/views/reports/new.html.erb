@@ -36,6 +36,9 @@
 	
 		  <%= f.radio_button(:report_type, "bar_chart") %>
 		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
+		
+		  <%= f.radio_button(:report_type, "pie_chart") %>
+		  <%= label_tag(:bar_chart, "Pie Chart", :class=>'radio_label') %>
 	  </div>  
 
 	  <%= f.fields_for :config do |c| %>

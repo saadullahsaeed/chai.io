@@ -23,7 +23,9 @@
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="<%=edit_user_path(current_user)%>">Settings</a></li>
-                    <li><a href="/sessions/destroy">Sign out</a></li>
+					<li>
+						<%= link_to 'Sign out', '/logout', :method => :delete %>
+					</li>
                   </ul>
 			  </li>
             </ul>

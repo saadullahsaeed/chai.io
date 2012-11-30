@@ -3,9 +3,9 @@ ChaiIo::Application.routes.draw do
   root :to => 'home#index'
   match '/' => 'home#index'
   
-  resources :sessions do
-    post 'create'
-  end
+  match '/logout' => 'sessions#destroy'
+  
+  resources :sessions
   
   resources :reports
   resources :datasources
