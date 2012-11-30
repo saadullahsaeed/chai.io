@@ -4,22 +4,19 @@ class ChaiIo.Views.ReportsLine_chart extends ChaiIo.Views.ReportsIndex
 	
 	postRender: ->
 		data = @prepareData()
-		console.log data
 		nv.addGraph ()=>
 			chart = nv.models.linePlusBarWithFocusChart()
 			chart.margin {top: 30, right: 60, bottom: 50, left: 70}
 			chart.x (d, i)=>i
 			chart.color d3.scale.category10().range()
 			
-			chart.xAxis.tickFormat (d)=>
+			xAxisFormatter = (d)=>
 				dx = data[0].values[d] && data[0].values[d].x || 0
 				return d3.time.format('%x')(new Date(dx)) if dx > 0
 				null
 				
-			chart.x2Axis.tickFormat (d)=>
-				dx = data[0].values[d] && data[0].values[d].x || 0
-				return d3.time.format('%x')(new Date(dx)) if dx > 0
-				null
+			chart.xAxis.tickFormat xAxisFormatter
+			chart.x2Axis.tickFormat xAxisFormatter
 			
 			chart.y1Axis.tickFormat d3.format(',f')
 			chart.y3Axis.tickFormat d3.format(',f')
