@@ -17,6 +17,9 @@ module ChaiIo
       def query
       end
         
+      def cache_data(timeout)
+      end    
+      
     end
     
   end

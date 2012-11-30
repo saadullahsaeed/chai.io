@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
    layout "dashboard"
    
+   
    #GET /reports/:id
    #To-do: Refactor
    def show
@@ -51,6 +52,12 @@ class ReportsController < ApplicationController
         flash.now[:error] = "Query Error: #{e.message}"
       end
       
+    end #if
+    
+    respond_to do |format|
+      format.html { render :action => 'show' }
+      format.json { render :json => @data }
+      format.csv { render :csv => result.to_csv }
     end
     
    end
