@@ -1,0 +1,9 @@
+= chai.io
+
+A Rails app for Data Visualization. Interface to create reports with SQL queries and data visualization via Graphs, Charts etc.
+
+Its in a very early stage, so things may change.
+
+== Copyright
+
+Copyright (c) 2012 Saadullah Saeed. See LICENSE.txt for further details.

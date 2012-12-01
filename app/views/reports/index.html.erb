@@ -1,8 +1,18 @@
+<% content_for :js_init_code do %>
+	ChaiIo.initialize();
+	window.App = new ChaiIo.Views.ReportsListView({el: $('.container')});
+<% end %>
+
 <div class="page-header">
 	<h1>Your Reports</h1>
 </div>
 
 <div class="">
+	<form class="form-search">
+    	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="search">
+		<input id="report_search" type="button" class="btn" value="Search">
+    </form>
+
 	<table class="table table-striped">
 		
 		<thead>
