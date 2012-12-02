@@ -139,8 +139,8 @@ class ReportsController < ApplicationController
      
      return unless filters
      todays_date = Date.today.to_s
-     today_date['-']='/' #super hacky - figure out the right way to do this
-     today_date['-']='/'
+     todays_date['-']='/' #super hacky - figure out the right way to do this
+     todays_date['-']='/'
      
      query_params = {}
      filters.each do |i, fi|
