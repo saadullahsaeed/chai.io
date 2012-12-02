@@ -100,7 +100,6 @@ class ReportsController < ApplicationController
    def edit
      
      @report = find_report_for_current_user params[:id]
-     
      render :action => 'new'
    end
    
@@ -139,8 +138,6 @@ class ReportsController < ApplicationController
      
      return unless filters
      todays_date = Date.today.to_s
-     todays_date['-']='/' #super hacky - figure out the right way to do this
-     todays_date['-']='/'
      
      query_params = {}
      filters.each do |i, fi|
