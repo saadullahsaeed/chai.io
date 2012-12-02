@@ -16,6 +16,7 @@
 		model: model,
 		el: $('#content')});
 	
+	$('.datepicker').datepicker({"format": "yyyy/mm/dd"});
 	window.App.render();
 	
 	<% end %>
@@ -24,6 +25,19 @@
 <h1><%= @report.title %></h1>
 <%= @report.description %>
 <hr>
+
+<% if @report.filters %>
+	<form class="form-inline" method="GET" action="/reports/<%=@report.id%>">
+		
+		<% @report.filters.each do |i, fi|%>
+			<label class="control-label"><%=fi['placeholder'].capitalize%></label>
+			<input type="text" class="datepicker" data-behaviour='datepicker' 
+				name="<%=fi['placeholder']%>" value="<%=@query_params[fi['placeholder'].to_sym]%>">
+		<% end %>
+		<input type="submit" class="btn btn-primary" value="Refresh">
+	</form>
+	
+<% end %>
 
 <div id="content"></div>
 

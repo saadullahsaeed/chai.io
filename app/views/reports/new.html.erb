@@ -26,26 +26,53 @@
 		  </div>
 	  <% end %>
 	
-	  <label class="control-label">Report Type</label>
+	  <label class="control-label filters">Filters</label>
+	  <%= f.fields_for :filters do |fi| %>
+			<div class="form-inline">
+				<label class="control-label">Type</label>
+				<select class="input-medium" name="report[filters][0][type]">
+					<option value="date">Date</option>
+				</select>
+
+				<label class="control-label">Placeholder</label>
+				<input type="text" size="30" 
+					name="report[filters][0][placeholder]" id="report_filters_placeholder" 
+					 value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>">
+			</div>
+			
+			<div class="form-inline">
+				<label class="control-label">Type</label>
+				<select class="input-medium" name="report[filters][1][type]">
+					<option value="date">Date</option>
+				</select>
+
+				<label class="control-label">Placeholder</label>
+				<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder"
+					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>">
+			</div>
+	  <% end %>
+	
+	  <label class="control-label filters">Report Type</label>
 	  <div class="form-inline">	
 	  	  <%= f.radio_button(:report_type, "table") %>
 		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
-	
+
 		  <%= f.radio_button(:report_type, "single_value") %>
 		  <%= label_tag(:single_value, "Single Value", :class=>'radio_label') %>
-	
+
 		  <%= f.radio_button(:report_type, "bar_chart") %>
 		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
-		
+
 		  <%= f.radio_button(:report_type, "line_chart") %>
 		  <%= label_tag(:bar_chart, "Bar and Line Chart", :class=>'radio_label') %>
-		
+
 		  <%= f.radio_button(:report_type, "pie_chart") %>
 		  <%= label_tag(:bar_chart, "Pie Chart", :class=>'radio_label') %>
-	  </div>  
+	  </div>
+
 
 	  <%= f.fields_for :config do |c| %>
-	    <label class="control-label">Cache Time (Seconds)</label>	
+	    <label class="control-label filters">Cache Time (Seconds)</label>	
 	    <%= c.text_field :cache_time %>
 	  <% end %>
 

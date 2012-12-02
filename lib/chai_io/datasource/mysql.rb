@@ -26,7 +26,7 @@ module ChaiIo
           raise "Empty Query!"
         end
         
-        @connection.fetch(@query_str)
+        @connection.fetch(@query_str, @query_params)
       end
         
     end

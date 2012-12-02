@@ -1,9 +1,8 @@
 class ReportsController < ApplicationController
    layout "dashboard"
    
-   
    #GET /reports/:id
-   #To-do: Refactor
+   #To-do: Refactor and move to lib
    def show
     
     @id = params[:id]
@@ -20,7 +19,14 @@ class ReportsController < ApplicationController
       @connection_error = true
     else
       
-      datasource_class.query_str = @report.config['query']
+      query = @report.config['query']
+      if @report.filters
+        @query_params = get_query_params query, @report.filters, params
+      end
+      
+      datasource_class.query_str = query
+      datasource_class.query_params = @query_params || []
+      logger.debug @query_params
       begin 
         
         result = datasource_class.query
@@ -57,7 +63,6 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html { render :action => 'show' }
       format.json { render :json => @data }
-      format.csv { render :csv => result.to_csv }
     end
     
    end
@@ -71,6 +76,7 @@ class ReportsController < ApplicationController
    
    #GET /reports/new
    def new
+     
      set_active_menu_item 'new_report'
      @report = Report.new
    end 
@@ -83,7 +89,7 @@ class ReportsController < ApplicationController
      @report = Report.new params[:report]
      
      if @report.save
-       redirect_to '/reports'
+       redirect_to_listing
      else
        render :action => 'new'
      end
@@ -92,7 +98,9 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/edit
    def edit
+     
      @report = find_report_for_current_user params[:id]
+     
      render :action => 'new'
    end
    
@@ -124,6 +132,22 @@ class ReportsController < ApplicationController
    
    def find_report_for_current_user(id)
      current_user.reports.find id
+   end
+   
+   #Inject Filters into Query
+   def get_query_params(query, filters, params)
+     
+     return unless filters
+     todays_date = Date.today.to_s
+     today_date['-']='/' #super hacky - figure out the right way to do this
+     today_date['-']='/'
+     
+     query_params = {}
+     filters.each do |i, fi|
+       ph = fi['placeholder'].to_sym
+       query_params[ph] = params[ph] || todays_date
+     end
+     query_params
    end
    
 end

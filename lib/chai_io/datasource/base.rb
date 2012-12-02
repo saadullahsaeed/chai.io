@@ -3,7 +3,7 @@ module ChaiIo
     
     class Base
       
-      attr_accessor :datasource_info
+      attr_accessor :datasource_info, :query_params
       
       def init
       end
