@@ -44,10 +44,7 @@ class ChaiIo.Views.ReportsBar_line_chart extends ChaiIo.Views.ReportsIndex
 		prepared[1] = []
 		for row in data
 			dt = row.values[0]
-			if isNaN dt
-				dt = dt.split("-")
-				dt = (new Date(dt[0], dt[1], dt[2])).getTime()
-				
+			dt = @dateToTime(dt) if isNaN dt
 			prepared[0].push {x: dt, y: row.values[1]}
 			prepared[1].push {x: dt, y: row.values[2]}
 		

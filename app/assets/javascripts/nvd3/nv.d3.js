@@ -3777,7 +3777,7 @@ nv.models.lineChart = function() {
         e.pos[1] = e.pos[1] * ratio;
       }
     }
-
+	
     var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ),
         top = e.pos[1] + ( offsetElement.offsetTop || 0),
         x = xAxis.tickFormat()(lines.x()(e.point, e.pointIndex)),
@@ -3834,7 +3834,7 @@ nv.models.lineChart = function() {
 
       x = lines.xScale();
       y = lines.yScale();
-
+		
       //------------------------------------------------------------
 
 

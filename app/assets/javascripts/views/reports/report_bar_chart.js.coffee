@@ -26,7 +26,9 @@ class ChaiIo.Views.ReportsBar_chart extends ChaiIo.Views.ReportsIndex
 		for y in colsY
 			prepared = []
 			for value in data
-				prepared.push {x: value[colX], y: value[y], series: 0} 
+				dt = value[colX]
+				dt = @dateToTime(value[colX]) if @convertDateToTime()
+				prepared.push {x: dt, y: value[y], series: 0} 
 			streams.push {key: y, values: prepared}
 		streams
 	
@@ -37,4 +39,4 @@ class ChaiIo.Views.ReportsBar_chart extends ChaiIo.Views.ReportsIndex
 	getColY: -> @getColumns()[1]
 	
 	totalColumns: -> @getColumns().length
-	
+	convertDateToTime: -> no

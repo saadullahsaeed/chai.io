@@ -33,4 +33,12 @@ class ChaiIo.Views.ReportsIndex extends Backbone.View
 			temp = []
 			temp.push row[val] for val of row
 			nested.push {values: temp}
-		nested	
+		nested
+	
+	dateToTime: (dt)->
+		dt = dt.toString()
+		dt = dt.split("-")
+		month = parseInt(dt[1]) - 1;
+		(new Date(dt[0], month, dt[2])).getTime()
+	
+		
