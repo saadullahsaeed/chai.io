@@ -9,4 +9,4 @@
 //= require ./nvd3/d3.v2.min
 //= require ./nvd3/nv.d3
 //= require_tree ./nvd3
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
