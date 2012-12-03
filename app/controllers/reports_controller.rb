@@ -39,13 +39,12 @@ class ReportsController < ApplicationController
    #GET /reports
    def index
      set_active_menu_item 'reports'
-     @reports = current_user.reports.all
+     @reports = current_user.reports.includes(:datasource)
    end
    
    
    #GET /reports/new
    def new
-     
      set_active_menu_item 'new_report'
      @report = Report.new
    end 

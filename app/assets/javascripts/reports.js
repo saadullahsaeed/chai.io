@@ -1,9 +1,9 @@
 //= require underscore
 //= require backbone
 //= require icanhaz
-//= require d3.v3
 //= require chai_io
 //= require_tree ./models
+//= require_tree ./collections
 //= require views/reports/reports_index
 //= require_tree ./views
 //= require ./nvd3/d3.v2.min

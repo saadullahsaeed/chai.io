@@ -1,47 +1,54 @@
 <% content_for :js_init_code do %>
 	ChaiIo.initialize();
-	window.App = new ChaiIo.Views.ReportsListView({el: $('.container')});
+	var collection = new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => :datasource).html_safe%>);
+	window.App = new ChaiIo.Views.ReportsListView({el: $('#dv_report_list'), model: collection}).render();
 <% end %>
 
 <div class="page-header">
 	<h1>Your Reports</h1>
 </div>
 
-<div class="">
+<div id="dv_report_list">
+	
 	<form class="form-search">
     	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="search">
 		<input id="report_search" type="button" class="btn" value="Search">
     </form>
-
-	<table class="table table-striped">
-		
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Type</th>
-				<th>Datasource</th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			<% @reports.each do |r|%>
-				<tr>
-					<td>
-						<%= link_to r.title, r %>
-					</td>
-					<td><%= r.report_type %></td>
-					<td><%= r.datasource.name %></td>
-					<td>
-						<%= link_to 'Edit', edit_report_path(r) %>
-					</td>
-					<td>
-						<%= link_to 'Delete', report_path(r), :method => :delete, :confirm => "Are you sure?"  %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+	
+	<div id="dv_table">
+	</div>
 </div>
+
+<script type="text/html" id="list_main">
+<table class="table table-striped">
+	
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Type</th>
+			<th>Datasource</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		{{#reports}}
+			<tr>
+				<td>
+					<a href="/reports/{{id}}">{{title}}</a>
+				</td>
+				<td>{{report_type}}</td>
+				<td>{{#datasource}}{{name}}{{/datasource}}</td>
+				<td>
+					<a href="/reports/{{id}}/edit">Edit</a>
+				</td>
+				<td>
+					<a href="/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
+				</td>
+			</tr>
+		{{/reports}}
+	</tbody>
+</table>
+</script>
