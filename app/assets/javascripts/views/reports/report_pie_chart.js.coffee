@@ -30,4 +30,4 @@ class ChaiIo.Views.ReportsPie_chart extends ChaiIo.Views.ReportsIndex
 		
 		
 	getTemplateName: -> "report_pie_chart"
-	
+	hasNestedDataValues: -> yes

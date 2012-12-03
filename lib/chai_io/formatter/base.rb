@@ -5,7 +5,8 @@ module ChaiIo
       
       attr_accessor :data
       
-      def init
+      def format
+        @data
       end
         
     end

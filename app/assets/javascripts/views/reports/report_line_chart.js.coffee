@@ -1,5 +1,6 @@
 class ChaiIo.Views.ReportsLine_chart extends ChaiIo.Views.ReportsIndex
 	
+	hasNestedDataValues: -> yes
 	preRender: ->
 	
 	postRender: ->
@@ -55,6 +56,5 @@ class ChaiIo.Views.ReportsLine_chart extends ChaiIo.Views.ReportsIndex
 		[preparedBarData, preparedLineData]
 	
 	getTemplateName: -> "report_line_chart"
-	
 	totalColumns: -> @getColumns().length
 	

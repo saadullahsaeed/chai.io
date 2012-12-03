@@ -4,7 +4,12 @@ class ChaiIo.Views.ReportsIndex extends Backbone.View
 	
 	postRender: ->
 	
+	getFilterDateFormat: -> "yyyy-mm-dd"
+	initFilters: -> $('.datepicker').datepicker {"format": @getFilterDateFormat()}
+	
 	render: ->
+		@initFilters()
+		@setData @nestDataValues() if @hasNestedDataValues()
 		@preRender()
 		templateName = @getTemplateName()
 		return no if templateName is ''
@@ -17,3 +22,15 @@ class ChaiIo.Views.ReportsIndex extends Backbone.View
 	getModelJSON: -> @model.toJSON()
 	getColumns: -> @model.get 'columns'
 	getData: -> @model.get 'data'
+	setData:(data)-> @model.set {data: data}
+	
+	hasNestedDataValues: -> no
+	
+	nestDataValues: ->
+		data = @getData()
+		nested = []
+		for row in data
+			temp = []
+			temp.push row[val] for val of row
+			nested.push {values: temp}
+		nested	

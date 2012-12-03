@@ -4,56 +4,25 @@ class ReportsController < ApplicationController
    #GET /reports/:id
    #To-do: Refactor and move to lib
    def show
+    @report = find_report_for_current_user(params[:id])
     
-    @id = params[:id]
-    @report = current_user.reports.find(@id)
-    
-    datasource_class = ChaiIo::Datasource::Mysql.new
-    datasource_class.datasource_info = @report.datasource.config
-    connected = datasource_class.connect
-    
-    @connection_error = false
-    @query_error = false
-    if !connected
+    dsource = get_datasource_object(@report.datasource.config)
+    @connected = dsource.connect
+    if !@connected
       flash.now[:error] = "Error: Cannot connect to the data source!"
       @connection_error = true
     else
       
       query = @report.config['query']
-      if @report.filters
-        @query_params = get_query_params query, @report.filters, params
-      end
+      dsource.query_str = query
+      @query_params = get_query_params(query, @report.filters, params)
+      dsource.query_params = @query_params
       
-      datasource_class.query_str = query
-      datasource_class.query_params = @query_params || []
-      logger.debug @query_params
       begin 
-        
-        result = datasource_class.query
+        result = dsource.query
         @columns = result.columns.to_json
-        @data = []
-        
-        case @report.report_type
-          
-          when 'single_value'
-            @name = result.columns.first
-            @single_value = result.first[@name]
-            
-          when 'bar_chart'
-            @data = result
-            
-          else
-            result.each do |row|
-              temp = []
-              row.each {|v| temp << v.last}
-              @data.push({:values => temp})
-            end
-        end
-        @data = @data.to_json
-      
+        @data = get_formatted_data(@report.report_type, result).to_json
       rescue Sequel::DatabaseError => e
-        @data = '[]'
-        @columns = '[]'
         @query_error = true
         flash.now[:error] = "Query Error: #{e.message}"
       end
@@ -64,8 +33,8 @@ class ReportsController < ApplicationController
       format.html { render :action => 'show' }
       format.json { render :json => @data }
     end
-    
    end
+
    
    #GET /reports
    def index
@@ -129,22 +98,45 @@ class ReportsController < ApplicationController
      redirect_to '/reports'
    end
    
+   
    def find_report_for_current_user(id)
      current_user.reports.find id
    end
    
+   
+   def get_datasource_object(config)
+     dsource = ChaiIo::Datasource::Mysql.new
+     dsource.datasource_info = config
+     dsource
+   end
+   
+   
+   def get_formatted_data(type, result)
+     formatter = get_data_formatter(type)
+     formatter.data = result
+     formatter.format
+   end
+   
+   
+   def get_data_formatter(type)
+     ChaiIo::Formatter::Base.new
+   end
+   
+   
    #Inject Filters into Query
    def get_query_params(query, filters, params)
-     
-     return unless filters
-     todays_date = Date.today.to_s
-     
+     return {} unless filters
      query_params = {}
      filters.each do |i, fi|
        ph = fi['placeholder'].to_sym
-       query_params[ph] = params[ph] || todays_date
+       query_params[ph] = params[ph] || default_placeholder_value(fi['type'])
      end
      query_params
    end
    
+   
+   #Get the default placeholder value
+   def default_placeholder_value(ph_type)
+    Date.today.to_s
+   end
 end
