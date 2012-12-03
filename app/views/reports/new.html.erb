@@ -22,7 +22,7 @@
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
 	  	  <div class="textwrapper">
-			<%= c.text_area :query, :size => '500x5', :class => 'span12 query', :value => @report.config['query'] %>
+			<%= c.text_area :query, :size => '500x5', :class => 'span12 query lined', :value => @report.config['query'] %>
 		  </div>
 	  <% end %>
 	
