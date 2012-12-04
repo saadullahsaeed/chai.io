@@ -1,6 +1,19 @@
+<% content_for :js_init_code do %>
+	//re-factor .. write a backbone view for this
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/textmate");
+	editor.getSession().setMode("ace/mode/sql");
+	
+	editor.setValue($('#query').val());
+	editor.selection.setSelectionRange({start:0, end:0});
+	$('form').submit(function(){
+		$('#query').val(editor.getValue());
+		return true;
+	});
+<% end %>
 
 <div class="page-header">
-	<h1>New Report <small>Create a new report</small></h1>
+	<h1><%=@report.id ? 'Edit' : 'New'%> Report <small><%=@report.id ? '' : 'Create a new report'%></small></h1>
 </div>
 
 <div class="">
@@ -13,20 +26,40 @@
 	  <label class="control-label">Title</label>
 	  <%= f.text_field :title %>
 
-	  <label class="control-label">Datasource</label>
-	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
- 
 	  <label class="control-label">Description</label>
 	  <%= f.text_area :description, :size => '200x2'%>
+	
+	  <label class="control-label">Datasource</label>
+	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
+
+	  <label class="control-label filters">Report Type</label>
+	  <div class="form-inline">	
+	  	  <%= f.radio_button(:report_type, "table") %>
+		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
+
+		  <%= f.radio_button(:report_type, "single_value") %>
+		  <%= label_tag(:single_value, "Single Value", :class=>'radio_label') %>
+
+		  <%= f.radio_button(:report_type, "bar_chart") %>
+		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
+
+		  <%= f.radio_button(:report_type, "line_chart") %>
+		  <%= label_tag(:bar_chart, "Line Chart", :class=>'radio_label') %>
+
+		  <%= f.radio_button(:report_type, "bar_line_chart") %>
+		  <%= label_tag(:bar_chart, "Bar and Line Chart", :class=>'radio_label') %>
+
+		  <%= f.radio_button(:report_type, "pie_chart") %>
+		  <%= label_tag(:bar_chart, "Pie Chart", :class=>'radio_label') %>
+	  </div>
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
-	  	  <div class="textwrapper">
-			<%= c.text_area :query, :size => '500x5', :class => 'span12 query lined', :value => @report.config['query'] %>
-		  </div>
+	  	  <div id="editor"></div>
+		  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
 	  <% end %>
 	
-	  <label class="control-label filters">Filters</label>
+	  <label class="control-label filters" style="margin-top: 220px;">Filters</label>
 	  <%= f.fields_for :filters do |fi| %>
 			<div class="form-inline">
 				<label class="control-label">Type</label>
@@ -52,28 +85,7 @@
 			</div>
 	  <% end %>
 	
-	  <label class="control-label filters">Report Type</label>
-	  <div class="form-inline">	
-	  	  <%= f.radio_button(:report_type, "table") %>
-		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
-
-		  <%= f.radio_button(:report_type, "single_value") %>
-		  <%= label_tag(:single_value, "Single Value", :class=>'radio_label') %>
-
-		  <%= f.radio_button(:report_type, "bar_chart") %>
-		  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
-		
-		  <%= f.radio_button(:report_type, "line_chart") %>
-		  <%= label_tag(:bar_chart, "Line Chart", :class=>'radio_label') %>
-
-		  <%= f.radio_button(:report_type, "bar_line_chart") %>
-		  <%= label_tag(:bar_chart, "Bar and Line Chart", :class=>'radio_label') %>
-
-		  <%= f.radio_button(:report_type, "pie_chart") %>
-		  <%= label_tag(:bar_chart, "Pie Chart", :class=>'radio_label') %>
-	  </div>
-
-
+	
 	  <%= f.fields_for :config do |c| %>
 	    <label class="control-label filters">Cache Time (Seconds)</label>	
 	    <%= c.text_field :cache_time %>

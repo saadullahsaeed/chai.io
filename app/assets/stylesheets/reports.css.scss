@@ -4,6 +4,7 @@
 
 textarea.query {
     width: 98%;
+	display: none;
 }
 
 .radio_label {
@@ -24,4 +25,14 @@ textarea.query {
 
 .form-inline select, input {
 	margin-right: 10px;
+}
+
+#editor {
+	height: 200px;
+	width: 600px;
+	border: 1px solid #CCCCCC;
+}
+
+.control-label {
+	margin-top: 10px;
 }

@@ -4,7 +4,7 @@ class ChaiIo.Views.ReportsIndex extends Backbone.View
 	
 	postRender: ->
 	
-	getFilterDateFormat: -> "yyyy-mm-dd"
+	getFilterDateFormat: -> "yyyy-mm-dd H:i:s"
 	initFilters: -> $('.datepicker').datepicker {"format": @getFilterDateFormat()}
 	
 	render: ->

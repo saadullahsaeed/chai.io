@@ -10,3 +10,4 @@
 //= require ./nvd3/nv.d3
 //= require_tree ./nvd3
 //= require bootstrap-datepicker/core
+//= require_tree ./ace
