@@ -1,6 +1,6 @@
 <% content_for :js_init_code do %>
 	//re-factor .. write a backbone view for this
-	var editor = ace.edit("editor");
+	/*var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/textmate");
 	editor.getSession().setMode("ace/mode/sql");
 	
@@ -9,7 +9,7 @@
 	$('form').submit(function(){
 		$('#query').val(editor.getValue());
 		return true;
-	});
+	});*/
 <% end %>
 
 <div class="page-header">
@@ -55,11 +55,13 @@
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
-	  	  <div id="editor"></div>
-		  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
+	  	  <div id="text-wrapper">
+			<%= c.text_area :query, :size => '500x5', :class => 'span12 query lined', :id=>'query', :value => @report.config['query'] %>
+	  	  </div>
+		  
 	  <% end %>
 	
-	  <label class="control-label filters" style="margin-top: 220px;">Filters</label>
+	  <label class="control-label filters">Filters</label>
 	  <%= f.fields_for :filters do |fi| %>
 			<div class="form-inline">
 				<label class="control-label">Type</label>
