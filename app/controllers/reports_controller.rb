@@ -1,3 +1,5 @@
+require 'timeout'
+
 class ReportsController < ApplicationController
    layout "dashboard"
    
@@ -21,10 +23,16 @@ class ReportsController < ApplicationController
       begin 
         result = dsource.query
         @columns = result.columns.to_json
-        @data = get_formatted_data(@report.report_type, result).to_json
+        
+        Timeout::timeout(10) { @data = get_formatted_data(@report.report_type, result).to_json }
+        
       rescue Sequel::DatabaseError => e
         @query_error = true
         flash.now[:error] = "Query Error: #{e.message}"
+        
+      rescue Timeout::Error => e
+        @query_error = true
+        flash.now[:error] = "Query timed out. Please fix your query."
       end
       
     end #if

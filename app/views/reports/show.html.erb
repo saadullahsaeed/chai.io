@@ -1,5 +1,6 @@
-<% content_for :js_init_code do %>
-	<% if !@connection_error && !@query_error %>
+<% if !@connection_error && !@query_error %>
+
+	<% content_for :js_init_code do %>
 	ChaiIo.initialize();
 	var model = new ChaiIo.Models.Report().set({
 		report: <%= @report.to_json.html_safe %>,
@@ -13,26 +14,28 @@
 	
 	window.App.render();
 	<% end %>
-<% end %>
 
-<h1><%= @report.title %></h1>
-<%= @report.description %>
-<hr>
 
-<% if @report.filters && @query_params %>
-	<form id="form_filters" class="form-inline filters-form" method="GET" action="/reports/<%=@report.id%>">
+	<h1><%= @report.title %></h1>
+	<%= @report.description %>
+	<hr>
+
+	<% if @report.filters && @query_params %>
+		<form id="form_filters" class="form-inline filters-form" method="GET" action="/reports/<%=@report.id%>">
 		
-		<% @report.filters.each do |i, fi|%>
-			<% if fi && fi['placeholder']!=''%>
-				<label class="control-label"><%=fi['placeholder'].capitalize%></label>
-				<input type="text" class="datepicker input-small" data-behaviour='datepicker' 
-					name="<%=fi['placeholder']%>" value="<%=@query_params[fi['placeholder'].to_sym]%>">
+			<% @report.filters.each do |i, fi|%>
+				<% if fi && fi['placeholder']!=''%>
+					<label class="control-label"><%=fi['placeholder'].capitalize%></label>
+					<input type="text" class="datepicker input-small" data-behaviour='datepicker' 
+						name="<%=fi['placeholder']%>" value="<%=@query_params[fi['placeholder'].to_sym]%>">
+				<% end %>
 			<% end %>
-		<% end %>
-		<input type="submit" class="btn btn-primary" value="Refresh">
-	</form>
+			<input type="submit" class="btn btn-primary" value="Refresh">
+		</form>
+	<% end %>
+
+	<div id="content"></div>
+
+	<%= render :partial => "report_type_#{@report.report_type}" %>
+
 <% end %>
-
-<div id="content"></div>
-
-<%= render :partial => "report_type_#{@report.report_type}" %>

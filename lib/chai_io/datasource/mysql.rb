@@ -29,7 +29,7 @@ module ChaiIo
         @connection.fetch(@query_str, @query_params)
       end
         
-    end
+    end #MySql
     
   end
 end

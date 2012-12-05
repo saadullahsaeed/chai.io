@@ -9,6 +9,7 @@ class ChaiIo.Views.ReportsPie_chart extends ChaiIo.Views.ReportsIndex
 		nv.addGraph ()=>
 			chart = nv.models.pieChart()
 			chart.x (d)=> d.key
+                        
 			chart.y (d)=> d.y
 			chart.values (d)=> d
 			chart.color d3.scale.category10().range()
