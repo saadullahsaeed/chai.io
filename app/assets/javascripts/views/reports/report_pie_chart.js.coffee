@@ -20,12 +20,9 @@ class ChaiIo.Views.ReportsPie_chart extends ChaiIo.Views.ReportsIndex
 	
 	prepareData: ->
 		data = @getData()
-		data = data.shift()
-		columns = @getColumns()
-
 		prepared = []
-		for col, i in columns
-			prepared.push {key: col, y: data.values[i]} unless _.isUndefined(data.values[i]) || isNaN(data.values[i])
+		for row in data
+                        prepared.push {key: row.values[0], y: row.values[1]} 
 		prepared
 		
 		
