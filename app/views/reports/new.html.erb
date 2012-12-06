@@ -1,15 +1,19 @@
 <% content_for :js_init_code do %>
 	//re-factor .. write a backbone view for this
-	/*var editor = ace.edit("editor");
+	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/textmate");
 	editor.getSession().setMode("ace/mode/sql");
 	
 	editor.setValue($('#query').val());
-	editor.selection.setSelectionRange({start:0, end:0});
+	
+	if (editor.getValue().trim() != '') {
+		editor.selection.setSelectionRange({start:0, end:0});
+	}
+	
 	$('form').submit(function(){
 		$('#query').val(editor.getValue());
 		return true;
-	});*/
+	});
 <% end %>
 
 <div class="page-header">
@@ -32,7 +36,7 @@
 	  <label class="control-label">Datasource</label>
 	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
 
-	  <label class="control-label filters">Report Type</label>
+	  <label class="control-label">Report Type</label>
 	  <div class="form-inline">	
 	  	  <%= f.radio_button(:report_type, "table") %>
 		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
@@ -55,10 +59,8 @@
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
-	  	  <div id="text-wrapper">
-			<%= c.text_area :query, :size => '500x5', :class => 'span12 query lined', :id=>'query', :value => @report.config['query'] %>
-	  	  </div>
-		  
+	  	  <div id="editor"></div>
+		<%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
 	  <% end %>
 	
 	  <label class="control-label filters">Filters</label>
@@ -89,8 +91,8 @@
 	
 	
 	  <%= f.fields_for :config do |c| %>
-	    <label class="control-label filters">Cache Time (Seconds)</label>	
-	    <%= c.text_field :cache_time %>
+	   <!-- <label class="control-label">Cache Time (Seconds)</label>	
+	    <%= c.text_field :cache_time %>-->
 	  <% end %>
 
 	  <div class="form-actions">

@@ -1,18 +1,18 @@
 <% if !@connection_error && !@query_error %>
 
 	<% content_for :js_init_code do %>
-	ChaiIo.initialize();
-	var model = new ChaiIo.Models.Report().set({
-		report: <%= @report.to_json.html_safe %>,
-		report_type: '<%= @report.report_type %>',
-		columns: <%= @columns.html_safe %>,
-		data: <%= @data.html_safe %>});
+		ChaiIo.initialize();
+		var model = new ChaiIo.Models.Report().set({
+			report: <%= @report.to_json.html_safe %>,
+			report_type: '<%= @report.report_type %>',
+			columns: <%= @columns.html_safe %>,
+			data: <%= @data.html_safe %>});
 	
-	window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
-		model: model,
-		el: $('#content')});
+		window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
+			model: model,
+			el: $('#content')});
 	
-	window.App.render();
+		window.App.render();
 	<% end %>
 
 

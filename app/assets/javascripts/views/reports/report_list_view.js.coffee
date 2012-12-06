@@ -15,7 +15,7 @@ class ChaiIo.Views.ReportsListView extends Backbone.View
 		searchFields = @getSearchFields()
 		filtered = _.filter @model.toJSON(), (item)=>
 			for field in searchFields
-				return yes if item[field] && item[field].match(searchTerm)
+				return yes if item[field] && item[field].toLowerCase().match(searchTerm.toLowerCase())
 			
 		filtered
 	
