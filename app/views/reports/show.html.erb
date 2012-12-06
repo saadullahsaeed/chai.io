@@ -1,7 +1,6 @@
 <% if !@connection_error && !@query_error %>
 
 	<% content_for :js_init_code do %>
-		ChaiIo.initialize();
 		var model = new ChaiIo.Models.Report().set({
 			report: <%= @report.to_json.html_safe %>,
 			report_type: '<%= @report.report_type %>',
@@ -15,14 +14,13 @@
 		window.App.render();
 	<% end %>
 
-
 	<h1><%= @report.title %></h1>
 	<%= @report.description %>
 	<hr>
 
 	<% if @report.filters && @query_params %>
 		<form id="form_filters" class="form-inline filters-form" method="GET" action="/reports/<%=@report.id%>">
-		
+			
 			<% @report.filters.each do |i, fi|%>
 				<% if fi && fi['placeholder']!=''%>
 					<label class="control-label"><%=fi['placeholder'].capitalize%></label>

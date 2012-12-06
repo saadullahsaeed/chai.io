@@ -11,16 +11,26 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		@initFilters()
 		@setData @nestDataValues() if @hasNestedDataValues()
 		@preRender()
-		templateName = @getTemplateName()
-		return no if templateName is ''
-		$(@el).html(ich[templateName] @getModelJSON())
+		@reRenderTpl()
 		@postRender()
 		yes
+	
+	renderTpl: (tplName, container, data)-> 
+		return no if tplName is ''
+		container.html(ich[tplName] data)
+		
+	reRenderTpl: -> @renderTpl @getTemplateName(), $(@el), @getModelJSON()
 	
 	getTemplateName: -> "report_#{@model.get('report_type')}"
 	
 	getModelJSON: -> @model.toJSON()
 	getColumns: -> @model.get 'columns'
+	getColumnIndex: (colText)-> 
+		cols = @getColumns()
+		for i of cols
+			return i if cols[i] is colText
+		no
+	
 	getData: -> @model.get 'data'
 	setData:(data)-> @model.set {data: data}
 	
@@ -40,5 +50,4 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		dt = dt.split("-")
 		month = parseInt(dt[1]) - 1;
 		(new Date(dt[0], month, dt[2])).getTime()
-	
 		

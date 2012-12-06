@@ -1,23 +1,35 @@
 <script type="text/html" id="report_table">
-	
-	<table class="table table-striped">
-	
+	<form class="form-search">
+    	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="Search">
+    </form>
+	<table id="tbl_report" class="table table-striped">
 		<thead>
 			<tr>
 			{{#columns}}
-				<th>{{.}}</th>
+				<th class="tbl_r_col">{{.}}</th>
 			{{/columns}}
 			</tr>
 		</thead>
 		
-		<tbody>
-			{{#data}}
-				<tr>
-					{{#values}}
-						<td>{{.}}</td>
-					{{/values}}
-				</tr>
-			{{/data}}
+		<tbody id="tbody">
+			{{>tpl_table_body_partial}}
 		</tbody>
+		
 	</table>
+</script>
+
+
+<script type="text/html" id="tpl_table_body">
+	{{>tpl_table_body_partial}}
+</script>
+
+
+<script type="text/html" id="tpl_table_body_partial" class="partial">
+	{{#data}}
+		<tr>
+			{{#values}}
+				<td>{{.}}</td>
+			{{/values}}
+		</tr>
+	{{/data}}
 </script>

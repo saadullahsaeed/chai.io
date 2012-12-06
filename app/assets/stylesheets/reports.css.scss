@@ -2,6 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.control-label {
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+#editor {
+	height: 200px;
+	width: 600px;
+	border: 1px solid #CCCCCC;
+}
+
 textarea.query {
     width: 98%;
 	display: none;
@@ -27,13 +38,7 @@ textarea.query {
 	margin-right: 10px;
 }
 
-#editor {
-	height: 200px;
-	width: 600px;
-	border: 1px solid #CCCCCC;
-}
-
-.control-label {
-	margin-top: 10px;
-	font-weight: bold;
+.tbl_r_col {
+	cursor: pointer;
+	text-decoration: underline;
 }

@@ -8,16 +8,9 @@ class ChaiIo.Views.ReportsListView extends ChaiIo.Views.Base
 	search: (event)->
 		search_term = $('#search_keywords').val()
 		return @render() if search_term is ''
-		@showList(@filterList search_term)
+		@showList(@filterList search_term, @model.toJSON())
 	
 	getSearchFields: -> ['title', 'report_type']
-	filterList: (searchTerm) ->
-		searchFields = @getSearchFields()
-		filtered = _.filter @model.toJSON(), (item)=>
-			for field in searchFields
-				return yes if item[field] && item[field].toLowerCase().match(searchTerm.toLowerCase())
-			
-		filtered
 	
 	render: -> 
 		@showList @model.toJSON()
