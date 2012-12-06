@@ -4,6 +4,7 @@
 //= require chai_io
 //= require_tree ./models
 //= require_tree ./collections
+//= require views/base_view
 //= require views/reports/reports_index
 //= require_tree ./views
 //= require ./nvd3/d3.v2.min

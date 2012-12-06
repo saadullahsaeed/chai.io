@@ -1,4 +1,4 @@
-class ChaiIo.Views.ReportsListView extends Backbone.View
+class ChaiIo.Views.ReportsListView extends ChaiIo.Views.Base
 	constructor: (options)->
 		@events = 
 			'keyup #search_keywords': 'search'

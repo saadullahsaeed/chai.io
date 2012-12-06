@@ -1,19 +1,6 @@
 <% content_for :js_init_code do %>
-	//re-factor .. write a backbone view for this
-	var editor = ace.edit("editor");
-	editor.setTheme("ace/theme/textmate");
-	editor.getSession().setMode("ace/mode/sql");
-	
-	editor.setValue($('#query').val());
-	
-	if (editor.getValue().trim() != '') {
-		editor.selection.setSelectionRange({start:0, end:0});
-	}
-	
-	$('form').submit(function(){
-		$('#query').val(editor.getValue());
-		return true;
-	});
+	window.App = new ChaiIo.Views.NewReport({});
+	window.App.render();
 <% end %>
 
 <div class="page-header">

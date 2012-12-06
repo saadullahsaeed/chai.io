@@ -5,5 +5,5 @@ window.ChaiIo =
   Routers: {}
   initialize: -> 
 
-#$(document).ready ->
- #ChaiIo.initialize()
+$(document).ready ->
+ ChaiIo.initialize()

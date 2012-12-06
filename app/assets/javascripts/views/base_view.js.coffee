@@ -1,0 +1,1 @@
+class ChaiIo.Views.Base extends Backbone.View

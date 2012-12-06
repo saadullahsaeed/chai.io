@@ -1,4 +1,4 @@
-class ChaiIo.Views.ReportsIndex extends Backbone.View
+class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	
 	preRender: ->
 	
