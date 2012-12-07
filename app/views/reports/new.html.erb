@@ -1,5 +1,5 @@
 <% content_for :js_init_code do %>
-	window.App = new ChaiIo.Views.NewReport({});
+	window.App = new ChaiIo.Views.NewReport({el: $('.container')});
 	window.App.render();
 <% end %>
 
@@ -9,7 +9,7 @@
 
 <div class="">
 	
-	<%= form_for @report, :html => {:class => "", :method => @report.id ? "put" : "post"} do |f| %>
+	<%= form_for @report, :html => {:class => "form", :method => @report.id ? "put" : "post"} do |f| %>
 	<% @report.errors.full_messages.each do |msg| %>
 	      <p><%= msg %></p>
 	<% end %>

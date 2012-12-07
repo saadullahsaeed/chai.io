@@ -1,7 +1,7 @@
 class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 	constructor: (options)->
 		@events =
-			'submit form': 'copyQueryValue'
+			'submit .form': 'copyQueryValue'
 		super options
 	
 	render: ->
