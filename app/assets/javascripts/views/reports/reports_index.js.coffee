@@ -1,7 +1,6 @@
 class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	
 	preRender: ->
-	
 	postRender: ->
 	
 	getFilterDateFormat: -> "yyyy-mm-dd H:i:s"
@@ -35,7 +34,6 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	setData:(data)-> @model.set {data: data}
 	
 	hasNestedDataValues: -> no
-	
 	nestDataValues: ->
 		data = @getData()
 		nested = []
@@ -46,8 +44,15 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		nested
 	
 	dateToTime: (dt)->
-		dt = dt.toString()
-		dt = dt.split("-")
+		dt = dt.toString().split "-"
 		month = parseInt(dt[1]) - 1;
 		(new Date(dt[0], month, dt[2])).getTime()
-		
+	
+	getReportId: -> @getReport().id
+	getReport: -> @model.get 'report'
+	
+	initSharingEvents: -> $('#btn-enable-sharing').click ()=>@enableSharing()
+	enableSharing: -> @sendRequest "/reports/#{@getReportId()}/share", {}, ()=>@reportShared()
+	reportShared: -> $('#aSharingModal').click()
+	
+	

@@ -70,14 +70,11 @@ class ReportsController < ApplicationController
      end
    end 
    
-   
    #GET /reports/:id/edit
    def edit
-     
      @report = find_report_for_current_user params[:id]
      render :action => 'new'
    end
-   
    
    #PUT /reports/:id
    def update
@@ -90,11 +87,23 @@ class ReportsController < ApplicationController
      end
    end
    
-   
-   #DELETe /reports/:id
+   #DELETE /reports/:id
    def destroy
      find_report_for_current_user(params[:id]).delete
      redirect_to_listing
+   end
+   
+   #GET /reports/:id/share
+   def share
+     report = find_report_for_current_user(params[:report_id])
+     unless report.sharing_enabled
+       report.enable_sharing params[:password]
+     end  
+     
+     msg = {:shared => true}
+     respond_to do |format|
+       format.json { render :json => msg }
+     end
    end
    
    
@@ -104,7 +113,6 @@ class ReportsController < ApplicationController
      redirect_to '/reports'
    end
    
-   
    def find_report_for_current_user(id)
      begin
        current_user.reports.find id
@@ -113,13 +121,11 @@ class ReportsController < ApplicationController
      end
    end
    
-   
    def get_datasource_object(config)
      dsource = ChaiIo::Datasource::Mysql.new
      dsource.datasource_info = config
      dsource
    end
-   
    
    def get_formatted_data(type, result)
      formatter = get_data_formatter(type)
@@ -127,11 +133,9 @@ class ReportsController < ApplicationController
      formatter.format
    end
    
-   
    def get_data_formatter(type)
      ChaiIo::Formatter::Base.new
    end
-   
    
    #Inject Filters into Query
    def get_query_params(query, filters, params)
@@ -143,7 +147,6 @@ class ReportsController < ApplicationController
      end
      query_params
    end
-   
    
    #Get the default placeholder value
    def default_placeholder_value(ph_type)

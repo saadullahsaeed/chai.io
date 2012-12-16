@@ -7,7 +7,10 @@ ChaiIo::Application.routes.draw do
   
   resources :sessions
   
-  resources :reports
+  resources :reports do
+    get 'share'
+  end
+  
   resources :datasources
   resources :users
   
