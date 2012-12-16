@@ -22,7 +22,7 @@ module ChaiIo
       
       def query
         
-        if !@query_str
+        unless @query_str
           raise "Empty Query!"
         end
         

@@ -22,3 +22,5 @@ class ChaiIo.Views.Base extends Backbone.View
 	
 	showLoading: ->
 	hideLoading: ->	
+	
+	getModelJSON: -> @model.toJSON()	

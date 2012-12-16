@@ -22,7 +22,6 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	
 	getTemplateName: -> "report_#{@model.get('report_type')}"
 	
-	getModelJSON: -> @model.toJSON()
 	getColumns: -> @model.get 'columns'
 	getColumnIndex: (colText)-> 
 		cols = @getColumns()
@@ -47,12 +46,5 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		dt = dt.toString().split "-"
 		month = parseInt(dt[1]) - 1;
 		(new Date(dt[0], month, dt[2])).getTime()
-	
-	getReportId: -> @getReport().id
-	getReport: -> @model.get 'report'
-	
-	initSharingEvents: -> $('#btn-enable-sharing').click ()=>@enableSharing()
-	enableSharing: -> @sendRequest "/reports/#{@getReportId()}/share", {}, ()=>@reportShared()
-	reportShared: -> $('#aSharingModal').click()
 	
 	

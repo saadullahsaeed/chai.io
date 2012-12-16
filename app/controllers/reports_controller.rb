@@ -95,18 +95,33 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/share
    def share
-     report = find_report_for_current_user(params[:report_id])
-     unless report.sharing_enabled
-       report.enable_sharing params[:password]
+     @report = find_report_for_current_user(params[:report_id])
+     unless @report.sharing_enabled
+       @report.enable_sharing params[:password]
      end  
      
-     msg = {:shared => true}
+     public_report = ChaiIo::Export::PublicReport.new
+     public_report.report = @report
+     
+     response = { :public_url => "#{request.protocol}#{request.host_with_port}#{public_report.generate_url}" }
      respond_to do |format|
-       format.json { render :json => msg }
+       format.json { render :json => response }
      end
    end
    
-   
+   #GET /reports/:id/unshare
+   def unshare
+     @report = find_report_for_current_user(params[:report_id])
+     if @report.sharing_enabled
+       @report.disable_sharing
+     end
+     response = { :unshared => true }
+     respond_to do |format|
+        format.json { render :json => response }
+      end
+   end
+     
+     
    private
    
    def redirect_to_listing

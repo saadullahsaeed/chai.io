@@ -1,16 +1,19 @@
 <% if !@connection_error && !@query_error %>
 
 	<% content_for :js_init_code do %>
-		window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
-			model: new ChaiIo.Models.Report().set({
-				report: <%= @report.to_json.html_safe %>,
-				report_type: '<%= @report.report_type %>',
-				columns: <%= @columns.html_safe %>,
-				data: <%= @data.html_safe %>}),
-				el: $('#content')});
-			
+	
+		var model = new ChaiIo.Models.Report().set({
+			report: <%= @report.to_json.html_safe %>,
+			report_type: '<%= @report.report_type %>',
+			columns: <%= @columns.html_safe %>,
+			data: <%= @data.html_safe %>});
+						
+		window.App = new ChaiIo.Views.ReportMain({ model: model, el: $('#main_container') });
+		
+		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({ model: model, el: $('#content') });
+		window.App.setReportTypeView(reportTypeView);
 		window.App.render();
-		window.App.initSharingEvents();
+		
 	<% end %>
 
 	<h1><%= @report.title %></h1>
@@ -22,8 +25,7 @@
 		<%= render :partial => "report_filters" %>
 	</div>
 	
-	<div class="pull-right">
-		<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn">Public URL</a>
+	<div id="sharing_container" class="pull-right">
 		<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
 	</div>
 
@@ -31,26 +33,39 @@
 	<div id="content"></div>
 
 	<%= render :partial => "report_type_#{@report.report_type}" %>
-	
 <% end %>
 
 
+<script type="text/html" id="tpl_sharing">
+	{{#report}}
+		{{#sharing_enabled}}
+			<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn">Disable Sharing</a>
+			<a id="btn-public-url" href="javascript: void(0);" role="button" class="btn">Public URL</a>
+		{{/sharing_enabled}}
+		
+		{{^sharing_enabled}}
+			<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn">Enable Sharing</a>
+		{{/sharing_enabled}}
+	{{/report}}
+</script>
+
+
 <!-- Modal -->
+<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
 <div id="sharingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="sharingModalLabel">Enable Sharing</h3>
+		<h3 id="sharingModalLabel">Public Report URL</h3>
 	</div>
 	<div class="modal-body">
 		<p>
 			Your report has been shared to the following URL:
 		</p>
 		<p>
-			<input type="text" class="input large" value="http://">
+			<input id="txt_public_url" type="text" class="input large" value="">
 		</p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		<button id="" class="btn btn-primary">Enable Sharing</button>
 	</div>
 </div>

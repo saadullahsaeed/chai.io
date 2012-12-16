@@ -9,6 +9,7 @@ ChaiIo::Application.routes.draw do
   
   resources :reports do
     get 'share'
+    get 'unshare'
   end
   
   resources :datasources
