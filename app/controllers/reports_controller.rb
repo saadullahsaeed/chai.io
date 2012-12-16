@@ -2,7 +2,7 @@ require 'timeout'
 
 class ReportsController < ApplicationController
    layout "dashboard"
-   
+
    #GET /reports/:id
    #To-do: Refactor and move to lib
    def show
@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
       begin 
         result = dsource.query
         @columns = result.columns.to_json
-        
+
         Timeout::timeout(10) { @data = get_formatted_data(@report.report_type, result).to_json }
         
       rescue Sequel::DatabaseError => e
@@ -60,7 +60,6 @@ class ReportsController < ApplicationController
    
    #POST /reports/
    def create
-
      params[:report][:user_id] = current_user.id
      @report = Report.new params[:report]
      
@@ -107,7 +106,11 @@ class ReportsController < ApplicationController
    
    
    def find_report_for_current_user(id)
-     current_user.reports.find id
+     begin
+       current_user.reports.find id
+     rescue Exception => e
+        render :status => 404
+     end
    end
    
    

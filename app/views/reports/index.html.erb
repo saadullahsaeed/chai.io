@@ -1,7 +1,8 @@
 <% content_for :js_init_code do %>
-	ChaiIo.initialize();
-	var collection = new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => :datasource).html_safe%>);
-	window.App = new ChaiIo.Views.ReportsListView({el: $('#dv_report_list'), model: collection}).render();
+	window.App = new ChaiIo.Views.ReportsListView({
+		el: $('#dv_report_list'), 
+		model: new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => :datasource).html_safe%>)})
+		.render();
 <% end %>
 
 <div class="page-header">
@@ -10,7 +11,7 @@
 
 <div id="dv_report_list">
 	<form class="form-search">
-    	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="Search">
+    	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="Filter reports...">
     </form>
 	<div id="dv_table">
 	</div>
@@ -18,7 +19,7 @@
 
 <script type="text/html" id="list_main">
 <table class="table table-striped table-hover">
-	
+
 	<thead>
 		<tr>
 			<th>Title</th>
@@ -47,5 +48,6 @@
 			</tr>
 		{{/reports}}
 	</tbody>
+	
 </table>
 </script>

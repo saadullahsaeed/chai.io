@@ -1,39 +1,49 @@
 <% if !@connection_error && !@query_error %>
 
 	<% content_for :js_init_code do %>
-		var model = new ChaiIo.Models.Report().set({
-			report: <%= @report.to_json.html_safe %>,
-			report_type: '<%= @report.report_type %>',
-			columns: <%= @columns.html_safe %>,
-			data: <%= @data.html_safe %>});
-	
 		window.App = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
-			model: model,
+			model: new ChaiIo.Models.Report().set({
+				report: <%= @report.to_json.html_safe %>,
+				report_type: '<%= @report.report_type %>',
+				columns: <%= @columns.html_safe %>,
+				data: <%= @data.html_safe %>}),
 			el: $('#content')});
-	
+			
 		window.App.render();
 	<% end %>
 
 	<h1><%= @report.title %></h1>
 	<%= @report.description %>
 	<hr>
+	
+	<!-- Filters -->
+	<div id="dv_filters">
+		<%= render :partial => "report_filters" %>
+	</div>
+	
+	<div class="pull-right">
+		<a href="#sharingModal" style="display: none;" role="button" class="btn" data-toggle="modal">Share Report</a>
+	</div>
 
-	<% if @report.filters && @query_params %>
-		<form id="form_filters" class="form-inline filters-form" method="GET" action="/reports/<%=@report.id%>">
-			
-			<% @report.filters.each do |i, fi|%>
-				<% if fi && fi['placeholder']!=''%>
-					<label class="control-label"><%=fi['placeholder'].capitalize%></label>
-					<input type="text" class="datepicker input-small" data-behaviour='datepicker' 
-						name="<%=fi['placeholder']%>" value="<%=@query_params[fi['placeholder'].to_sym]%>">
-				<% end %>
-			<% end %>
-			<input type="submit" class="btn btn-primary" value="Refresh">
-		</form>
-	<% end %>
-
+	<!-- Content -->
 	<div id="content"></div>
 
 	<%= render :partial => "report_type_#{@report.report_type}" %>
 
 <% end %>
+
+
+<!-- Modal -->
+<div id="sharingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="sharingModalLabel">Enable Sharing</h3>
+	</div>
+	<div class="modal-body">
+		<p>COMING SOON</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn btn-primary">Enable Sharing</button>
+	</div>
+</div>

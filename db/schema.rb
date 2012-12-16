@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201012309) do
+ActiveRecord::Schema.define(:version => 20121208085731) do
 
   create_table "datasource_types", :force => true do |t|
     t.string   "name"
@@ -51,11 +51,13 @@ ActiveRecord::Schema.define(:version => 20121201012309) do
     t.string   "report_type"
     t.integer  "datasource_id"
     t.text     "config"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "cache_time"
     t.string   "description"
     t.text     "filters"
+    t.boolean  "sharing_enabled"
+    t.text     "sharing_config"
   end
 
   create_table "users", :force => true do |t|
