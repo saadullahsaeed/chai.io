@@ -75,6 +75,7 @@ class ReportsController < ApplicationController
    def update
      @report = find_report_for_current_user params[:id]
      
+     params[:report][:user_id] = current_user.id
      if @report.update_attributes params[:report]
        redirect_to_listing
      else 

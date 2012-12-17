@@ -41,12 +41,12 @@
 	<script type="text/html" id="tpl_sharing">
 		{{#report}}
 			{{#sharing_enabled}}
-				<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn">Disable Sharing</a>
+				<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn" data-loading-text="Loading...">Disable Sharing</a>
 				<a id="btn-public-url" href="javascript: void(0);" role="button" class="btn">Public URL</a>
 			{{/sharing_enabled}}
 		
 			{{^sharing_enabled}}
-				<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn">Enable Sharing</a>
+				<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn" data-loading-text="Loading...">Enable Sharing</a>
 			{{/sharing_enabled}}
 		{{/report}}
 	</script>
@@ -63,7 +63,7 @@
 				Your report has been shared to the following URL:
 			</p>
 			<p>
-				<input id="txt_public_url" type="text" class="input large" value="">
+				<input id="txt_public_url" type="text" class="input large">
 			</p>
 		</div>
 		<div class="modal-footer">
