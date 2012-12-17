@@ -2,7 +2,7 @@ class Report < ActiveRecord::Base
   belongs_to :report
   belongs_to :datasource
   
-  attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id
+  attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :cache_time
   
   serialize :config, Hash
   serialize :filters

@@ -11,6 +11,7 @@ gem 'bootstrap-datepicker-rails'
 
 group :development do
   gem "better_errors"
+  gem 'factory_girl_rails'
 end
 
 # Gems used only for assets and not required
