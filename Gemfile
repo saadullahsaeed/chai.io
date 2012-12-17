@@ -3,15 +3,25 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 
 gem 'mysql2'
-gem 'pg'
 gem 'attr_encrypted'
 gem 'sequel'
 gem 'backbone-on-rails'
 gem 'bootstrap-datepicker-rails'
+gem "rspec-rails", "~> 2.12.0"
+gem "factory_girl_rails", "~> 3.2.0"
 
-group :development do
+group :development, :test do
   gem "better_errors"
-  gem 'factory_girl_rails'
+  gem "rspec-rails", "~> 2.12.0"
+  gem "factory_girl_rails", "~> 3.2.0"
+  gem "guard-rspec", "~> 0.7.0"
+end
+
+group :test do
+  gem "faker", "~> 1.0.1"
+  gem "capybara", "~> 1.1.2"
+  gem "database_cleaner", "~> 0.7.2"
+  gem "launchy", "~> 2.1.0"
 end
 
 # Gems used only for assets and not required

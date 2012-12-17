@@ -4,7 +4,7 @@ class Datasource < ActiveRecord::Base
   
   attr_accessible :name, :config, :datasource_type_id, :user_id
   
-  validates_presence_of :user_id, :name, :datasource_type_id
+  validates_presence_of :user_id, :name, :datasource_type_id, :config
 
   serialize :config, Hash
   attr_encrypted :config, :key => ChaiIo::Application.config.secret_token, :marshal => true

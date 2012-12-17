@@ -1,6 +1,7 @@
 class Report < ActiveRecord::Base
   belongs_to :report
   belongs_to :datasource
+  belongs_to :user
   
   attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :cache_time
   
