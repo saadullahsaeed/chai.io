@@ -25,9 +25,9 @@
 		<%= render :partial => "report_filters" %>
 	</div>
 	
-	<div id="sharing_container" class="pull-right">
-		<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
-	</div>
+	<% unless @public_report %>
+		<div id="sharing_container" class="pull-right"></div>
+	<% end %>
 
 	<!-- Content -->
 	<div id="content"></div>
@@ -36,36 +36,39 @@
 <% end %>
 
 
-<script type="text/html" id="tpl_sharing">
-	{{#report}}
-		{{#sharing_enabled}}
-			<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn">Disable Sharing</a>
-			<a id="btn-public-url" href="javascript: void(0);" role="button" class="btn">Public URL</a>
-		{{/sharing_enabled}}
+<% unless @public_report %>
+
+	<script type="text/html" id="tpl_sharing">
+		{{#report}}
+			{{#sharing_enabled}}
+				<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn">Disable Sharing</a>
+				<a id="btn-public-url" href="javascript: void(0);" role="button" class="btn">Public URL</a>
+			{{/sharing_enabled}}
 		
-		{{^sharing_enabled}}
-			<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn">Enable Sharing</a>
-		{{/sharing_enabled}}
-	{{/report}}
-</script>
+			{{^sharing_enabled}}
+				<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn">Enable Sharing</a>
+			{{/sharing_enabled}}
+		{{/report}}
+	</script>
 
-
-<!-- Modal -->
-<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
-<div id="sharingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="sharingModalLabel">Public Report URL</h3>
+	<!-- Modal -->
+	<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
+	<div id="sharingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="sharingModalLabel">Public Report URL</h3>
+		</div>
+		<div class="modal-body">
+			<p>
+				Your report has been shared to the following URL:
+			</p>
+			<p>
+				<input id="txt_public_url" type="text" class="input large" value="">
+			</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
 	</div>
-	<div class="modal-body">
-		<p>
-			Your report has been shared to the following URL:
-		</p>
-		<p>
-			<input id="txt_public_url" type="text" class="input large" value="">
-		</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-	</div>
-</div>
+	
+<% end %>

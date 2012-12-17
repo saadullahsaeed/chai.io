@@ -4,6 +4,7 @@ ChaiIo::Application.routes.draw do
   match '/' => 'home#index'
   
   match '/logout' => 'sessions#destroy'
+  match '/r/:id/:hash' => 'reports#public'
   
   resources :sessions
   

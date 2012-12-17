@@ -2,47 +2,42 @@ require 'timeout'
 
 class ReportsController < ApplicationController
    layout "dashboard"
+   
+   before_filter :require_login, :except => [:public]
 
    #GET /reports/:id
    #To-do: Refactor and move to lib
    def show
-    @report = find_report_for_current_user(params[:id])
-    
-    dsource = get_datasource_object(@report.datasource.config)
-    @connected = dsource.connect
-    if !@connected
-      flash.now[:error] = "Error: Cannot connect to the data source!"
-      @connection_error = true
-    else
-      
-      query = @report.config['query']
-      dsource.query_str = query
-      @query_params = get_query_params(query, @report.filters, params)
-      dsource.query_params = @query_params
-      
-      begin 
-        result = dsource.query
-        @columns = result.columns.to_json
-
-        Timeout::timeout(10) { @data = get_formatted_data(@report.report_type, result).to_json }
-        
-      rescue Sequel::DatabaseError => e
-        @query_error = true
-        flash.now[:error] = "Query Error: #{e.message}"
-        
-      rescue Timeout::Error => e
-        @query_error = true
-        flash.now[:error] = "Query timed out. Please fix your query."
-      end
-      
-    end #if
+     
+    begin
+      @report = find_report_for_current_user(params[:id])
+      @data = load_report_data @report
+    rescue Exception => e
+      return render_404
+    end
     
     respond_to do |format|
       format.html { render :action => 'show' }
       format.json { render :json => @data }
     end
    end
-
+   
+   
+   #
+   def public
+    
+    @public_report = true
+    public_report = ChaiIo::Export::PublicReport.new
+    our_hash = public_report.generate_hash params[:id]
+    return render_404 unless our_hash == params[:hash]
+    
+    @report = Report.find(params[:id]) || raise("not found")
+    return render_404 unless @report.sharing_enabled
+    
+    @data = load_report_data @report
+    render :action => 'show', :layout => "public"
+   end
+   
    
    #GET /reports
    def index
@@ -120,7 +115,7 @@ class ReportsController < ApplicationController
         format.json { render :json => response }
       end
    end
-     
+
      
    private
    
@@ -128,13 +123,43 @@ class ReportsController < ApplicationController
      redirect_to '/reports'
    end
    
+   
    def find_report_for_current_user(id)
-     begin
-       current_user.reports.find id
-     rescue Exception => e
-        render :status => 404
-     end
+     current_user.reports.find(id)
    end
+   
+   # Load report data - need to re-factor this
+   def load_report_data(report)
+     dsource = get_datasource_object report.datasource.config
+     @connected = dsource.connect
+     if !@connected
+       flash.now[:error] = "Error: Cannot connect to the data source!"
+       @connection_error = true
+     else
+
+       query = report.config['query']
+       dsource.query_str = query
+       @query_params = get_query_params(query, report.filters, params)
+       dsource.query_params = @query_params
+
+       begin 
+         result = dsource.query
+         @columns = result.columns.to_json
+
+         Timeout::timeout(10) { @data = get_formatted_data(report.report_type, result).to_json }
+
+       rescue Sequel::DatabaseError => e
+         @query_error = true
+         flash.now[:error] = "Query Error: #{e.message}"
+
+       rescue Timeout::Error => e
+         @query_error = true
+         flash.now[:error] = "Query timed out. Please fix your query."
+       end
+     end #if
+     @data
+   end
+   
    
    def get_datasource_object(config)
      dsource = ChaiIo::Datasource::Mysql.new

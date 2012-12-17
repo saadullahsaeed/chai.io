@@ -1,5 +1,4 @@
 class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
-	
 	preRender: ->
 	postRender: ->
 	
@@ -46,5 +45,4 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		dt = dt.toString().split "-"
 		month = parseInt(dt[1]) - 1;
 		(new Date(dt[0], month, dt[2])).getTime()
-	
 	

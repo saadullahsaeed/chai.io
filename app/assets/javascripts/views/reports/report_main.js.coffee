@@ -24,11 +24,13 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@model.set {report: report}
 		
 	disableSharing: (event)->
+		$('#btn-disable-sharing').button 'loading'
 		@sendRequest "#{@getReportURL()}/unshare", {}, (response)=>
 			@updateReport 'sharing_enabled', no
 			@renderSharingOptions()
 			
 	enableSharing: (event)-> 
+		$('#btn-enable-sharing').button 'loading'
 		@sendRequest "#{@getReportURL()}/share", {}, (response)=>
 			if response
 				@showPublicURL response.public_url 
@@ -39,5 +41,8 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		$('#txt_public_url').val url
 		$('#aSharingModal').click()
 		
-	renderSharingOptions: -> $('#sharing_container').html(ich.tpl_sharing {report: @getReport()})
+	renderSharingOptions: -> 
+		$('#sharing_container').html(ich.tpl_sharing {report: @getReport()})
+		$('#btn-enable-sharing').button 'reset'
+		$('#btn-disable-sharing').button 'reset'
 	

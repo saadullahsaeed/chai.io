@@ -1,4 +1,5 @@
 <div class="navbar navbar-fixed-top">
+	
 	<div class="navbar-inner">
 		<div class="container">
 	
@@ -9,30 +10,32 @@
           </a>
 
           <a class="brand" href="/">chai.io</a>
-
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="<%= @active == 'new_report' ? 'active': ''%>"><a href="/reports/new">New Report</a></li>
-              <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">Reports</a></li>
-	          	  <li class="dropdown <%= @active == 'datasources' ? 'active': ''%>">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Datasources <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/datasources/new">New</a></li>
-                    <li><a href="/datasources">Datasources</a></li>
-                  </ul>
-			  </li>
+		
+		  <% unless @public_report %>	
+          	<div class="nav-collapse">
+	            <ul class="nav">
+	              <li class="<%= @active == 'new_report' ? 'active': ''%>"><a href="/reports/new">New Report</a></li>
+	              <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">Reports</a></li>
+		          	  <li class="dropdown <%= @active == 'datasources' ? 'active': ''%>">
+	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Datasources <b class="caret"></b></a>
+	                  <ul class="dropdown-menu">
+	                    <li><a href="/datasources/new">New</a></li>
+	                    <li><a href="/datasources">Datasources</a></li>
+	                  </ul>
+				  </li>
               
-			  <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="<%=edit_user_path(current_user)%>">Settings</a></li>
-					<li>
-						<%= link_to 'Sign out', '/logout', :method => :delete %>
-					</li>
-                  </ul>
-			  </li>
-            </ul>
-          </div><!--/.nav-collapse -->
+				  <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
+	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
+	                  <ul class="dropdown-menu">
+	                    <li><a href="<%=edit_user_path(current_user)%>">Settings</a></li>
+						<li>
+							<%= link_to 'Sign out', '/logout', :method => :delete %>
+						</li>
+	                  </ul>
+				  </li>
+	            </ul>
+	          </div><!--/.nav-collapse -->
+		  <% end %>
         </div>
       </div>
 </div>
