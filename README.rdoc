@@ -4,6 +4,8 @@ A Rails app for Data Visualization. Interface to create reports with SQL queries
 
 Its in a very early stage, so things may change.
 
+Also, if you use it don't forget to change the config/initializers/secret_token.rb as a few important features are using keys from there.
+
 == Copyright
 
 Copyright (c) 2012 Saadullah Saeed. See LICENSE.txt for further details.
