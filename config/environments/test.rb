@@ -37,3 +37,4 @@ ChaiIo::Application.configure do
 end
 
 ChaiIo::Application.config.secret_token = "test"
+ChaiIo::Application.config.public_url_secret_token = "test"

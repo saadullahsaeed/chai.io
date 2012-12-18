@@ -6,7 +6,6 @@ class ReportsController < ApplicationController
    before_filter :require_login, :except => [:public]
 
    #GET /reports/:id
-   #To-do: Refactor and move to lib
    def show
      
     begin
@@ -61,6 +60,7 @@ class ReportsController < ApplicationController
      if @report.save
        redirect_to_listing
      else
+       puts @report.errors.full_messages.first
        render :action => 'new'
      end
    end 

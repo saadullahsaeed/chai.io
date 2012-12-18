@@ -19,8 +19,11 @@ describe User do
     expect(build(:user, email: "saad@peanutlabs.com")).to_not be_valid
   end
   
-  it "is password hashed" do
-    expect(create(:user, password: "saad")).to_not eq "saad"
+  it "authenticates valid password" do
+    create(:user, email: "saad@peanutlabs.com", password: "saad").authenticate("saad").should_not eq false
   end
   
+  it "does not authenticate invalid password" do
+    create(:user, email: "saad@peanutlabs.com", password: "saad").authenticate("daas").should eq false
+  end
 end
