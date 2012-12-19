@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'uri'
 
 describe ReportsController do
   
@@ -47,6 +48,22 @@ describe ReportsController do
         get :show, id: @report
         response.should render_template :show
       end
+      
+      it "assigns the fetched data column names to @columns" do
+        get :show, id: @report
+        expect(JSON.parse(assigns(:columns))).to eq ['id', 'title']
+      end
+
+      it "assigns @query_params as empty hash if no filters defined" do
+        get :show, id: @report
+        expect(assigns(:query_params).length).to eq 0
+      end
+      
+      it "assigns @query_params with filter values" do
+        report_with_filters = create(:report_with_filters)
+        get :show, id: report_with_filters
+        expect(assigns(:query_params).length).to eq 2
+      end
     end
     
     
@@ -89,7 +106,7 @@ describe ReportsController do
     describe 'PUT #update' do
      
       before :each do
-        @report = create(:report, title: "Saads Report", user: @user)
+        @report = create(:report, title: "New Report", user: @user)
       end
       
       it "locates the requested @report" do
@@ -122,6 +139,11 @@ describe ReportsController do
         get :share, report_id: @report
         assigns(:report).sharing_enabled.should eq true
       end
+      
+      it "returns public_url as json" do
+        get :share, report_id: @report, format: :json
+        expect(JSON.parse(response.body).has_key?('public_url')).to eq true
+      end
     end
     
     
@@ -145,11 +167,25 @@ describe ReportsController do
       end
       
       context "shared report" do
-        get :share, report_id: @report
         
+        it "should render template :show" do
+          get :share, report_id: @report, format: :json
+          public_url = JSON.parse(response.body)['public_url']
+          uri = URI(public_url)
+          hash = uri.path.split("/").last
+          
+          get :public, id: @report, hash: hash
+          response.should render_template :show
+        end
       end
       
       context "unshared report" do
+        
+        it "should not render template :show" do
+          get :unshare, report_id: @report
+          get :public, id: @report, hash: "test"
+          response.should_not render_template :show
+        end
       end
     end
 
