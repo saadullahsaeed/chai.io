@@ -14,10 +14,9 @@ class DatasourcesController < ApplicationController
   
   #POST /datasources/create
   def create
-    
      params[:datasource][:user_id] = current_user.id
      @datasource = Datasource.new params[:datasource]
-     
+
      if @datasource.save
        redirect_to datasources_path
      else
@@ -27,9 +26,7 @@ class DatasourcesController < ApplicationController
 
   #GET /datasources
   def show
-    logger.debug params
   end
-  
   
   #GET /datasources/:id/edit
   def edit
@@ -42,9 +39,9 @@ class DatasourcesController < ApplicationController
   def update
     @datasource = current_user.datasources.find params[:id]
     if @datasource.update_attributes(params[:datasource])
-       redirect_to '/datasources'
+       return redirect_to '/datasources'
     else 
-       render :action => 'new'
+       return render :action => 'new'
     end
   end
   

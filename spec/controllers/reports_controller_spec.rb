@@ -78,7 +78,7 @@ describe ReportsController do
         assigns(:report).should eq @report
       end
 
-      it "renders the :edit template" do
+      it "renders the :new template" do
         get :edit, id: @report
         response.should render_template :new
       end

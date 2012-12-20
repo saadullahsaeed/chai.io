@@ -12,7 +12,7 @@ FactoryGirl.define do
     datasource_id 1
     
     factory :report_with_filters do
-      filters([{:type => 'date', :placeholder => 'start'}, {:type => 'date', :placeholder => 'end'}])
+      filters([{'type' => 'date', 'placeholder' => 'start'}, {'type' => 'date', 'placeholder' => 'end'}])
     end
     
   end

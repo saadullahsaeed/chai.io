@@ -4,5 +4,6 @@ FactoryGirl.define do
     association :user
     name "Local Mysql"
     config({ :host => 'localhost', :user => 'root', :password => '', :database => 'chai_sql'})
+    datasource_type_id 1
   end
 end
