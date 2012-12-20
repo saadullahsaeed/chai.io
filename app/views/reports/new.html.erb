@@ -77,11 +77,12 @@
 	  <% end %>
 	
 	
-	  <%= f.fields_for :config do |c| %>
-	   <!-- <label class="control-label">Cache Time (Seconds)</label>	
-	    <%= c.text_field :cache_time %>-->
+	  <% if @caching_enabled %>
+		  <label class="control-label">Cache Time (Seconds)</label>	
+		  <%= f.text_field :cache_time, :value => '900' %>
 	  <% end %>
-
+	
+	
 	  <div class="form-actions">
 		<%= f.submit @report.id ? "Save" : "Create", :class => 'btn btn-primary' %>
 		<button type="button" class="btn">Reset</button>

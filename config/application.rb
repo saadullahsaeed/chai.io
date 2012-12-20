@@ -59,6 +59,15 @@ module ChaiIo
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
+    #Set to true if you want to enable Caching using Redis
+    config.redis_caching = {
+      :enabled => true, 
+      :host => 'localhost', 
+      :port => 6379, 
+      :default_expiry => 900
+    }
+    
+    #
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: true,

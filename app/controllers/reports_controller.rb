@@ -49,6 +49,10 @@ class ReportsController < ApplicationController
    def new
      set_active_menu_item 'new_report'
      @report = Report.new
+     
+     redis_config = ChaiIo::Application.config.redis_caching
+     @caching_enabled = redis_config[:enabled]
+     @default_expiry = redis_config[:default_expiry] if @caching_enabled
    end 
    
    
