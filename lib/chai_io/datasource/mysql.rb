@@ -8,9 +8,7 @@ module ChaiIo
       attr_accessor :query_str
       
       def connect
-        
         @connection = Sequel.mysql2 @datasource_info
-
         begin
           connected = @connection.test_connection
         rescue
@@ -21,7 +19,7 @@ module ChaiIo
       
       
       def query
-        
+        @query_str = @report.config['query']
         unless @query_str
           raise "Empty Query!"
         end

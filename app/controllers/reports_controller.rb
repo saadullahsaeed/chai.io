@@ -8,12 +8,13 @@ class ReportsController < ApplicationController
    #GET /reports/:id
    def show
      
-    begin
+    #begin
       @report = find_report_for_current_user(params[:id])
       @data = load_report_data @report
-    rescue Exception => e
-      return render_404
-    end
+    #rescue Exception => e
+      #logger.info e
+      #return render_404
+    #end
     
     respond_to do |format|
       format.html { render :action => 'show' }
@@ -143,15 +144,20 @@ class ReportsController < ApplicationController
      else
 
        query = report.config['query']
-       dsource.query_str = query
        @query_params = get_query_params(query, report.filters, params)
+       dsource.report = report
        dsource.query_params = @query_params
+       dsource.enable_caching = is_caching_enabled
 
        begin 
-         result = dsource.query
-         @columns = result.columns.to_json
+         
+         result = nil
+         
+         timeout = ChaiIo::Application.config.query[:timeout]
+         Timeout::timeout(timeout) { result = dsource.fetch }
 
-         Timeout::timeout(10) { @data = get_formatted_data(report.report_type, result).to_json }
+         @columns = result['columns'].to_json
+         @data = get_formatted_data(report.report_type, result['data']).to_json
 
        rescue Sequel::DatabaseError => e
          @query_error = true
@@ -173,6 +179,7 @@ class ReportsController < ApplicationController
    end
    
    def get_formatted_data(type, result)
+     logger.info result
      formatter = get_data_formatter(type)
      formatter.data = result
      formatter.format

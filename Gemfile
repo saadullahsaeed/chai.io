@@ -9,7 +9,7 @@ gem 'backbone-on-rails'
 gem 'bootstrap-datepicker-rails'
 gem "rspec-rails", "~> 2.12.0"
 gem "factory_girl_rails", "~> 3.2.0"
-gem 'redis', '2.1.1'
+gem 'redis', '3.0.2'
 
 group :development, :test do
   gem "better_errors"

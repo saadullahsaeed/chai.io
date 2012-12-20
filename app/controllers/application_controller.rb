@@ -33,4 +33,8 @@ class ApplicationController < ActionController::Base
   def render_404
     render :file => "#{Rails.root}/public/404.html", :status => :not_found
   end
+  
+  def is_caching_enabled
+    ChaiIo::Application.config.redis_caching[:enabled]
+  end
 end
