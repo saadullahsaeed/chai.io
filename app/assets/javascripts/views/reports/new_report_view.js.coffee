@@ -27,17 +27,17 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		
 	reservedPlaceholders: -> ['id']
 	isReservedPlaceholder: (ph) -> _.indexOf(@reservedPlaceholders(), ph) >= 0
-	isPlaceholderInQuery: (ph) -> @getQueryTAValue().concat(' ').match(":#{ph}[,|\ ]") != null
+	isPlaceholderInQuery: (ph) -> @getQueryTAValue().concat(' ').match(":#{ph}[;|,|\ ]") != null
 	checkPlaceholders: ->
 		placeholders = $('input[id*=report_filters_placeholder]')
 		for ph in placeholders
 			ph_value = $(ph).val()
 			continue if ph_value is ''
 			if @isReservedPlaceholder ph_value
-				alert "#{ph_value} is a reserved parameter and cannot be used as a placeholder"
+				alert "Placeholder '#{ph_value}' is a reserved parameter and cannot be used as a placeholder"
 				return no
 			if not @isPlaceholderInQuery ph_value
-				alert "Placeholder #{ph_value} is not present in the query"
+				alert "Placeholder '#{ph_value}' is not present in the query"
 				return no
 		yes
 	

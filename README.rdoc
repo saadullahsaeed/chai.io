@@ -6,6 +6,13 @@ Its in a very early stage, so things may change.
 
 Also, if you use it don't forget to change the config/initializers/secret_token.rb as a few important features are using keys from there.
 
+Changelog
+=========
+
+* Added caching support (for now only redis is supported)
+* Text and Number types for filters
+
+
 == Copyright
 
 Copyright (c) 2012 Saadullah Saeed. See LICENSE.txt for further details.
