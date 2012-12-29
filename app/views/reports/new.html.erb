@@ -11,7 +11,7 @@
 	
 	<%= form_for @report, :html => {:class => "form", :method => @report.id ? "put" : "post"} do |f| %>
 	<% @report.errors.full_messages.each do |msg| %>
-	      <p><%= msg %></p>
+		<p><%= msg %></p>
 	<% end %>
 	
 	  <label class="control-label">Title</label>
@@ -46,36 +46,39 @@
 		
 	  <%= f.fields_for :config do |c| %>
 	  	  <label class="control-label">Query</label>
+		  <small>Prefix filter placeholders with a ':'. Do NOT put a placeholder in quotes, they are always added by the system.</small>
+		
 	  	  <div id="editor"></div>
-		<%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
+		  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
 	  <% end %>
 	
 	  <label class="control-label filters">Filters</label>
+	  <small>You cannot use a filter with the placeholder 'id'</small>
 	  <%= f.fields_for :filters do |fi| %>
 			<div class="form-inline">
 				<label class="control-label">Type</label>
 				<select class="input-medium" name="report[filters][0][type]">
-					<option value="date">Date</option>
-					<option value="text">Text</option>
-					<option value="number">Number</option>
+					<option value="date" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='date'%> >Date</option>
+					<option value="text" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='text'%>>Text</option>
+					<option value="number" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='number'%>>Number</option>
 				</select>
 
 				<label class="control-label">Placeholder</label>
 				<input type="text" size="30" 
-					name="report[filters][0][placeholder]" id="report_filters_placeholder" 
+					name="report[filters][0][placeholder]" id="report_filters_placeholder1" 
 					 value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>">
 			</div>
 			
 			<div class="form-inline">
 				<label class="control-label">Type</label>
 				<select class="input-medium" name="report[filters][1][type]">
-					<option value="date">Date</option>
-					<option value="text">Text</option>
-					<option value="number">Number</option>
+					<option value="date" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='date'%> >Date</option>
+					<option value="text" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='text'%>>Text</option>
+					<option value="number" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='number'%>>Number</option>
 				</select>
 
 				<label class="control-label">Placeholder</label>
-				<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder"
+				<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder2"
 					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>">
 			</div>
 	  <% end %>
@@ -88,7 +91,7 @@
 	
 	
 	  <div class="form-actions">
-		<%= f.submit @report.id ? "Save" : "Create", :class => 'btn btn-primary' %>
+		<button class="btn btn-primary" name="commit" id="commit" type="button">Create</button>
 		<button type="button" class="btn">Reset</button>
 	  </div>
 	

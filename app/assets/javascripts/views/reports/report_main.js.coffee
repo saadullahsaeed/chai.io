@@ -14,8 +14,9 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@renderSharingOptions()
 		@delegateEvents()
 	
+	filtersContainer: -> $('#dv_filters')
 	initFilterView: ->
-		@filter_view = new ChaiIo.Views.ReportFiltersView {el: $('#dv_filters'), model: @model}
+		@filter_view = new ChaiIo.Views.ReportFiltersView {el: @filtersContainer(), model: @model}
 		@filter_view.render()
 	
 	getReportId: -> @getReport().id
