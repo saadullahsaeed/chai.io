@@ -6,7 +6,9 @@
 			report: <%= @report.to_json.html_safe %>,
 			report_type: '<%= @report.report_type %>',
 			columns: <%= @columns.html_safe %>,
-			data: <%= @data.html_safe %>});
+			data: <%= @data.html_safe %>,
+			qparams: <%= @query_params.to_json.html_safe %>,
+			filters: <%= @filters.to_json.html_safe %>});
 						
 		window.App = new ChaiIo.Views.ReportMain({ model: model, el: $('#main_container') });
 		
@@ -22,8 +24,8 @@
 	
 	<!-- Filters -->
 	<div id="dv_filters">
-		<%= render :partial => "report_filters" %>
 	</div>
+	<%= render :partial => "report_filters" %>
 	
 	<% unless @public_report %>
 		<div id="sharing_container" class="pull-right"></div>

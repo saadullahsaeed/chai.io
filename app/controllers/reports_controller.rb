@@ -8,13 +8,13 @@ class ReportsController < ApplicationController
    #GET /reports/:id
    def show
      
-    #begin
+    begin
       @report = find_report_for_current_user(params[:id])
       @data = load_report_data @report
-    #rescue Exception => e
-      #logger.info e
-      #return render_404
-    #end
+    rescue Exception => e
+      logger.info e
+      return render_404
+    end
     
     respond_to do |format|
       format.html { render :action => 'show' }
@@ -25,7 +25,6 @@ class ReportsController < ApplicationController
    
    #
    def public
-    
     @public_report = true
     public_report = ChaiIo::Export::PublicReport.new
     our_hash = public_report.generate_hash params[:id]
@@ -145,6 +144,7 @@ class ReportsController < ApplicationController
 
        query = report.config['query']
        @query_params = get_query_params(query, report.filters, params)
+       #@filters = report.filters
        dsource.report = report
        dsource.query_params = @query_params
        dsource.enable_caching = is_caching_enabled
@@ -152,7 +152,6 @@ class ReportsController < ApplicationController
        begin 
          
          result = nil
-         
          timeout = ChaiIo::Application.config.query[:timeout]
          Timeout::timeout(timeout) { result = dsource.fetch }
 
@@ -165,7 +164,7 @@ class ReportsController < ApplicationController
 
        rescue Timeout::Error => e
          @query_error = true
-         flash.now[:error] = "Query timed out. Please fix your query."
+         flash.now[:error] = "Query timed out."
        end
      end #if
      @data
@@ -178,13 +177,14 @@ class ReportsController < ApplicationController
      dsource
    end
    
+   #
    def get_formatted_data(type, result)
-     logger.info result
      formatter = get_data_formatter(type)
      formatter.data = result
      formatter.format
    end
    
+   #Get Data Foramtter object - keeping it simple on the server side and process data client side
    def get_data_formatter(type)
      ChaiIo::Formatter::Base.new
    end
@@ -193,15 +193,40 @@ class ReportsController < ApplicationController
    def get_query_params(query, filters, params)
      return {} unless filters
      query_params = {}
+     @filters = []
      filters.each do |i, fi|
        ph = fi['placeholder'].to_sym
-       query_params[ph] = params[ph] || default_placeholder_value(fi['type'])
+       if ph
+         filter_obj = get_filter_object fi['type'], fi['placeholder'], params[ph]
+         filter_obj.value = params[ph]
+         if filter_obj.validate
+           query_params[ph] = params[ph]
+         else
+           query_params[ph] = filter_obj.get_default_value
+         end
+         
+         filterX = fi
+         filterX['control_type'] = filter_obj.control_type
+         
+         @filters << filterX
+       end
      end
      query_params
    end
    
-   #Get the default placeholder value
-   def default_placeholder_value(ph_type)
-    Date.today.to_s
+   
+   def get_filter_object(type, placeholder, value)
+     case type
+      when 'date'
+       fo = ChaiIo::Filter::Date.new
+      when 'text'
+       fo = ChaiIo::Filter::Text.new
+      when 'number'
+       fo = ChaiIo::Filter::Number.new
+     end
+     raise "Invalid Filter type" unless fo
+     fo.value = value
+     fo
    end
+   
 end

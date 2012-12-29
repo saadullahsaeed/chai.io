@@ -1,13 +1,20 @@
-<% if @report.filters && @query_params %>
+<script type="text/html" id="tpl_filters">
 	<form id="form_filters" class="form-inline filters-form" method="GET" action="">
-		<% @report.filters.each do |i, fi|%>
-			<% if fi && fi['placeholder']!=''%>
-				<label class="control-label"><%=fi['placeholder'].capitalize%></label>
-				<input type="text" class="datepicker input-small" data-behaviour='datepicker' 
-					name="<%=fi['placeholder']%>" value="<%=@query_params[fi['placeholder'].to_sym]%>">
-			<% end %>
-		<% end %>
+		
+		{{#filters}}
+			<label class="control-label">{{label}}</label>
+			{{{filter_control}}}
+		{{/filters}}
+		
 		<input type="submit" class="btn btn-primary" value="Refresh">
 	</form>
-<% end %>
-<hr/>
+	<hr/>
+</script>
+
+<script type="text/html" id="f_ctl_text">
+	<input type="text" class="input-small" name="{{placeholder}}" value="{{value}}">
+</script>
+
+<script type="text/html" id="f_ctl_datepicker">
+	<input type="text" class="datepicker input-small" data-behaviour="datepicker" name="{{placeholder}}" value="{{value}}">
+</script>

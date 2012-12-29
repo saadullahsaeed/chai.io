@@ -2,11 +2,7 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	preRender: ->
 	postRender: ->
 	
-	getFilterDateFormat: -> "yyyy-mm-dd H:i:s"
-	initFilters: -> $('.datepicker').datepicker {"format": @getFilterDateFormat()}
-	
 	render: ->
-		@initFilters()
 		@setData @nestDataValues() if @hasNestedDataValues()
 		@preRender()
 		@reRenderTpl()

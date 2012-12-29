@@ -1,0 +1,20 @@
+module ChaiIo
+  module Filter  
+    
+    class Number < Base 
+      
+      #Should return the default value for that filter type
+      def get_default_value
+        1
+      end
+      
+      
+      #Should validate @value
+      def validate
+        @value != nil && @value != ''
+      end
+      
+    end
+    
+  end
+end

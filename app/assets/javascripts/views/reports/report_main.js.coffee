@@ -9,9 +9,14 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 	setReportTypeView: (view)-> @reportTypeView = view
 	
 	render: ->
+		@initFilterView()
 		@reportTypeView.render() if @reportTypeView
 		@renderSharingOptions()
 		@delegateEvents()
+	
+	initFilterView: ->
+		@filter_view = new ChaiIo.Views.ReportFiltersView {el: $('#dv_filters'), model: @model}
+		@filter_view.render()
 	
 	getReportId: -> @getReport().id
 	getReport: -> @model.get 'report'
