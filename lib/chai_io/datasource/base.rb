@@ -1,15 +1,18 @@
+require 'timeout'
+
 module ChaiIo
   module Datasource  
     
     class Base
       
-      attr_accessor :report, :datasource_info, :query_params, :enable_caching
+      attr_accessor :report, :datasource_info, :query_params, :data, :columns 
       
       def init
         @cache_obj = nil
       end
       
       def connect
+        raise "Connect not implemented"
       end
       
       def test_connection(config)
@@ -19,8 +22,33 @@ module ChaiIo
         raise "Method 'query' not implemeneted"
       end
       
+      #Run Report
+      def run_report
+        connected = connect
+        raise "Cannot connect to the data source!" unless connected
+        
+        result = nil
+        Timeout::timeout(get_query_timeout) { result = fetch }
+        
+        @columns = result['columns']
+        @data = get_formatted_data result['data']
+      end
+      
+      
+      #Get Formatted Data
+      def get_formatted_data(result)
+         formatter = ChaiIo::Formatter::Base.new
+         formatter.data = result
+         formatter.format
+      end
+      
+      
+      def get_query_timeout
+        ChaiIo::Application.config.query[:timeout]
+      end
+      
       def is_caching_enabled
-        @enable_caching && @report.cache_time > 0
+        ChaiIo::Application.config.redis_caching[:enabled] && @report.cache_time > 0
       end
       
       def make_result_object(columns, data)
@@ -36,7 +64,6 @@ module ChaiIo
         end
         
         if !caching_enabled || (caching_enabled && result == nil)
-          Rails.logger.info "Running db query"
           db_return = query()
           
           result = make_result_object(db_return.columns.as_json, db_return.as_json)

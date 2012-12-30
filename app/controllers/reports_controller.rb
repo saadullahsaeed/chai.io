@@ -1,5 +1,3 @@
-require 'timeout'
-
 class ReportsController < ApplicationController
    layout "dashboard"
    
@@ -93,6 +91,7 @@ class ReportsController < ApplicationController
      redirect_to_listing
    end
    
+   
    #GET /reports/:id/share
    def share
      @report = find_report_for_current_user(params[:report_id])
@@ -109,12 +108,11 @@ class ReportsController < ApplicationController
      end
    end
    
+   
    #GET /reports/:id/unshare
    def unshare
      @report = find_report_for_current_user(params[:report_id])
-     if @report.sharing_enabled
-       @report.disable_sharing
-     end
+     @report.disable_sharing
      response = { :unshared => true }
      respond_to do |format|
         format.json { render :json => response }
@@ -135,62 +133,42 @@ class ReportsController < ApplicationController
    
    # Load report data - need to re-factor this
    def load_report_data(report)
-     dsource = get_datasource_object report.datasource.config
-     @connected = dsource.connect
-     if !@connected
-       flash.now[:error] = "Error: Cannot connect to the data source!"
+     
+     @query_params = get_query_params(report.filters, params)
+      
+     dsource = get_datasource_object(report)
+     dsource.query_params = @query_params
+     
+     begin
+       
+       dsource.run_report
+       @columns = dsource.columns.to_json
+       @data = dsource.data.to_json
+       
+     rescue Sequel::DatabaseError => e
+       @query_error = true
+       flash.now[:error] = "Query Error: #{e.message}"
+     rescue Timeout::Error => e
+       @query_error = true
+       flash.now[:error] = "Query timed out."
+     rescue => e
+       flash.now[:error] = "Error: #{e.message}"
        @connection_error = true
-     else
-
-       query = report.config['query']
-       @query_params = get_query_params(query, report.filters, params)
-       #@filters = report.filters
-       dsource.report = report
-       dsource.query_params = @query_params
-       dsource.enable_caching = is_caching_enabled
-
-       begin 
-         
-         result = nil
-         timeout = ChaiIo::Application.config.query[:timeout]
-         Timeout::timeout(timeout) { result = dsource.fetch }
-
-         @columns = result['columns'].to_json
-         @data = get_formatted_data(report.report_type, result['data']).to_json
-
-       rescue Sequel::DatabaseError => e
-         @query_error = true
-         flash.now[:error] = "Query Error: #{e.message}"
-
-       rescue Timeout::Error => e
-         @query_error = true
-         flash.now[:error] = "Query timed out."
-       end
-     end #if
+     end
+    
      @data
    end
    
    
-   def get_datasource_object(config)
+   def get_datasource_object(report)
      dsource = ChaiIo::Datasource::Mysql.new
-     dsource.datasource_info = config
+     dsource.report = report
      dsource
    end
    
-   #
-   def get_formatted_data(type, result)
-     formatter = get_data_formatter(type)
-     formatter.data = result
-     formatter.format
-   end
-   
-   #Get Data Foramtter object - keeping it simple on the server side and process data client side
-   def get_data_formatter(type)
-     ChaiIo::Formatter::Base.new
-   end
    
    #Inject Filters into Query
-   def get_query_params(query, filters, params)
+   def get_query_params(filters, params)
      return {} unless filters
      query_params = {}
      @filters = []
@@ -215,18 +193,10 @@ class ReportsController < ApplicationController
    end
    
    
-   def get_filter_object(type, placeholder, value)
-     case type
-      when 'date'
-       fo = ChaiIo::Filter::Date.new
-      when 'text'
-       fo = ChaiIo::Filter::Text.new
-      when 'number'
-       fo = ChaiIo::Filter::Number.new
-     end
-     raise "Invalid Filter type" unless fo
-     fo.value = value
-     fo
-   end
-   
+   #Create an object for the filter
+    def get_filter_object(type, placeholder, value)
+      fo = eval("ChaiIo::Filter::#{type.capitalize}").new
+      fo.value = value
+      fo
+    end
 end

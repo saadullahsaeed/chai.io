@@ -4,12 +4,12 @@
 <% end %>
 
 <div class="page-header">
-	<h1><%=@report.id ? 'Edit' : 'New'%> Report <small><%=@report.id ? '' : 'Create a new report'%></small></h1>
+	<h1><%=@report.new_record? ? 'New' : 'Edit'%> Report <small><%=@report.new_record? ? 'Create a new report' : ''%></small></h1>
 </div>
 
 <div class="">
 	
-	<%= form_for @report, :html => {:class => "form", :method => @report.id ? "put" : "post"} do |f| %>
+	<%= form_for @report, :html => {:class => "form", :method => @report.new_record? ? "post" : "put"} do |f| %>
 	<% @report.errors.full_messages.each do |msg| %>
 		<p><%= msg %></p>
 	<% end %>
@@ -91,7 +91,7 @@
 	
 	
 	  <div class="form-actions">
-		<button class="btn btn-primary" name="commit" id="commit" type="button">Create</button>
+		<button class="btn btn-primary" name="commit" id="commit" type="button">Save</button>
 		<button type="button" class="btn">Reset</button>
 	  </div>
 	

@@ -5,8 +5,7 @@ module ChaiIo
       
       #Should return the default value for that filter type
       def get_default_value
-        #Date.today.to_s
-        '2012-12-28'
+        Object::Date.today.to_s
       end
       
       
