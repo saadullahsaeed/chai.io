@@ -5,7 +5,7 @@ module ChaiIo
       
       #Should return the default value for that filter type
       def get_default_value
-        1
+        0
       end
       
       
