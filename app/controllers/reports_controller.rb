@@ -9,6 +9,8 @@ class ReportsController < ApplicationController
     begin
       @report = find_report_for_current_user(params[:id])
       @data = load_report_data @report
+      
+      @page_title = "chai.io - #{@report[:title]}"
     rescue Exception => e
       logger.info e
       return render_404
@@ -32,6 +34,9 @@ class ReportsController < ApplicationController
     return render_404 unless @report.sharing_enabled
     
     @data = load_report_data @report
+    
+    @report[:user_id] = @report[:config] = @report[:datasource_id] = nil
+
     render :action => 'show', :layout => "public"
    end
    

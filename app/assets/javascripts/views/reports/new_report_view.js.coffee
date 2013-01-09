@@ -36,7 +36,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 			if @isReservedPlaceholder ph_value
 				alert "Placeholder '#{ph_value}' is a reserved parameter and cannot be used as a placeholder"
 				return no
-			if not @isPlaceholderInQuery ph_value
+			unless @isPlaceholderInQuery ph_value
 				alert "Placeholder '#{ph_value}' is not present in the query"
 				return no
 		yes
@@ -44,8 +44,8 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 	validated: ->
 		return no unless @checkPlaceholders()
 		yes
+	
+	queryStructure: ->
+	
 		
-		
-		
-		
-		
+			
