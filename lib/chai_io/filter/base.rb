@@ -21,6 +21,9 @@ module ChaiIo
         'text'
       end
       
+      def format(value)
+        value
+      end
     end
     
   end

@@ -183,7 +183,7 @@ class ReportsController < ApplicationController
          filter_obj = get_filter_object fi['type'], fi['placeholder'], params[ph]
          filter_obj.value = params[ph]
          if filter_obj.validate
-           query_params[ph] = params[ph]
+           query_params[ph] = filter_obj.format params[ph]
          else
            query_params[ph] = filter_obj.get_default_value
          end

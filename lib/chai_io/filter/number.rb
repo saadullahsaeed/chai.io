@@ -14,6 +14,10 @@ module ChaiIo
         @value != nil && @value != ''
       end
       
+      #
+      def format(value)
+        value.to_i
+      end
     end
     
   end
