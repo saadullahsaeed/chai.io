@@ -5,6 +5,7 @@ ChaiIo::Application.routes.draw do
   
   match '/logout' => 'sessions#destroy'
   match '/r/:id/:hash' => 'reports#public'
+
   
   resources :sessions
   
@@ -15,6 +16,7 @@ ChaiIo::Application.routes.draw do
   
   resources :datasources
   resources :users
+  resources :projects
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

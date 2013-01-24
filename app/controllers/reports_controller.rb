@@ -30,6 +30,8 @@ class ReportsController < ApplicationController
     our_hash = public_report.generate_hash params[:id]
     return render_404 unless our_hash == params[:hash]
     
+    @embed = true if params[:embed] == '1'
+    
     @report = Report.find(params[:id]) || raise("not found")
     return render_404 unless @report.sharing_enabled
     
@@ -37,7 +39,7 @@ class ReportsController < ApplicationController
     
     @report[:user_id] = @report[:config] = @report[:datasource_id] = nil
 
-    render :action => 'show', :layout => "public"
+    render :action => 'show', :layout => (@embed ? "embedded" : "public")
    end
    
    
@@ -67,7 +69,6 @@ class ReportsController < ApplicationController
      if @report.save
        redirect_to_listing
      else
-       puts @report.errors.full_messages.first
        render :action => 'new'
      end
    end 

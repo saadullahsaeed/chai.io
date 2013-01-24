@@ -8,7 +8,8 @@
 			columns: <%= @columns.html_safe %>,
 			data: <%= @data.html_safe %>,
 			qparams: <%= @query_params.to_json.html_safe %>,
-			filters: <%= @filters.to_json.html_safe %>});
+			filters: <%= @filters.to_json.html_safe %>,
+			embedded: <%= @embed %>});
 						
 		window.App = new ChaiIo.Views.ReportMain({ model: model, el: $('#main_container') });
 		
@@ -17,7 +18,8 @@
 		window.App.render();
 		
 	<% end %>
-
+	
+	<% unless @embed %>
 	<h1><%= @report.title %></h1>
 	<%= @report.description %>
 	<hr>
@@ -27,10 +29,13 @@
 	</div>
 	<%= render :partial => "report_filters" %>
 	
+	
 	<% unless @public_report %>
 		<div id="sharing_container" class="pull-right"></div>
 	<% end %>
 
+	<% end %>	
+	
 	<!-- Content -->
 	<div id="content"></div>
 

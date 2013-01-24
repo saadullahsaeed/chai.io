@@ -1,7 +1,10 @@
 <script type="text/html" id="report_table">
+	<% unless @embed %>
 	<form class="form-search">
     	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="Search">
     </form>
+	<% end %>
+	
 	<table id="tbl_report" class="table table-striped">
 		<thead>
 			<tr>

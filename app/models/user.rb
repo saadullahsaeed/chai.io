@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :projects, :dependent => :destroy
   has_many :reports, :dependent => :destroy
   has_many :datasources, :dependent => :destroy
   

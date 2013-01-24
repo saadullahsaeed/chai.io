@@ -8,10 +8,12 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		
 	setReportTypeView: (view)-> @reportTypeView = view
 	
+	isEmbedded: -> @model.get 'embedded'
+	
 	render: ->
-		@initFilterView()
+		@initFilterView() unless @isEmbedded()
 		@reportTypeView.render() if @reportTypeView
-		@renderSharingOptions()
+		@renderSharingOptions() unless @isEmbedded()
 		@delegateEvents()
 	
 	filtersContainer: -> $('#dv_filters')
