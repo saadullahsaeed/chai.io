@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
    layout "dashboard"
    
    before_filter :require_login, :except => [:public]
+   before_filter :check_embed
 
    #GET /reports/:id
    def show
@@ -204,5 +205,9 @@ class ReportsController < ApplicationController
       fo = eval("ChaiIo::Filter::#{type.capitalize}").new
       fo.value = value
       fo
+    end
+    
+    def check_embed
+      @embed = false
     end
 end
