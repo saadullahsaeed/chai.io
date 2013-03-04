@@ -16,6 +16,10 @@ ChaiIo::Application.routes.draw do
   resources :datasources
   resources :users
   
+  resources :projects do
+    resources :reports
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
