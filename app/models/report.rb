@@ -10,6 +10,7 @@ class Report < ActiveRecord::Base
   serialize :sharing_config
   
   validates_presence_of :title, :datasource_id, :report_type, :user_id, :config
+
   
   #Enable Sharing
   def enable_sharing(password)
@@ -24,5 +25,7 @@ class Report < ActiveRecord::Base
     self.sharing_config = {}
     self.save
   end  
+
+
 end
 

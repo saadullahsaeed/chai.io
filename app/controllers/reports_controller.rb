@@ -131,7 +131,8 @@ class ReportsController < ApplicationController
    private
    
    def redirect_to_listing
-     redirect_to '/reports'
+     #redirect_to '/reports'
+     redirect_to '/projects'
    end
    
    

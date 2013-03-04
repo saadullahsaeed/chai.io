@@ -1,8 +1,11 @@
 class ProjectsController < ApplicationController
 	layout "dashboard"
 
+  before_filter :set_active_menu
+
 	def index
 		@projects = current_user.projects.all
+    @projects.prepend get_default_project
 	end
 	
 
@@ -50,8 +53,20 @@ class ProjectsController < ApplicationController
 
    	private
 
+    def get_default_project
+      default_project = Project.new
+      default_project.id = 0
+      default_project.name = 'Default'
+      default_project.reports = current_user.reports.where(:project_id => 0) 
+      default_project
+    end
+
    	def find_user_project project_id
    		current_user.projects.find project_id
    	end
 
+
+    def set_active_menu
+      set_active_menu_item "projects"
+    end
 end
