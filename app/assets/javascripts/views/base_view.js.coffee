@@ -28,3 +28,6 @@ class ChaiIo.Views.Base extends Backbone.View
 	alert: (msg)-> alertify.alert msg
 	notifyError: (msg)-> alertify.error msg
 	notifySuccess: (msg)-> alertify.success msg
+	confirm: (msg)->
+		alertify.set { buttonFocus: "cancel" }
+		alertify.confirm msg
