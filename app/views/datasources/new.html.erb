@@ -1,11 +1,15 @@
+<% content_for :js_init_code do %>
+	window.App = new ChaiIo.Views.NewDatasource({el: $('#dv_dsource')});
+<% end %>
+
 <div class="page-header">
 	<h1>New Datasource <small>Create a new datasource</small></h1>
 </div>
 
-<div>
+<div id="dv_dsource">
 	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post"} do |f| %>
 	<% @datasource.errors.full_messages.each do |msg| %>
-	      <p><%= msg %></p>
+		<p><%= msg %></p>
 	<% end %>
 	
 	  <label class="control-label">Name</label>
@@ -31,7 +35,7 @@
 	  
 	  <div class="form-actions">
 		<%= f.submit "Create", :class => 'btn btn-primary' %>
-		<button type="button" class="btn">Reset</button>
+		<button type="button" class="btn" id="btn_test_connection">Test Connection</button>
 	  </div>
 	
 	<% end %>

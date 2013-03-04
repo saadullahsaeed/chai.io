@@ -5,8 +5,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 			'click #commit': 'submitForm'
 		super options
 	
-	render: ->
-		@initQueryEditor()
+	render: -> @initQueryEditor()
 		
 	initQueryEditor: ->
 		@editor = ace.edit "editor"
@@ -15,7 +14,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@editor.setValue @getQueryTAValue()
 		unless @getEditorValue() is ''
 			@editor.selection.setSelectionRange {start:0, end:0}
-		
+			
 	getQueryTextArea: -> $('#query')
 	getQueryTAValue: -> @getQueryTextArea().val()
 	getEditorValue: -> @editor.getValue()

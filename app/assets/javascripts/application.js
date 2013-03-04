@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require jquery-linedtextarea
 //= require_tree ./parser
+//= require_tree ./alertify

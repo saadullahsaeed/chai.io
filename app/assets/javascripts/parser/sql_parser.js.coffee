@@ -1,3 +1,4 @@
+#super basic sql parser for some client end validations
 class window.SQLParser 
 	constructor: (query)->
 		@query = query

@@ -6,7 +6,7 @@ ChaiIo::Application.routes.draw do
   match '/logout' => 'sessions#destroy'
   match '/r/:id/:hash' => 'reports#public'
 
-  
+
   resources :sessions
   
   resources :reports do
@@ -14,7 +14,9 @@ ChaiIo::Application.routes.draw do
     get 'unshare'
   end
   
+  match '/datasources/test' => 'datasources#test', :via => :post  
   resources :datasources
+
   resources :users
   resources :projects
   

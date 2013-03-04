@@ -23,7 +23,7 @@ class DatasourcesController < ApplicationController
        render :action => 'new'
      end
   end
-
+  
   #GET /datasources
   def show
   end
@@ -50,6 +50,20 @@ class DatasourcesController < ApplicationController
     current_user.datasources.find(params[:id]).delete
     redirect_to '/datasources'
   end
+  
+  
+  #POST /datasources/test
+  def test
+    
+    dsource = ChaiIo::Datasource::Mysql.new
+    connection_works = dsource.test_connection params[:datasource]
+    @data = { :success => connection_works }
+
+    respond_to do |format|
+       format.json { render :json => @data }
+    end
+  end
+  
   
   private
   

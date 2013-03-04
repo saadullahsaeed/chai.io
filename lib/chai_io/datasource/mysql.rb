@@ -6,15 +6,31 @@ module ChaiIo
     class Mysql < Base
       
       attr_accessor :query_str
+
+      def get_connection(config)
+        Sequel.mysql2 config
+      end
       
+
+      def test_connection(config)
+        begin
+          get_connection(config).test_connection
+        rescue
+          return false
+        end
+        return true
+      end
+      
+
       def connect
-        @connection = Sequel.mysql2 @report.datasource.config
+        @connection = get_connection @report.datasource.config
         begin
           connected = @connection.test_connection
         rescue
         end
         connected
       end
+
       
       #Query
       def query

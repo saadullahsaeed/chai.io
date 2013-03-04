@@ -24,3 +24,7 @@ class ChaiIo.Views.Base extends Backbone.View
 	hideLoading: ->	
 	
 	getModelJSON: -> @model.toJSON()	
+
+	alert: (msg)-> alertify.alert msg
+	notifyError: (msg)-> alertify.error msg
+	notifySuccess: (msg)-> alertify.success msg
