@@ -8,27 +8,24 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Type</th>
-				<th>Config</th>
+				<th>Description</th>
 				<th></th>
 				<th></th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<% @datasources.each do |d|%>
-				<% d.config['password'] = '****' %>
+			<% @projects.each do |p|%>
 				<tr>
 					<td>
-						<%= d.name %>
+						<%= p.name %>
 					</td>
-					<td><%= d.datasource_type.name %></td>
-					<td><%= d.config %></td>
+					<td><%= p.description %></td>
 					<td>
-						<%= link_to 'Edit', edit_datasource_path(d) %>
+						<%= link_to 'Edit', edit_project_path(p) %>
 					</td>
 					<td>
-						<%= link_to 'Delete', datasource_path(d), :method => :delete, :confirm => "Are you sure?" %>
+						<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?" %>
 					</td>
 				</tr>
 			<% end %>

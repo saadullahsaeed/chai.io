@@ -19,6 +19,9 @@
 
 	  <label class="control-label">Description</label>
 	  <%= f.text_area :description, :size => '200x2'%>
+
+	  <label class="control-label">Project</label>
+	  <%= f.collection_select(:project_id, current_user.projects, :id, :name, :include_blank => true) %>
 	
 	  <label class="control-label">Datasource</label>
 	  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>

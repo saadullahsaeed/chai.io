@@ -1,6 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :user
-  has_many :reports
+  has_many :reports, :dependent => :destroy
+  
   
   attr_accessible :description, :name, :user_id
   
