@@ -6,9 +6,10 @@
 <div class="">
 	
 	<%= form_for @project, :html => {:class => "form", :method => @project.new_record? ? "post" : "put"} do |f| %>
-	<% @project.errors.full_messages.each do |msg| %>
+
+	  <% @project.errors.full_messages.each do |msg| %>
 		<p><%= msg %></p>
-	<% end %>
+	  <% end %>
 	
 	  <label class="control-label">Name</label>
 	  <%= f.text_field :name %>

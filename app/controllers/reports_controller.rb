@@ -65,6 +65,7 @@ class ReportsController < ApplicationController
    #POST /reports/
    def create
      params[:report][:user_id] = current_user.id
+     params[:report][:project_id] = 0 unless params[:report][:project_id]
      @report = Report.new params[:report]
      
      if @report.save
@@ -73,6 +74,7 @@ class ReportsController < ApplicationController
        render :action => 'new'
      end
    end 
+
    
    #GET /reports/:id/edit
    def edit
@@ -80,6 +82,7 @@ class ReportsController < ApplicationController
      render :action => 'new'
    end
    
+
    #PUT /reports/:id
    def update
      @report = find_report_for_current_user params[:id]
@@ -91,6 +94,7 @@ class ReportsController < ApplicationController
        render :action => 'new'
      end
    end
+
    
    #DELETE /reports/:id
    def destroy
@@ -130,7 +134,8 @@ class ReportsController < ApplicationController
    private
    
    def redirect_to_listing
-     redirect_to '/reports'
+     #redirect_to '/reports'
+     redirect_to '/projects'
    end
    
    
