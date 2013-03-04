@@ -98,7 +98,7 @@ class ReportsController < ApplicationController
    
    #DELETE /reports/:id
    def destroy
-     find_report_for_current_user(params[:id]).delete
+     #find_report_for_current_user(params[:id]).delete
      redirect_to_listing
    end
    

@@ -44,9 +44,10 @@ class ProjectsController < ApplicationController
    	end
 
 
-   	#DELETE /reports/:id
+   	#DELETE /projects/:id
    	def destroy
-    	find_user_project(params[:id]).delete
+      #return if params[:id] == 0
+    	#find_user_project(params[:id]).delete
     	redirect_to '/projects'
    	end
 
