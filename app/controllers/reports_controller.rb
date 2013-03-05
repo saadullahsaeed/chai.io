@@ -4,13 +4,12 @@ class ReportsController < ApplicationController
    before_filter :require_login, :except => [:public]
    before_filter :check_embed
 
+
    #GET /reports/:id
    def show
-     
     begin
       @report = find_report_for_current_user(params[:id])
       @data = load_report_data @report
-      
       @page_title = "chai.io - #{@report[:title]}"
     rescue Exception => e
       logger.info e
@@ -32,12 +31,10 @@ class ReportsController < ApplicationController
     return render_404 unless our_hash == params[:hash]
     
     @embed = true if params[:embed] == '1'
-    
     @report = Report.find(params[:id]) || raise("not found")
     return render_404 unless @report.sharing_enabled
     
     @data = load_report_data @report
-    
     @report[:user_id] = @report[:config] = @report[:datasource_id] = nil
 
     render :action => 'show', :layout => (@embed ? "embedded" : "public")
@@ -65,7 +62,7 @@ class ReportsController < ApplicationController
    #POST /reports/
    def create
      params[:report][:user_id] = current_user.id
-     params[:report][:project_id] = 0 unless params[:report][:project_id]
+     #params[:report][:project_id] = 0 unless params[:report][:project_id] > 0
      @report = Report.new params[:report]
      
      if @report.save
@@ -78,6 +75,7 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/edit
    def edit
+     #params[:report][:project_id] = 0 unless params[:report][:project_id] > 0
      @report = find_report_for_current_user params[:id]
      render :action => 'new'
    end
@@ -98,7 +96,7 @@ class ReportsController < ApplicationController
    
    #DELETE /reports/:id
    def destroy
-     #find_report_for_current_user(params[:id]).delete
+     find_report_for_current_user(params[:id]).destroy
      redirect_to_listing
    end
    
@@ -134,7 +132,6 @@ class ReportsController < ApplicationController
    private
    
    def redirect_to_listing
-     #redirect_to '/reports'
      redirect_to '/projects'
    end
    
@@ -212,6 +209,7 @@ class ReportsController < ApplicationController
       fo
     end
     
+
     def check_embed
       @embed = false
     end

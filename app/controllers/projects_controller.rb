@@ -16,23 +16,23 @@ class ProjectsController < ApplicationController
 
 	def create
 		params[:project][:user_id] = current_user.id
-     	@project = Project.new params[:project]
+    @project = Project.new params[:project]
      
-     	if @project.save
-       		redirect_to '/projects'
-     	else
-       		render :action => 'new'
-     	end
+   	if @project.save
+     		redirect_to '/projects'
+   	else
+     		render :action => 'new'
+   	end
 	end
 
 
-	def edit
-    	@project = find_user_project params[:id]
-     	render :action => 'new'
-   	end
+  def edit
+    @project = find_user_project params[:id]
+    render :action => 'new'
+  end
 
 
-   	def update
+  def update
    		@project = find_user_project params[:id]
      
      	params[:project][:user_id] = current_user.id
@@ -41,26 +41,27 @@ class ProjectsController < ApplicationController
      	else 
        		render :action => 'new'
      	end
-   	end
+  end
 
 
-   	#DELETE /projects/:id
-   	def destroy
-      #return if params[:id] == 0
-    	#find_user_project(params[:id]).delete
+  #DELETE /projects/:id
+  def destroy
+      return if params[:id] == 0
+    	find_user_project(params[:id]).destroy
     	redirect_to '/projects'
-   	end
+  end
 
 
-   	private
+  private
 
     def get_default_project
       default_project = Project.new
-      default_project.id = 0
+      #default_project.id = 0
       default_project.name = 'Default'
       default_project.reports = current_user.reports.where(:project_id => 0) 
       default_project
     end
+
 
    	def find_user_project project_id
    		current_user.projects.find project_id

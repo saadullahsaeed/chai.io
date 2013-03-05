@@ -2,6 +2,7 @@ class Report < ActiveRecord::Base
   belongs_to :report
   belongs_to :datasource
   belongs_to :user
+  belongs_to :project
   
   attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :project_id, :cache_time
   
@@ -10,6 +11,13 @@ class Report < ActiveRecord::Base
   serialize :sharing_config
   
   validates_presence_of :title, :datasource_id, :report_type, :user_id, :config
+
+  after_initialize :default_values
+  before_save :default_values
+
+  def default_values
+    self.project_id ||= 0 
+  end
 
   
   #Enable Sharing
