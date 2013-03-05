@@ -9,6 +9,7 @@ class DatasourcesController < ApplicationController
   end
   
   def index
+    set_active_menu_item "datasources"
     @datasources = current_user.datasources.all
   end
   
@@ -68,7 +69,7 @@ class DatasourcesController < ApplicationController
   private
   
   def set_active_menu
-    set_active_menu_item "datasources"
+    #set_active_menu_item "datasources"
   end
   
 end

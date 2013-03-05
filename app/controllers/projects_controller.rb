@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_filter :set_active_menu
 
 	def index
+    set_active_menu_item "projects"
 		@projects = current_user.projects.all
     @projects.prepend get_default_project
 	end
@@ -69,7 +70,7 @@ class ProjectsController < ApplicationController
 
 
     def set_active_menu
-      set_active_menu_item "projects"
+      #set_active_menu_item "projects"
     end
 
 end

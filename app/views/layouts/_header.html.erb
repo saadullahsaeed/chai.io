@@ -15,24 +15,18 @@
           	<div class="nav-collapse">
 	            <ul class="nav">
 				 
-				 <li class="<%= @active == 'new_report' ? 'active': ''%>"><a href="/reports/new">New Report</a></li>
-	              <li class="dropdown <%= @active == 'projects' ? 'active': ''%>">
-	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Projects <b class="caret"></b></a>
+				  <li class="dropdown">
+	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">New <b class="caret"></b></a>
 	                  <ul class="dropdown-menu">
-	                    <li><a href="/projects/new">New</a></li>
-	                    <li><a href="/projects">Projects</a></li>
+	                    <li><a href="/projects/new">Report</a></li>
+	                    <li><a href="/reports/new">Project</a></li>
+	                    <li><a href="/datasources/new">Datasource</a></li>
 	                  </ul>
 				  </li>
-				   <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">All Reports</a></li>
-	             
+				  <li class="<%= @active == 'projects' ? 'active': ''%>"><a href="/reports">Projects</a></li>
+				<!--  <li class="<%= @active == 'reports' ? 'active': ''%>"><a href="/reports">All Reports</a></li>-->
+	             <li class="<%= @active == 'datasources' ? 'active': ''%>"><a href="/reports">Datasources</a></li>
               
-		          <li class="dropdown <%= @active == 'datasources' ? 'active': ''%>">
-	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Datasources <b class="caret"></b></a>
-	                  <ul class="dropdown-menu">
-	                    <li><a href="/datasources/new">New</a></li>
-	                    <li><a href="/datasources">Datasources</a></li>
-	                  </ul>
-				  </li>
               
 				  <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
 	                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
