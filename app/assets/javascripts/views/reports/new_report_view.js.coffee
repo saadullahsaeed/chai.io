@@ -20,7 +20,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 	getEditorValue: -> @editor.getValue()
 	copyQueryValue: (event)-> @getQueryTextArea().val @getEditorValue()
 
-	getConfigField: (field)-> $("#report_config_#{field}").val()
+	getConfigField: (field)-> $("#report_config_#{field}").val().trim()
 		
 	submitForm: ->
 		@copyQueryValue()
@@ -45,9 +45,9 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		yes
 
 	checkAggFields: ->
+		return yes if @getConfigField('sum').length is 0 and @getConfigField('average').length is 0
 		sum_fields = @getConfigField('sum').split ','
 		avg_fields = @getConfigField('average').split ','
-		return yes if sum_fields.length is 0 and avg_fields.length is 0
 		common = _.intersection(sum_fields, avg_fields)
 		if common.length > 0
 			@alert "Following field(s) can either belong to sum or average but not both: <br/> #{common}"
