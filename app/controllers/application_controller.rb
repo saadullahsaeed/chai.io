@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
   
   def auto_login
-    redirect_to "/reports" if is_logged_in?
+    redirect_to "/projects" if is_logged_in?
   end
 
   def current_user
