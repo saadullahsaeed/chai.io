@@ -16,6 +16,7 @@
 		
 		<tbody id="tbody">
 			{{>tpl_table_body_partial}}
+			{{>tpl_summary_row}}
 		</tbody>
 		
 	</table>
@@ -35,4 +36,15 @@
 			{{/values}}
 		</tr>
 	{{/data}}
+</script>
+
+
+<script type="text/html" id="tpl_summary_row" class="partial">
+	{{#has_summary}}
+		<tr>
+			{{#summary}}
+				<th class="tbl_r_col">{{.}}</th>
+			{{/summary}}
+		</tr>
+	{{/has_summary}}
 </script>

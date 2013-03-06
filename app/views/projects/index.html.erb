@@ -18,13 +18,12 @@
 		
 		<tbody>
 			<% @projects.each do |p|%>
+
 				<tr>
 					<td width="20"> 
-						<div class="accordion-group"> 
-							<div class="accordion-heading"> 
-								<a href="#collapse_<%=p.id%>" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle"><i id="toggle" class="icon-plus"></i></a> 
-							</div> 
-						</div>
+						<a href="#collapse_<%=p.id%>" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+									+
+						</a> 
 					</td>
 
 					<td>

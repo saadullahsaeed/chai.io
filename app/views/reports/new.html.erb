@@ -7,11 +7,12 @@
 	<h1><%=@report.new_record? ? 'New' : 'Edit'%> Report <small><%=@report.new_record? ? 'Create a new report' : ''%></small></h1>
 </div>
 
+
 <div class="">
 	
 	<%= form_for @report, :html => {:class => "form", :method => @report.new_record? ? "post" : "put"} do |f| %>
 	<% @report.errors.full_messages.each do |msg| %>
-		<p><%= msg %></p>
+		<div class="alert alert-error"><%= msg %></div>
 	<% end %>
 	
 	  <label class="control-label">Title</label>
@@ -53,6 +54,17 @@
 		
 	  	  <div id="editor"></div>
 		  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
+
+		  <div id="aggregation_config">
+	  	  	<label class="control-label filters">Aggregation</label>
+	  	  	<small>Only applies to Table report types. Enter list of fields, comma separated in each supported aggregation </small>
+
+	  	  	<label>Sum</label>
+			<%= c.text_field :sum, :value => @report.config['sum'] %>
+
+			<label>Average</label>
+			<%= c.text_field :average, :value => @report.config['average'] %>
+	  	  </div>
 	  <% end %>
 	
 	  <label class="control-label filters">Filters</label>
@@ -85,7 +97,7 @@
 					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>">
 			</div>
 	  <% end %>
-	
+
 	
 	  <% if @caching_enabled %>
 		  <label class="control-label">Cache Time (Seconds)</label>	

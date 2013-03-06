@@ -23,6 +23,14 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		for i of cols
 			return i if cols[i] is colText
 		no
+
+	columnNameToIndexArray: (fields)->
+		mapped = []
+		for column_name in fields
+			index = @getColumnIndex column_name
+			mapped.push index if index
+		mapped
+
 	
 	getData: -> @model.get 'data'
 	setData:(data)-> @model.set {data: data}
@@ -41,4 +49,14 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		dt = dt.toString().split "-"
 		month = parseInt(dt[1]) - 1;
 		(new Date(dt[0], month, dt[2])).getTime()
-	
+
+	getReport: -> @model.get 'report'
+	getReportConfig: -> 
+		report = @getReport()
+		return {} unless report
+		report.config
+
+	getReportConfigField: (field)-> @getReportConfig()[field]
+
+	sum: (arr)-> _.reduce arr, ((memo, num)=> return memo + num), 0
+	avg: (arr)-> Math.round(@sum(arr) / arr.length)

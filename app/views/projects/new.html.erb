@@ -8,7 +8,7 @@
 	<%= form_for @project, :html => {:class => "form", :method => @project.new_record? ? "post" : "put"} do |f| %>
 
 	  <% @project.errors.full_messages.each do |msg| %>
-		<p><%= msg %></p>
+		<div class="alert alert-error"><%= msg %></div>
 	  <% end %>
 	
 	  <label class="control-label">Name</label>

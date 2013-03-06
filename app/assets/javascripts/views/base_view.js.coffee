@@ -1,5 +1,4 @@
 class ChaiIo.Views.Base extends Backbone.View
-
 	getSearchFields: -> []	
 	
 	filterList: (searchTerm, data) ->

@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
     return render_404 unless @report.sharing_enabled
     
     @data = load_report_data @report
-    @report[:user_id] = @report[:config] = @report[:datasource_id] = nil
+    @report[:user_id] = @report[:config][:query] = @report[:datasource_id] = nil
 
     render :action => 'show', :layout => (@embed ? "embedded" : "public")
    end
@@ -62,7 +62,6 @@ class ReportsController < ApplicationController
    #POST /reports/
    def create
      params[:report][:user_id] = current_user.id
-     #params[:report][:project_id] = 0 unless params[:report][:project_id] > 0
      @report = Report.new params[:report]
      
      if @report.save
@@ -75,7 +74,6 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/edit
    def edit
-     #params[:report][:project_id] = 0 unless params[:report][:project_id] > 0
      @report = find_report_for_current_user params[:id]
      render :action => 'new'
    end
@@ -149,11 +147,9 @@ class ReportsController < ApplicationController
      dsource.query_params = @query_params
      
      begin
-       
        dsource.run_report
        @columns = dsource.columns.to_json
        @data = dsource.data.to_json
-       
      rescue Sequel::DatabaseError => e
        @query_error = true
        flash.now[:error] = "Query Error: #{e.message}"
@@ -164,7 +160,7 @@ class ReportsController < ApplicationController
        flash.now[:error] = "Error: #{e.message}"
        @connection_error = true
      end
-    
+
      @data
    end
    
@@ -194,7 +190,6 @@ class ReportsController < ApplicationController
          
          filterX = fi
          filterX['control_type'] = filter_obj.control_type
-         
          @filters << filterX
        end
      end

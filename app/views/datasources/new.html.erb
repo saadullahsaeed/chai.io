@@ -9,7 +9,7 @@
 <div id="dv_dsource">
 	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post"} do |f| %>
 	<% @datasource.errors.full_messages.each do |msg| %>
-		<p><%= msg %></p>
+		<div class="alert alert-error"><%= msg %></div>
 	<% end %>
 	
 	  <label class="control-label">Name</label>
