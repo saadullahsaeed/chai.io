@@ -19,6 +19,7 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	
 	getColumns: -> @model.get 'columns'
 	getColumnIndex: (colText)-> 
+		colText = colText.trim()
 		cols = @getColumns()
 		for i of cols
 			return i if cols[i] is colText
@@ -58,5 +59,5 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 
 	getReportConfigField: (field)-> @getReportConfig()[field]
 
-	sum: (arr)-> _.reduce arr, ((memo, num)=> return memo + num), 0
+	sum: (arr)-> _.reduce arr, ((memo, num)=> return memo + parseInt(num)), 0
 	avg: (arr)-> Math.round(@sum(arr) / arr.length)

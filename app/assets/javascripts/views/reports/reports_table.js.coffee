@@ -77,8 +77,8 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 		for i of columns
 			summary[i] = '' unless summary[i]
 			if _.indexOf(sum_fields, columns[i]) >= 0
-				summary[i] = "Total: #{@getColumnSum columns[i]}"
+				summary[i] = @getColumnSum columns[i]
 			else if _.indexOf(avg_fields, columns[i]) >= 0
-				summary[i] = "Average: #{@getColumnAvg columns[i]}"
+				summary[i] = @getColumnAvg columns[i]
 		summary
 			
