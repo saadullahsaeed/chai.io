@@ -15,8 +15,12 @@ group :development, :test do
   gem "better_errors"
   gem "rspec-rails", "~> 2.12.0"
   gem "factory_girl_rails", "~> 3.2.0"
-  gem "guard-rspec", "~> 0.7.0"
+  gem "guard-rspec", "~> 0.7.0"  
 end
+
+gem 'jasmine', :git => "git://github.com/pivotal/jasmine-gem.git"
+gem "jasminerice", :git => 'https://github.com/bradphelan/jasminerice.git'
+gem 'headless', '0.1.0'
 
 group :test do
   gem "faker", "~> 1.0.1"
@@ -33,7 +37,6 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 

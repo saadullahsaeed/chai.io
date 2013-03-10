@@ -1,0 +1,1 @@
+(function(){ChaiIo.Util=function(){function e(){}return e.dateToTime=function(e){var t;return e=e.toString().split("-"),t=parseInt(e[1])-1,(new Date(e[0],t,e[2])).getTime()},e.sum=function(e){var t=this;return _.reduce(e,function(e,t){return e+parseInt(t)},0)},e.avg=function(t){return Math.round(e.sum(t)/t.length)},e}()}).call(this);
