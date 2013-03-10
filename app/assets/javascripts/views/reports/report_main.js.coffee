@@ -6,9 +6,9 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 			'click #btn-disable-sharing': 'disableSharing'
 		super options
 		
-	setReportTypeView: (view)-> @reportTypeView = view
+	setReportTypeView: (view)-> @setThisAsParentView(@reportTypeView = view)
 	
-	isEmbedded: -> @model.get 'embedded'
+	isEmbedded: -> @model.isReportEmbedded()
 	
 	render: ->
 		@initFilterView() unless @isEmbedded()
@@ -21,36 +21,28 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@filter_view = new ChaiIo.Views.ReportFiltersView {el: @filtersContainer(), model: @model}
 		@filter_view.render()
 	
-	getReportId: -> @getReport().id
-	getReport: -> @model.get 'report'
-	getReportURL: ->"/reports/#{@getReportId()}"
-	
-	isSharingEnabled: -> @getReport().sharing_enabled
-	updateReport: (key, value)-> 
-		report = @getReport()
-		report[key] = value
-		@model.set {report: report}
+	getReportURL: ->"/reports/#{@model.getReportId()}"
 		
 	disableSharing: (event)->
-		$('#btn-disable-sharing').button 'loading'
+		@$('#btn-disable-sharing').button 'loading'
 		@sendRequest "#{@getReportURL()}/unshare", {}, (response)=>
-			@updateReport 'sharing_enabled', no
+			@model.updateReport 'sharing_enabled', no
 			@renderSharingOptions()
 			
 	enableSharing: (event)-> 
-		$('#btn-enable-sharing').button 'loading'
+		@$('#btn-enable-sharing').button 'loading'
 		@sendRequest "#{@getReportURL()}/share", {}, (response)=>
 			if response
 				@showPublicURL response.public_url 
-				@updateReport 'sharing_enabled', yes
+				@model.updateReport 'sharing_enabled', yes
 				@renderSharingOptions()
 		
 	showPublicURL: (url)->
-		$('#txt_public_url').val url
-		$('#aSharingModal').click()
+		@$('#txt_public_url').val url
+		@$('#aSharingModal').click()
 		
 	renderSharingOptions: -> 
-		$('#sharing_container').html(ich.tpl_sharing {report: @getReport()})
-		$('#btn-enable-sharing').button 'reset'
-		$('#btn-disable-sharing').button 'reset'
+		@$('#sharing_container').html(ich.tpl_sharing {report: @model.getReport()})
+		@$('#btn-enable-sharing').button 'reset'
+		@$('#btn-disable-sharing').button 'reset'
 	

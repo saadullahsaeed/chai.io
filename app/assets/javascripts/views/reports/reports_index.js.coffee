@@ -1,9 +1,16 @@
 class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
+
+	setReportData: (report_data)->
+		@report_data = report_data
+		@
+
+	reportDataToJSON: -> @report_data.toJSON()
+
 	preRender: ->
 	postRender: ->
 	
 	render: ->
-		@setData @nestDataValues() if @hasNestedDataValues()
+		@setData @report_data.nestDataValues() if @hasNestedDataValues()
 		@preRender()
 		@reRenderTpl()
 		@postRender()
@@ -13,51 +20,19 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		return no if tplName is ''
 		container.html(ich[tplName] data)
 		
-	reRenderTpl: -> @renderTpl @getTemplateName(), $(@el), @getModelJSON()
+	reRenderTpl: -> @renderTpl @getTemplateName(), $(@el), @reportDataToJSON()
+	getTemplateName: -> "report_#{@model.getReportType()}"
 	
-	getTemplateName: -> "report_#{@model.get('report_type')}"
-	
-	getColumns: -> @model.get 'columns'
-	getColumnIndex: (colText)-> 
-		colText = colText.trim()
-		cols = @getColumns()
-		for i of cols
-			return i if cols[i] is colText
-		no
+	getReport: -> @model.getReport()
 
-	columnNameToIndexArray: (fields)->
-		mapped = []
-		for column_name in fields
-			index = @getColumnIndex column_name
-			mapped.push index if index
-		mapped
-
+	getColumns: -> @report_data.getColumns()
+	getColumnIndex: (colText)-> @report_data.getColumnIndex colText
+	columnNameToIndexArray: (fields)-> @report_data.getColumnsIndices fields
 	
-	getData: -> @model.get 'data'
-	setData:(data)-> @model.set {data: data}
+	getData: -> @report_data.getData()
+	setData:(data)-> @report_data.setData data
 	
 	hasNestedDataValues: -> no
-	nestDataValues: ->
-		data = @getData()
-		nested = []
-		for row in data
-			temp = []
-			temp.push row[val] for val of row
-			nested.push {values: temp}
-		nested
-	
-	dateToTime: (dt)->
-		dt = dt.toString().split "-"
-		month = parseInt(dt[1]) - 1;
-		(new Date(dt[0], month, dt[2])).getTime()
 
-	getReport: -> @model.get 'report'
-	getReportConfig: -> 
-		report = @getReport()
-		return {} unless report
-		report.config
+	dateToTime: (dt)-> ChaiIo.Util.dateToTime dt
 
-	getReportConfigField: (field)-> @getReportConfig()[field]
-
-	sum: (arr)-> _.reduce arr, ((memo, num)=> return memo + parseInt(num)), 0
-	avg: (arr)-> Math.round(@sum(arr) / arr.length)

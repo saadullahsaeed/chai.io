@@ -1,4 +1,8 @@
 class ChaiIo.Views.Base extends Backbone.View
+	constructor: (options)->
+		@parentView = null
+		super options
+
 	getSearchFields: -> []	
 	
 	filterList: (searchTerm, data) ->
@@ -30,3 +34,6 @@ class ChaiIo.Views.Base extends Backbone.View
 	confirm: (msg)->
 		alertify.set { buttonFocus: "cancel" }
 		alertify.confirm msg
+
+	hasParentView: -> @parentView is not nil
+	setThisAsParentView: (view)-> view.parentView = @

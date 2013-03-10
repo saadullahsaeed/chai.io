@@ -23,7 +23,7 @@ class ChaiIo.Views.ReportsPie_chart extends ChaiIo.Views.ReportsIndex
 		data = @getData()
 		prepared = []
 		for row in data
-                        prepared.push {key: row.values[0], y: row.values[1]} 
+			prepared.push {key: row.values[0], y: row.values[1]} 
 		prepared
 		
 		

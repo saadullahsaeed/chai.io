@@ -2,18 +2,25 @@
 
 	<% content_for :js_init_code do %>
 	
-		var model = new ChaiIo.Models.Report().set({
+		var report_model = new ChaiIo.Models.Report().set({
 			report: <%= @report.to_json.html_safe %>,
 			report_type: '<%= @report.report_type %>',
-			columns: <%= @columns.html_safe %>,
-			data: <%= @data.html_safe %>,
 			qparams: <%= @query_params.to_json.html_safe %>,
 			filters: <%= @filters.to_json.html_safe %>,
-			embedded: <%= @embed %>});
-						
-		window.App = new ChaiIo.Views.ReportMain({ model: model, el: $('#main_container') });
+			embedded: <%= @embed %>
+		});
+
+		var report_data = new ChaiIo.Models.ReportData().set({
+			columns: <%= @columns.html_safe %>,
+			data: <%= @data.html_safe %>});
+
+		window.App = new ChaiIo.Views.ReportMain({ model: report_model, el: $('#main_container') });
 		
-		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({ model: model, el: $('#content') });
+		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({ 
+			model: report_model, 
+			el: $('#content') 
+		}).setReportData(report_data);
+
 		window.App.setReportTypeView(reportTypeView);
 		window.App.render();
 		
@@ -28,7 +35,6 @@
 	<div id="dv_filters">
 	</div>
 	<%= render :partial => "report_filters" %>
-	
 	
 	<% unless @public_report %>
 		<div id="sharing_container" class="pull-right"></div>
@@ -58,6 +64,7 @@
 		{{/report}}
 	</script>
 
+
 	<!-- Modal -->
 	<a href="#sharingModal" style="display: none;" id="aSharingModal" role="button" class="btn" data-toggle="modal"></a>
 	<div id="sharingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
@@ -77,4 +84,5 @@
 			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 		</div>
 	</div>
+
 <% end %>

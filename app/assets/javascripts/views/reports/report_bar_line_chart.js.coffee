@@ -53,5 +53,4 @@ class ChaiIo.Views.ReportsBar_line_chart extends ChaiIo.Views.ReportsIndex
 		[preparedBarData, preparedLineData]
 	
 	getTemplateName: -> "report_line_chart"
-	totalColumns: -> @getColumns().length
 	

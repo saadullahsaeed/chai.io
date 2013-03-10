@@ -16,8 +16,8 @@ class ChaiIo.Views.ReportsBar_chart extends ChaiIo.Views.ReportsIndex
 		data = @getData()
 		colX = @getColX()
 		
-		if @totalColumns() > 2
-			colsY = @getColumns()
+		if @report_data.totalColumns() > 2
+			colsY = @report_data.getColumns()
 			colsY.shift()
 		else
 			colsY = [@getColY()]
@@ -35,8 +35,7 @@ class ChaiIo.Views.ReportsBar_chart extends ChaiIo.Views.ReportsIndex
 	
 	getTemplateName: -> "report_bar_chart"
 	
-	getColX: -> @getColumns()[0]
-	getColY: -> @getColumns()[1]
-	
-	totalColumns: -> @getColumns().length
+	getColX: -> @report_data.getColumns()[0]
+	getColY: -> @report_data.getColumns()[1]
+
 	convertDateToTime: -> no
