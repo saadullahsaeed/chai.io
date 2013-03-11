@@ -5,7 +5,7 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 		mapped = []
 		for column_name in columns_list
 			index = @getColumnIndex column_name
-			mapped.push index if index
+			mapped.push(index) if index > -1
 		mapped
 
 	getColumnValues: (name)->
@@ -23,6 +23,7 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 	setData: (data)-> @set {data: data}
 
 	setSummaryRow: (summary_row)-> @set {has_summary: yes, summary: summary_row}
+	getSummaryRow: -> @get 'summary_row'
 
 	sortModel: (colIndex, order = "asc")->
 		return if colIndex is no
@@ -35,6 +36,7 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 				return yes if val.toLowerCase().indexOf(searchTerm.toLowerCase(0)) >= 0
 		filtered
 
+	setDataAsNestedValues: -> @setData @nestDataValues()
 	nestDataValues: ->
 		data = @getData()
 		nested = []
@@ -44,5 +46,5 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 			nested.push {values: temp}
 		nested
 
-	getFirstColumn: -> @getColumns().shift()
-	getFirstRow: -> @getData().shift()
+	getFirstColumn: -> @getColumns()[0]
+	getFirstRow: -> @getData()[0]

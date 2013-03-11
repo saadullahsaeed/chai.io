@@ -3,8 +3,59 @@
 #= require reports
 
 describe "Report Data Model", ->
-  loadFixtures 'example_fixture' # located at 'spec/javascripts/fixtures/example_fixture.html.haml'
-  it "it returns the correct report type", ->
-    r = new ChaiIo.Models.Report()
-    r.set {report_type: 'table'}
-    expect(r.getReportType()).toEqual('table')
+  
+  report_data = null	
+  fixture = getJSONFixture('report_data')
+
+  beforeEach ()=>
+  	report_data = new ChaiIo.Models.ReportData()
+  	report_data.set fixture
+  	
+  it "returns total number of columns via totalColumns", ->
+  	expect(report_data.totalColumns()).toEqual fixture.columns.length
+
+  it "returns column index given column name via getColumnIndex", ->
+  	expect(report_data.getColumnIndex('id')).toEqual 0
+  	expect(report_data.getColumnIndex('user_id')).toEqual 1
+  	expect(report_data.getColumnIndex('report_id')).toEqual 2
+  	expect(report_data.getColumnIndex('project_id')).toEqual 3
+
+  it "trims whitespace before finding column index", ->
+  	expect(report_data.getColumnIndex('user_id   ')).toEqual 1
+
+  it "returns columns as array via getColumns", ->
+  	expect(report_data.getColumns()).toEqual fixture.columns
+
+  it "returns array of indices for given column list via getColumnsIndices", ->
+  	expect(report_data.getColumnsIndices ['id','project_id']).toEqual [0, 3]
+  	expect(report_data.getColumnsIndices ['user_id','id ']).toEqual [1, 0]
+
+  it "return result data via getData", ->
+  	expect(report_data.getData()).toEqual fixture.data
+
+  it "allows setting of data via setData", ->
+  	new_data = [{new_data: 1}]
+  	report_data.setData new_data
+  	expect(report_data.getData()).toEqual new_data
+
+  it "can find the first column from the column set", ->
+  	expect(report_data.getFirstColumn()).toEqual 'id'
+
+  it "can find the first row from the data set", ->
+  	expect(report_data.getFirstRow()).toEqual fixture.data[0]
+
+  it "can sum number column values via getColumnSum for nested data values", ->
+  	report_data.set {data: report_data.nestDataValues()}
+  	expect(report_data.getColumnSum 'user_id').toEqual 3
+  	
+  it "can filter result data for a given search term across all columns", ->
+  	report_data.set {data: report_data.nestDataValues()}
+  	expect(report_data.filterData('2')).toEqual [{values:report_data.getData()[1].values}]
+  	#expect(report_data.filterData('third report')).toEqual [fixture.data[2]]
+  	#fixture being cached
+  	
+  it "can sort the data in asc order", ->
+  	report_data.setDataAsNestedValues()
+  	
+
+
