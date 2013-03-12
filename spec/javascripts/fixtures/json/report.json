@@ -1,0 +1,15 @@
+{
+	"id": 1,
+	"report_type": "table",
+	"report": {
+		"id": 1,
+		"title": "My Report Fixture",
+		"config": {
+			"sum": "count",
+			"average": ""
+		},
+		"sharing_enabled": 0
+	},
+	"embedded": 0,
+	"filters": []
+}

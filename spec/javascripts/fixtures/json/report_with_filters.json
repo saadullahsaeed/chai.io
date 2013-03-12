@@ -1,0 +1,12 @@
+{
+	"id": 1,
+	"report_type": "table",
+	"report": {
+		"config": {
+			"sum": ["count"],
+			"average": []
+		}
+	},
+	"embedded": 0,
+	"filters": []
+}
