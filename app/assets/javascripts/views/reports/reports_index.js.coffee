@@ -14,7 +14,7 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 		@preRender()
 		@reRenderTpl()
 		@postRender()
-		yes
+		@
 	
 	renderTpl: (tplName, container, data)-> 
 		return no if tplName is ''

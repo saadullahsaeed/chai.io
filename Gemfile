@@ -20,7 +20,7 @@ end
 
 gem 'jasmine', :git => "git://github.com/pivotal/jasmine-gem.git"
 gem "jasminerice", :git => 'https://github.com/bradphelan/jasminerice.git'
-gem 'headless', '0.1.0'
+gem 'sinon-rails'
 
 group :test do
   gem "faker", "~> 1.0.1"

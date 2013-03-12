@@ -9,3 +9,6 @@
 # spec/javascripts/*_spec.js.erb
 #
 #=require_tree ./
+#=require sinon
+#=require test/jasmine-sinon
+
