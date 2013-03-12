@@ -74,7 +74,6 @@ describe "Reports Index View", ->
       it "nests data if nest data values is enabled", ->
         report_view.render()
         nested_data = report_data.nestDataValues()
-        console.log nested_data
         #expect(report_view.getData()).toEqual nested_data
 
 

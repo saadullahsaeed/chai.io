@@ -11,4 +11,6 @@
 #=require_tree ./
 #=require sinon
 #=require test/jasmine-sinon
+#=require test/jasmine-jquery
+#=require test/chai-matchers
 

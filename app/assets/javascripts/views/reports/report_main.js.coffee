@@ -5,8 +5,9 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 			'click #btn-enable-sharing': 'enableSharing'
 			'click #btn-disable-sharing': 'disableSharing'
 		super options
+		@filter_view = new ChaiIo.Views.ReportFiltersView {el: @filtersContainer(), model: @model}
 		
-	setReportTypeView: (view)-> @setThisAsParentView(@reportTypeView = view)
+	setReportTypeView: (view)-> @reportTypeView = @setThisAsParentView(view)
 	
 	isEmbedded: -> @model.isReportEmbedded()
 	
@@ -16,21 +17,20 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@renderSharingOptions() unless @isEmbedded()
 		@delegateEvents()
 	
-	filtersContainer: -> $('#dv_filters')
-	initFilterView: ->
-		@filter_view = new ChaiIo.Views.ReportFiltersView {el: @filtersContainer(), model: @model}
-		@filter_view.render()
+	filtersContainer: -> @$('#dv_filters')
+	initFilterView: -> @filter_view.render()
 	
 	getReportURL: ->"/reports/#{@model.getReportId()}"
 		
+	setLoadingState: (el)-> el.button 'loading'
 	disableSharing: (event)->
-		@$('#btn-disable-sharing').button 'loading'
+		@setLoadingState @$('#btn-disable-sharing')
 		@sendRequest "#{@getReportURL()}/unshare", {}, (response)=>
 			@model.updateReport 'sharing_enabled', no
 			@renderSharingOptions()
 			
 	enableSharing: (event)-> 
-		@$('#btn-enable-sharing').button 'loading'
+		@setLoadingState @$('#btn-enable-sharing')
 		@sendRequest "#{@getReportURL()}/share", {}, (response)=>
 			if response
 				@showPublicURL response.public_url 
