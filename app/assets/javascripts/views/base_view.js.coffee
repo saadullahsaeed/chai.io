@@ -35,5 +35,7 @@ class ChaiIo.Views.Base extends Backbone.View
 		alertify.set { buttonFocus: "cancel" }
 		alertify.confirm msg
 
-	hasParentView: -> @parentView is not nil
-	setThisAsParentView: (view)-> view.parentView = @
+	hasParentView: -> @parentView isnt null
+	setThisAsParentView: (view)-> 
+		view.parentView = @
+		view
