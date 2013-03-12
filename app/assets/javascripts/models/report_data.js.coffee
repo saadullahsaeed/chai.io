@@ -23,7 +23,7 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 	setData: (data)-> @set {data: data}
 
 	setSummaryRow: (summary_row)-> @set {has_summary: yes, summary: summary_row}
-	getSummaryRow: -> @get 'summary_row'
+	getSummaryRow: -> @get 'summary'
 
 	sortModel: (colIndex, order = "asc")->
 		return if colIndex is no

@@ -50,12 +50,20 @@ describe "Report Data Model", ->
   	
   it "can filter result data for a given search term across all columns", ->
   	report_data.set {data: report_data.nestDataValues()}
-  	expect(report_data.filterData('2')).toEqual [{values:report_data.getData()[1].values}]
-  	#expect(report_data.filterData('third report')).toEqual [fixture.data[2]]
-  	#fixture being cached
+  	expect(report_data.filterData(fixture.data[2].title)).toEqual [report_data.getData()[2]]
+  	expect(report_data.filterData(fixture.data[1].title)).toEqual [report_data.getData()[1]]
+  	expect(report_data.filterData(fixture.data[0].title)).toEqual [report_data.getData()[0]]
   	
   it "can sort the data in asc order", ->
   	report_data.setDataAsNestedValues()
-  	
+  	column_index = report_data.getColumnIndex 'id'
+  	sorted = report_data.sortModel column_index
+  	expect(sorted[0].values[column_index]).toEqual fixture.data[0].id
+
+  it "can set a summary row and verify has_summary is set", ->
+  	summary_row = [{total: 100}]
+  	report_data.setSummaryRow summary_row
+  	expect(report_data.getSummaryRow()).toEqual summary_row
+  	expect(report_data.get 'has_summary').toBe yes
 
 
