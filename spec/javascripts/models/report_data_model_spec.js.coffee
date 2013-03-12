@@ -44,26 +44,30 @@ describe "Report Data Model", ->
   it "can find the first row from the data set", ->
   	expect(report_data.getFirstRow()).toEqual fixture.data[0]
 
-  it "can sum number column values via getColumnSum for nested data values", ->
-  	report_data.set {data: report_data.nestDataValues()}
-  	expect(report_data.getColumnSum 'user_id').toEqual 3
-  	
-  it "can filter result data for a given search term across all columns", ->
-  	report_data.set {data: report_data.nestDataValues()}
-  	expect(report_data.filterData(fixture.data[2].title)).toEqual [report_data.getData()[2]]
-  	expect(report_data.filterData(fixture.data[1].title)).toEqual [report_data.getData()[1]]
-  	expect(report_data.filterData(fixture.data[0].title)).toEqual [report_data.getData()[0]]
-  	
-  it "can sort the data in asc order", ->
-  	report_data.setDataAsNestedValues()
-  	column_index = report_data.getColumnIndex 'id'
-  	sorted = report_data.sortModel column_index
-  	expect(sorted[0].values[column_index]).toEqual fixture.data[0].id
 
   it "can set a summary row and verify has_summary is set", ->
-  	summary_row = [{total: 100}]
-  	report_data.setSummaryRow summary_row
-  	expect(report_data.getSummaryRow()).toEqual summary_row
-  	expect(report_data.get 'has_summary').toBe yes
+    summary_row = [{total: 100}]
+    report_data.setSummaryRow summary_row
+    expect(report_data.getSummaryRow()).toEqual summary_row
+    expect(report_data.get 'has_summary').toBe yes
+
+
+  describe "with nested data valutes", ->
+
+    beforeEach ()=>
+      report_data.setDataAsNestedValues()
+
+    it "can sum number column values via getColumnSum", ->
+    	expect(report_data.getColumnSum 'user_id').toEqual 3
+    	
+    it "can filter result data for a given search term across all columns", ->
+    	expect(report_data.filterData(fixture.data[2].title)).toEqual [report_data.getData()[2]]
+    	expect(report_data.filterData(fixture.data[1].title)).toEqual [report_data.getData()[1]]
+    	expect(report_data.filterData(fixture.data[0].title)).toEqual [report_data.getData()[0]]
+    	
+    it "can sort the data in asc order", ->
+    	column_index = report_data.getColumnIndex 'id'
+    	sorted = report_data.sortModel column_index
+    	expect(sorted[0].values[column_index]).toEqual fixture.data[0].id
 
 

@@ -10,11 +10,14 @@ describe "Base View", ->
     base_model = new ChaiIo.Models.Base()
     base_view = new ChaiIo.Views.Base({model: base_model})
 
-  it "is initialized with parentView as null", ->
-    expect(base_view.parentView).toBe null
+  describe "when initialized", ->
 
-  it "is initialized with search fields as an empty array", ->
-    expect(base_view.getSearchFields()).toEqual []
+    it "should have parentView as null", ->
+      expect(base_view.parentView).toBe null
+
+    it "should have search fields as an empty array", ->
+      expect(base_view.getSearchFields()).toEqual []
+      
 
   it "can filter a list for a given term on set search fields", ->
     base_view.getSearchFields = ()=> ['test_field']
