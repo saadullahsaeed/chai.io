@@ -36,6 +36,7 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 				@showPublicURL response.public_url 
 				@model.updateReport 'sharing_enabled', yes
 				@renderSharingOptions()
+	
 		
 	showPublicURL: (url)->
 		@$('#txt_public_url').val url

@@ -7,8 +7,10 @@ describe "Report Main View", ->
   main_view = null
   report_type_viw = null
   report_model = null
+
   report_fixture = getJSONFixture('report')
   report_with_filters_fixture = getJSONFixture('report_with_filters')
+  server = null
 
   loadFixtures 'sharing_button_fixture'
 
@@ -53,13 +55,22 @@ describe "Report Main View", ->
     beforeEach ()=>
       main_view.setLoadingState = sinon.spy()
       main_view.sendRequest = sinon.spy()
+      server = sinon.fakeServer.create()
 
     afterEach ()=>
       expect(main_view.sendRequest).toHaveBeenCalledOnce()
+      server.restore()
 
     it "enable sharing sets the loading state and sends request to enable sharing", ->
+      sinon.stub($, "ajax").yieldsTo("success", yes)
+      main_view.showPublicURL = sinon.spy()
       main_view.enableSharing()
+
       expect(main_view.setLoadingState).toHaveBeenCalledWith main_view.$('#btn-enable-sharing')
+      #put this in a helper
+      #server.requests[0].respond 200, { "Content-Type": "application/json" }, JSON.stringify({ success: true})
+      #expect(main_view.showPublicURL).toHaveBeenCalledOnce()
+
       
     it "disable sharing sets the loading state and sends request to disable sharing", ->
       main_view.disableSharing()
