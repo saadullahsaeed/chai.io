@@ -29,7 +29,7 @@
 
 	  <label class="control-label">Report Type</label>
 	  <div class="form-inline">	
-	  	  <%= f.radio_button(:report_type, "table") %>
+	  	  <%= f.radio_button(:report_type, "table", :checked => true) %>
 		  <%= label_tag(:table, "Table", :class=>'radio_label') %>
 
 		  <%= f.radio_button(:report_type, "single_value") %>
@@ -78,10 +78,14 @@
 					<option value="number" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='number'%>>Number</option>
 				</select>
 
-				<label class="control-label">Placeholder</label>
 				<input type="text" size="30" 
 					name="report[filters][0][placeholder]" id="report_filters_placeholder1" 
-					 value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>">
+					value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>"
+					placeholder="Placeholder">
+
+				<input type="text" size="30" name="report[filters][1][default]" id="report_filters_default1"
+					value="<%=@report.filters["0"]['default'] if @report.filters && @report.filters["0"]%>"
+					placeholder="Default Value">
 			</div>
 			
 			<div class="form-inline">
@@ -92,9 +96,13 @@
 					<option value="number" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='number'%>>Number</option>
 				</select>
 
-				<label class="control-label">Placeholder</label>
 				<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder2"
-					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>">
+					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>"
+					placeholder="Placeholder">
+
+				<input type="text" size="30" name="report[filters][1][default]" id="report_filters_default2"
+					value="<%=@report.filters["1"]['default'] if @report.filters && @report.filters["1"]%>"
+					placeholder="Default Value">
 			</div>
 	  <% end %>
 

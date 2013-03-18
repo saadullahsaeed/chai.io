@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require_tree ./parser
 //= require_tree ./alertify
+//= require_tree ./toolbar-js
 
 

@@ -14,3 +14,4 @@ if defined?(Jasminerice) == 'constant'
     #config.fixture_path = 'spec/javascripts/fixtures'
   end
 end
+

@@ -97,7 +97,7 @@ describe ReportsController do
         
         it "redirects to the home page" do
           post :create, report: attributes_for(:report)
-          response.should redirect_to '/reports'
+          response.should redirect_to '/projects'
         end
         
       end
@@ -123,7 +123,7 @@ describe ReportsController do
         
         it "redirects to the reports listing" do
           put :update, id: @report, report: attributes_for(:report)
-          response.should redirect_to '/reports'
+          response.should redirect_to '/projects'
         end
       end
     end

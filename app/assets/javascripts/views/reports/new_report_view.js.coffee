@@ -3,6 +3,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@events =
 			'submit .form': 'copyQueryValue'
 			'click #commit': 'submitForm'
+			'change input[type=radio]': 'reportTypeChanged'
 		super options
 	
 	render: -> @initQueryEditor()
@@ -12,6 +13,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@editor.setTheme "ace/theme/textmate"
 		@editor.getSession().setMode "ace/mode/sql"
 		@editor.setValue @getQueryTAValue()
+		editor.getSession().on('change', (e)=> )
 		unless @getEditorValue() is ''
 			@editor.selection.setSelectionRange {start:0, end:0}
 			
@@ -48,8 +50,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		return yes if @getConfigField('sum').length is 0 and @getConfigField('average').length is 0
 		sum_fields = @getConfigField('sum').split ','
 		avg_fields = @getConfigField('average').split ','
-		common = _.intersection(sum_fields, avg_fields)
-		if common.length > 0
+		if _.intersection(sum_fields, avg_fields).length > 0
 			@alert "Following field(s) can either belong to sum or average but not both: <br/> #{common}"
 			@notifyError "Invalid Aggregation fields"
 			return no
@@ -62,4 +63,17 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		yes
 	
 	queryStructure: ->
-		
+
+	hideAggregationConfig: -> $('#aggregation_config').hide()
+	showAggregationConfig: -> $('#aggregation_config').show()
+
+	reportTypeChanged: (event)->
+
+	hasPlaceholderValues: -> 
+		for ph_val in $('input[id*=report_filters_placeholder]')
+			return yes if  $(ph_val).val() and $(ph_val).val().trim() isnt ''
+		no
+
+	preFillPlaceholders: (event)->
+		return if @hasPlaceholderValues()
+
