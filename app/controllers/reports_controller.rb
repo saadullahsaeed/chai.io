@@ -12,9 +12,6 @@ class ReportsController < ApplicationController
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
     rescue Exception => e
-      #logger.info e
-      #puts e.backtrace
-      #puts e
       return render_404
     end
     
@@ -181,17 +178,19 @@ class ReportsController < ApplicationController
      @filters = []
      filters.each do |i, fi|
        ph = fi['placeholder'].to_sym
+       val = params.has_key?(ph) ? params[ph] : fi['default_value'] 
        if ph
-         filter_obj = get_filter_object fi['type'], fi['placeholder'], params[ph]
-         filter_obj.value = params[ph]
+         filter_obj = get_filter_object fi['type'], fi['placeholder'], val
+         filter_obj.value = val
          if filter_obj.validate
-           query_params[ph] = filter_obj.format params[ph]
+           query_params[ph] = filter_obj.format val
          else
            query_params[ph] = filter_obj.get_default_value
          end
          
          filterX = fi
          filterX['control_type'] = filter_obj.control_type
+         #filterX['default_value'] = filter_obj.default_value if filter_obj.respond_to?('default_value')
          @filters << filterX
        end
      end

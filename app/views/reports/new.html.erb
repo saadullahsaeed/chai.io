@@ -83,8 +83,8 @@
 					value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>"
 					placeholder="Placeholder">
 
-				<input type="text" size="30" name="report[filters][1][default]" id="report_filters_default1"
-					value="<%=@report.filters["0"]['default'] if @report.filters && @report.filters["0"]%>"
+				<input type="text" size="30" name="report[filters][0][default_value]" id="report_filters_default1"
+					value="<%=@report.filters["0"]['default_value'] if @report.filters && @report.filters["0"]%>"
 					placeholder="Default Value">
 			</div>
 			
@@ -100,8 +100,8 @@
 					value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>"
 					placeholder="Placeholder">
 
-				<input type="text" size="30" name="report[filters][1][default]" id="report_filters_default2"
-					value="<%=@report.filters["1"]['default'] if @report.filters && @report.filters["1"]%>"
+				<input type="text" size="30" name="report[filters][1][default_value]" id="report_filters_default2"
+					value="<%=@report.filters["1"]['default_value'] if @report.filters && @report.filters["1"]%>"
 					placeholder="Default Value">
 			</div>
 	  <% end %>
