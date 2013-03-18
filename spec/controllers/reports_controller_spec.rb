@@ -37,6 +37,7 @@ describe ReportsController do
       
       before :each do
         @report = create(:report, user: @user, datasource: @datasource)
+        @report_with_filters = create(:report, user: @user, datasource: @datasource, filters: {0=>{'type' => 'date', 'placeholder' => 'start'}, 1=>{'type' => 'date', 'placeholder' => 'end'}})
       end
       
       it "assigns the requested report to @report" do
@@ -60,9 +61,8 @@ describe ReportsController do
       end
       
       it "assigns @query_params with filter values" do
-        report_with_filters = create(:report_with_filters)
-        get :show, id: report_with_filters
-        #expect(assigns(:query_params).length).to eq 2
+        get :show, id: @report_with_filters
+        expect(assigns(:query_params).length).to eq 2
       end
     end
     

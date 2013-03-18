@@ -12,7 +12,9 @@ class ReportsController < ApplicationController
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
     rescue Exception => e
-      logger.info e
+      #logger.info e
+      #puts e.backtrace
+      #puts e
       return render_404
     end
     

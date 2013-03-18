@@ -10,9 +10,10 @@ FactoryGirl.define do
     report_type "table"
     config({'query' => 'select id, title from reports'})
     datasource_id 1
+    filters []
     
     factory :report_with_filters do
-      filters([{'type' => 'date', 'placeholder' => 'start'}, {'type' => 'date', 'placeholder' => 'end'}])
+      filters [{'type' => 'date', 'placeholder' => 'start'}, {'type' => 'date', 'placeholder' => 'end'}]
     end
     
   end
