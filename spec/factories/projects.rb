@@ -1,8 +1,8 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+  
   factory :project do
-    name "MyProject"
+    sequence(:name) {|n| "MyProject#{n}"} 
     description "Description of the project"
     user_id 1
     
