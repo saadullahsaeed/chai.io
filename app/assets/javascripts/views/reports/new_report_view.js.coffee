@@ -50,7 +50,8 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		return yes if @getConfigField('sum').length is 0 and @getConfigField('average').length is 0
 		sum_fields = @getConfigField('sum').split ','
 		avg_fields = @getConfigField('average').split ','
-		if _.intersection(sum_fields, avg_fields).length > 0
+		common = _.intersection sum_fields, avg_fields
+		if common.length > 0
 			@alert "Following field(s) can either belong to sum or average but not both: <br/> #{common}"
 			@notifyError "Invalid Aggregation fields"
 			return no

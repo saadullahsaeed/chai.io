@@ -103,6 +103,23 @@ describe "New Report View", ->
 			expect(new_report_view.checkPlaceholders()).not.toBeFalsy()
 
 
+		it "verifies if placeholders are in the query", ->
+			$('#query').val "select * from some_table where field = :fieldx"
+			$('#report_filters_placeholder1').val "fieldx"
+			expect(new_report_view.isPlaceholderInQuery 'fieldx').toBeTruthy()
+			expect(new_report_view.isPlaceholderInQuery 'fieldx_does_not_Exist').not.toBeTruthy()
+
+
+		it "verifies if the same field is in sum and avg both", ->
+			$('#report_config_sum').val 'fieldx'
+			expect(new_report_view.checkAggFields()).toBeTruthy()
+			expect(new_report_view.alert).not.toHaveBeenCalledOnce()
+
+			$('#report_config_average').val 'fieldx'
+			expect(new_report_view.checkAggFields()).toBeFalsy()
+			expect(new_report_view.alert).toHaveBeenCalledOnce()
+
+
 
 
 
