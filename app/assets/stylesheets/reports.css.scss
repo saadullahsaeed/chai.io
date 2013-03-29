@@ -29,9 +29,10 @@ html {
 }
 
 body {
-	-webkit-transform: rotate(180deg);
-	/*-webkit-animation: fall 5s infinite;*/
-  font-family: 'Comic Sans MS', cursive !important;
+	/*-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-webkit-animation: fall 5s infinite;
+  font-family: 'Comic Sans MS', cursive !important;*/
 }
 
 .control-label {
