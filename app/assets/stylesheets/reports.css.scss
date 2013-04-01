@@ -29,8 +29,9 @@ html {
 }
 
 body {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
+	/*-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);*/
+	-webkit-animation: rainbow 5s infinite;
   	font-family: 'Comic Sans MS', cursive !important;
 }
 
