@@ -6,17 +6,24 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 			'change input[type=radio]': 'reportTypeChanged'
 		super options
 	
-	render: -> @initQueryEditor()
+	render: -> 
+		@initQueryEditor()
+		@initAdvancedSettings()
+
+	initAdvancedSettings: ->
+		view = new ChaiIo.Views.ReportSettingsView({el: @el})
+		view.render()
 		
 	initQueryEditor: ->
 		@editor = ace.edit "editor"
 		@editor.setTheme "ace/theme/textmate"
 		@editor.getSession().setMode "ace/mode/sql"
 		@editor.setValue @getQueryTAValue()
-		editor.getSession().on('change', (e)=> )
+		@editor.getSession().on('change', (e)=> )
 		unless @getEditorValue() is ''
 			@editor.selection.setSelectionRange {start:0, end:0}
 			
+
 	getQueryTextArea: -> $('#query')
 	getQueryTAValue: -> @getQueryTextArea().val()
 	getEditorValue: -> @editor.getValue()
@@ -45,6 +52,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 				@notifyError "Invalid Placeholder"
 				return no
 		yes
+
 
 	checkAggFields: ->
 		return yes if @getConfigField('sum').length is 0 and @getConfigField('average').length is 0
@@ -75,6 +83,5 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 			return yes if  $(ph_val).val() and $(ph_val).val().trim() isnt ''
 		no
 
-	preFillPlaceholders: (event)->
-		return if @hasPlaceholderValues()
+	preFillPlaceholders: (event)-> return if @hasPlaceholderValues()
 

@@ -1,5 +1,5 @@
 <% content_for :js_init_code do %>
-	window.App = new ChaiIo.Views.NewReport({el: $('.container')});
+	window.App = new ChaiIo.Views.NewReport({el: $('#main_container')});
 	window.App.render();
 <% end %>
 
@@ -130,3 +130,55 @@
 	</div>
 
 <% end %>
+
+
+<!-- Templates -->
+<script type="text/html" id="tpl_settings">
+
+<!-- Button to trigger modal -->
+<a href="#myModal" role="button" class="btn" data-toggle="modal">Advanced Settings</a>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Advanced Settings</h3>
+  </div>
+
+
+  <div class="modal-body">
+
+    <ul class="nav nav-tabs" id="tabSettings">
+	  <li class="active"><a href="#filters">Filters</a></li>
+	  <li><a href="#aggregation">Aggregation</a></li>
+	  <li><a href="#link">Link Report</a></li>
+	</ul>
+	 
+	<div class="tab-content">
+	  <div class="tab-pane active" id="filters">
+	  	Filters content here ...
+	  </div>
+	  
+	  <div class="tab-pane" id="aggregation">
+	  	Aggregation content here
+	  </div>
+
+	  <div class="tab-pane" id="link">
+	  	Link content here ...
+	  </div>
+	</div>
+
+  </div>
+
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+
+</div>
+
+</script>
+
+
+
