@@ -10,7 +10,7 @@ class Report < ActiveRecord::Base
   serialize :filters
   serialize :sharing_config
   
-  validates_presence_of :title, :datasource_id, :report_type, :user_id, :config
+  validates_presence_of :title, :datasource_id, :report_type, :user_id, :config, :project_id
 
   after_initialize :default_values
   before_save :default_values

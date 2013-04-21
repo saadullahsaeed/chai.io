@@ -190,7 +190,6 @@ class ReportsController < ApplicationController
          
          filterX = fi
          filterX['control_type'] = filter_obj.control_type
-         #filterX['default_value'] = filter_obj.default_value if filter_obj.respond_to?('default_value')
          @filters << filterX
        end
      end

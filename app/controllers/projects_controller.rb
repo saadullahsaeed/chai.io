@@ -6,10 +6,9 @@ class ProjectsController < ApplicationController
 	def index
     set_active_menu_item "projects"
 		@projects = current_user.projects.all
-    @projects.prepend get_default_project
 	end
 	
-
+  
 	def new 
 		@project = Project.new
 	end
@@ -54,15 +53,6 @@ class ProjectsController < ApplicationController
 
 
   private
-
-    def get_default_project
-      default_project = Project.new
-      #default_project.id = 0
-      default_project.name = 'Default'
-      default_project.reports = current_user.reports.where(:project_id => 0) 
-      default_project
-    end
-
 
    	def find_user_project project_id
    		current_user.projects.find project_id
