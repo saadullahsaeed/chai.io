@@ -31,7 +31,7 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 
 	reportDataToJSON: -> 
 		report_data = super
-		return data unless @model.isReportLinked()
+		return report_data unless @model.isReportLinked()
 		col_index = @getColumnIndex @model.getLinkedColumn()
 		for i of report_data.data
 			column_value = report_data.data[i].values[col_index]
