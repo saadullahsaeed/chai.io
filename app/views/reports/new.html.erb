@@ -1,5 +1,5 @@
 <% content_for :js_init_code do %>
-	window.App = new ChaiIo.Views.NewReport({el: $('.container')});
+	window.App = new ChaiIo.Views.NewReport({el: $('#main_container')});
 	window.App.render();
 <% end %>
 
@@ -56,69 +56,133 @@
 			
 		  	  <div id="editor"></div>
 			  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
-
-			  <div id="aggregation_config">
-		  	  	<label class="control-label filters">Aggregation</label>
-		  	  	<small>Only applies to Table report types. Enter list of fields, comma separated in each supported aggregation </small>
-
-		  	  	<label>Sum</label>
-				<%= c.text_field :sum, :value => @report.config['sum'] %>
-
-				<label>Average</label>
-				<%= c.text_field :average, :value => @report.config['average'] %>
-		  	  </div>
 		  <% end %>
 		
-		  <label class="control-label filters">Filters</label>
-		  <small>You cannot use a filter with the placeholder 'id'</small>
-		  <%= f.fields_for :filters do |fi| %>
-				<div class="form-inline">
-					<label class="control-label">Type</label>
-					<select class="input-medium" name="report[filters][0][type]">
-						<option value="date" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='date'%> >Date</option>
-						<option value="text" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='text'%>>Text</option>
-						<option value="number" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='number'%>>Number</option>
-					</select>
-
-					<input type="text" size="30" 
-						name="report[filters][0][placeholder]" id="report_filters_placeholder1" 
-						value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>"
-						placeholder="Placeholder">
-
-					<input type="text" size="30" name="report[filters][0][default_value]" id="report_filters_default1"
-						value="<%=@report.filters["0"]['default_value'] if @report.filters && @report.filters["0"]%>"
-						placeholder="Default Value">
-				</div>
-				
-				<div class="form-inline">
-					<label class="control-label">Type</label>
-					<select class="input-medium" name="report[filters][1][type]">
-						<option value="date" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='date'%> >Date</option>
-						<option value="text" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='text'%>>Text</option>
-						<option value="number" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='number'%>>Number</option>
-					</select>
-
-					<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder2"
-						value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>"
-						placeholder="Placeholder">
-
-					<input type="text" size="30" name="report[filters][1][default_value]" id="report_filters_default2"
-						value="<%=@report.filters["1"]['default_value'] if @report.filters && @report.filters["1"]%>"
-						placeholder="Default Value">
-				</div>
-		  <% end %>
-
 		
 		  <% if @caching_enabled %>
 			  <label class="control-label">Cache Time (Seconds)</label>	
 			  <%= f.text_field :cache_time, :value => '900' %>
 		  <% end %>
+
+		  <!-- Button to trigger modal -->
+		  <div>
+		  	<a href="#myModal" style="margin-top: 232px !important;" role="button" class="btn" data-toggle="modal">Advanced Settings</a>
+		  </div>
 		
 		
+
 		  <div class="form-actions">
 			<button class="btn btn-primary" name="commit" id="commit" type="button">Save</button>
 			<button type="button" class="btn">Reset</button>
 		  </div>
+
+
+	<!-- Templates -->
+	<script type="text/html" id="tpl_settings">
+
+		<div id="myModal" style="width: 700px;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Advanced Settings</h3>
+		  </div>
+
+
+		  <div class="modal-body">
+
+
+		    <ul class="nav nav-tabs" id="tabSettings">
+			  <li class="active"><a href="#filters">Filters</a></li>
+			  <li><a href="#aggregation">Aggregation</a></li>
+			  <li><a href="#link">Link Report</a></li>
+			</ul>
+
+			 
+			<div class="tab-content" style="align: center;">
+
+			  <div class="tab-pane active" id="filters">
+
+			  	<label class="control-label filters">Filters</label>
+				  <small>You cannot use a filter with the placeholder 'id'</small>
+				  <%= f.fields_for :filters do |fi| %>
+						<div class="form-inline">
+							<label class="control-label">Type</label>
+							<select class="input-medium" name="report[filters][0][type]">
+								<option value="date" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='date'%> >Date</option>
+								<option value="text" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='text'%>>Text</option>
+								<option value="number" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='number'%>>Number</option>
+							</select>
+
+							<input type="text" size="30" 
+								name="report[filters][0][placeholder]" id="report_filters_placeholder1" 
+								value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>"
+								placeholder="Placeholder">
+
+							<input type="text" size="30" name="report[filters][0][default_value]" id="report_filters_default1"
+								value="<%=@report.filters["0"]['default_value'] if @report.filters && @report.filters["0"]%>"
+								placeholder="Default Value">
+						</div>
+						
+						<div class="form-inline">
+							<label class="control-label">Type</label>
+							<select class="input-medium" name="report[filters][1][type]">
+								<option value="date" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='date'%> >Date</option>
+								<option value="text" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='text'%>>Text</option>
+								<option value="number" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='number'%>>Number</option>
+							</select>
+
+							<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder2"
+								value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>"
+								placeholder="Placeholder">
+
+							<input type="text" size="30" name="report[filters][1][default_value]" id="report_filters_default2"
+								value="<%=@report.filters["1"]['default_value'] if @report.filters && @report.filters["1"]%>"
+								placeholder="Default Value">
+						</div>
+				  <% end %>
+			 </div> <!-- /Filters -->
+			  
+
+			  <%= f.fields_for :config do |c| %>
+
+			  <div class="tab-pane" id="aggregation">
+			  	<div id="aggregation_config">
+			  	  	<label class="control-label filters">Aggregation</label>
+			  	  	<small>Only applies to Table report types. Enter list of fields, comma separated in each supported aggregation </small>
+
+			  	  	<label>Sum</label>
+					<%= c.text_field :sum, :value => @report.config['sum'] %>
+
+					<label>Average</label>
+					<%= c.text_field :average, :value => @report.config['average'] %>
+		  	  	</div>
+			  </div> <!-- /Aggregation -->
+
+
+			  <div class="tab-pane" id="link">
+			  	<label class="control-label">Column to link</label>
+			 	<%= c.text_field :link_column, :value => @report.config['link_column'] %>
+
+			 	<label class="control-label">Linked to Report</label>
+			 	<%= c.collection_select(:link_report, current_user.reports, :id, :title) %>
+			 
+			 	<label class="control-label">For Filter</label>
+				<%= c.text_field :link_filter, :value => @report.config['link_filter'] %>
+			  </div 
+
+			 <% end %> 
+
+		  </div>
+
+
+		  <div class="modal-footer">
+		    <button class="btn btn-primary" data-dismiss="modal">Done</button>
+		  </div>
+
+		</div>
+
+	</script>
+
 		
 		<% end %>
 	</div>
@@ -130,3 +194,4 @@
 	</div>
 
 <% end %>
+

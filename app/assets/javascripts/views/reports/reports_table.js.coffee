@@ -26,7 +26,20 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 		model_json.data = data
 		@renderTpl 'tpl_table_body', @$('#tbody'), model_json
 	
-	preRender: -> @setSummary @getData()
+	preRender: -> 
+		@setSummary @getData()
+
+	reportDataToJSON: -> 
+		report_data = super
+		return data unless @model.isReportLinked()
+		col_index = @getColumnIndex @model.getLinkedColumn()
+		for i of report_data.data
+			column_value = report_data.data[i].values[col_index]
+			report_data.data[i].values[col_index] = @linkColumn column_value
+		report_data
+
+	linkColumn: (value)-> "<a href='/reports/#{@model.getLinkedReport()}?#{@model.getLinkedFilter()}=#{encodeURIComponent value}' target='_blank'>#{value}</a>"	
+
 	setSummary: (data)-> @report_data.setSummaryRow(@getSummaryRow data) if @summaryEnabled() 
 
 	summaryEnabled: -> @getFieldsToSum() || @getFieldsToAverage()
