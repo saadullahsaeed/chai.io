@@ -7,7 +7,6 @@ class ChaiIo.Views.ReportSettingsView extends ChaiIo.Views.Base
 	render: -> 
 		$(@el).append ich.tpl_settings({})
 		@delegateEvents()
-	
 
 	switchTab: (e)->
 		e.preventDefault()

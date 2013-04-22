@@ -11,7 +11,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@initAdvancedSettings()
 
 	initAdvancedSettings: ->
-		view = new ChaiIo.Views.ReportSettingsView({el: @el})
+		view = new ChaiIo.Views.ReportSettingsView({el: $('form')})
 		view.render()
 		
 	initQueryEditor: ->

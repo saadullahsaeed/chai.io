@@ -28,12 +28,12 @@ class Report < ActiveRecord::Base
     self.save
   end
   
+
   #Disable sharing
   def disable_sharing
     self.sharing_enabled = false
     self.sharing_config = {}
     self.save
   end  
-
 
 end

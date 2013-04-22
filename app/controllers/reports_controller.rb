@@ -36,6 +36,8 @@ class ReportsController < ApplicationController
     @data = load_report_data @report
     @report[:user_id] = @report[:config][:query] = @report[:datasource_id] = nil
 
+    @report[:config][:link_report] = nil
+
     render :action => 'show', :layout => (@embed ? "embedded" : "public")
    end
    

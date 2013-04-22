@@ -20,3 +20,8 @@ class ChaiIo.Models.Report extends Backbone.Model
 	getFieldsToAverage: -> @getAggFields 'average'
 
 	isSharingEnabled: -> @getReport().sharing_enabled
+
+	isReportLinked: -> @getLinkedReport() && @getLinkedColumn() && @getLinkedFilter()
+	getLinkedReport: -> @getReportConfigField 'link_report'
+	getLinkedColumn: -> @getReportConfigField 'link_column'
+	getLinkedFilter: -> @getReportConfigField 'link_filter'
