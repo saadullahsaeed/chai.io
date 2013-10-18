@@ -1,15 +1,14 @@
 FactoryGirl.define do
   factory :report do
     
-    association :datasource
-    association :user
-    association :project
-    
+    user
+    datasource
+    project
+
     title "MyReport"
     description "This is a test report for Factory"
     report_type "table"
     config({'query' => 'select id, title from reports'})
-    datasource_id 1
     filters []
     
     factory :report_with_filters do

@@ -15,15 +15,16 @@ describe User do
   end
   
   it "is invalid with a duplicate email address" do
-    create(:user, email: "saad@peanutlabs.com")
-    expect(build(:user, email: "saad@peanutlabs.com")).to_not be_valid
+    n = Time.now.to_i
+    create(:user, email: "saad#{n}@peanutlabs.com")
+    expect(build(:user, email: "saad#{n}@peanutlabs.com")).to_not be_valid
   end
   
   it "authenticates valid password" do
-    create(:user, email: "saad@peanutlabs.com", password: "saad").authenticate("saad").should_not eq false
+    create(:user).authenticate("saad").should_not eq false
   end
   
   it "does not authenticate invalid password" do
-    create(:user, email: "saad@peanutlabs.com", password: "saad").authenticate("daas").should eq false
+    create(:user).authenticate("daas").should eq false
   end
 end

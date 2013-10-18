@@ -2,9 +2,9 @@
 FactoryGirl.define do
   
   factory :project do
+    user
     sequence(:name) {|n| "MyProject#{n}"} 
     description "Description of the project"
-    user_id 1
     
     factory :project_without_name do
       name nil
