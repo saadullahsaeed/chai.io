@@ -11,19 +11,19 @@ class DatasourcesController < ApplicationController
   #GET /datasources
   def index
     set_active_menu_item "datasources"
-    @datasources = current_user.datasources.all
+    @datasources = current_user.datasources
   end
   
 
   #POST /datasources/create
   def create
      @datasource = current_user.datasources.build datasource_params
-     logger.info @datasource[:config]
      if @datasource.save
        redirect_to datasources_path
      else
        render :action => 'new'
      end
+     puts @datasource.errors.full_messages
   end
 
   
@@ -49,6 +49,7 @@ class DatasourcesController < ApplicationController
     end
   end
   
+
   #DELETE /datasources/:id
   def destroy
     current_user.datasources.find(params[:id]).delete

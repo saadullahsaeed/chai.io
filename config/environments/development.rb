@@ -7,7 +7,7 @@ ChaiIo::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  #config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -23,7 +23,7 @@ ChaiIo::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  #config.active_record.mass_assignment_sanitizer = :strict
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
@@ -35,6 +35,7 @@ ChaiIo::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   
+  config.eager_load = false
 end
 
 ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')

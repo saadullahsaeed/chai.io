@@ -18,6 +18,7 @@ describe DatasourcesController do
         end
     end
     
+
     describe 'GET #new' do
 
       it "assigns a new Datasource to @datasource" do
@@ -39,7 +40,8 @@ describe DatasourcesController do
 
         it "redirects to the home page" do
           post :create, datasource: attributes_for(:datasource)
-          response.should redirect_to '/datasources'
+          #response.should redirect_to '/datasources'
+          response.should redirect_to datasources_path
         end
         
       end
