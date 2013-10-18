@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+#gem 'rails', '3.2.9'
+gem 'rails', '4.0.0'
 
 gem 'mysql2'
+gem 'sqlite3'
 gem 'attr_encrypted'
 gem 'sequel'
 gem 'backbone-on-rails'
@@ -10,35 +12,33 @@ gem 'bootstrap-datepicker-rails'
 gem "rspec-rails", "~> 2.12.0"
 gem "factory_girl_rails", "~> 3.2.0"
 gem 'redis', '3.0.2'
+gem 'therubyracer'
 
-group :development, :test do
-  gem "better_errors"
-  gem "rspec-rails", "~> 2.12.0"
-  gem "factory_girl_rails", "~> 3.2.0"
-  gem "guard-rspec", "~> 0.7.0"  
-end
+gem "better_errors"
+gem "rspec-rails", "~> 2.12.0"
+gem "factory_girl_rails", "~> 3.2.0"
+gem "guard-rspec", "~> 0.7.0"  
 
 gem 'jasmine', :git => "git://github.com/pivotal/jasmine-gem.git"
 gem "jasminerice", :git => 'https://github.com/bradphelan/jasminerice.git'
 gem 'sinon-rails'
 
-group :test do
-  gem "faker", "~> 1.0.1"
-  gem "capybara", "~> 1.1.2"
-  gem "database_cleaner", "~> 0.7.2"
-  gem "launchy", "~> 2.1.0"
-end
+gem "faker", "~> 1.0.1"
+gem "capybara", "~> 1.1.2"
+gem "database_cleaner", "~> 0.7.2"
+gem "launchy", "~> 2.1.0"
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
-end
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
 
 gem 'jquery-rails'
 

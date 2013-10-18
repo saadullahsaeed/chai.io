@@ -1,33 +1,36 @@
 class DatasourcesController < ApplicationController
   layout "dashboard"
   
-  before_filter :set_active_menu
 
   #GET /datasources/new
   def new  
-    @datasource = Datasource.new
+    @datasource = current_user.datasources.build
   end
   
+
+  #GET /datasources
   def index
     set_active_menu_item "datasources"
     @datasources = current_user.datasources.all
   end
   
+
   #POST /datasources/create
   def create
-     params[:datasource][:user_id] = current_user.id
-     @datasource = Datasource.new params[:datasource]
-
+     @datasource = current_user.datasources.build datasource_params
+     logger.info @datasource[:config]
      if @datasource.save
        redirect_to datasources_path
      else
        render :action => 'new'
      end
   end
+
   
   #GET /datasources
   def show
   end
+
   
   #GET /datasources/:id/edit
   def edit
@@ -39,25 +42,24 @@ class DatasourcesController < ApplicationController
   #PUT /datasources/:id
   def update
     @datasource = current_user.datasources.find params[:id]
-    if @datasource.update_attributes(params[:datasource])
-       return redirect_to '/datasources'
+    if @datasource.update_attributes datasource_params
+       redirect_to datasources_path
     else 
-       return render :action => 'new'
+       render :action => 'new'
     end
   end
   
   #DELETE /datasources/:id
   def destroy
     current_user.datasources.find(params[:id]).delete
-    redirect_to '/datasources'
+    redirect_to datasources_path
   end
   
   
   #POST /datasources/test
   def test
-    
     dsource = ChaiIo::Datasource::Mysql.new
-    connection_works = dsource.test_connection params[:datasource]
+    connection_works = dsource.test_connection datasource_params
     @data = { :success => connection_works }
 
     respond_to do |format|
@@ -67,9 +69,9 @@ class DatasourcesController < ApplicationController
   
   
   private
-  
-  def set_active_menu
-    #set_active_menu_item "datasources"
-  end
+
+    def datasource_params
+      params.require(:datasource).permit(:name, :datasource_type_id, config: [:host, :user, :password, :database])
+    end
   
 end

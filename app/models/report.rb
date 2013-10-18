@@ -4,7 +4,7 @@ class Report < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   
-  attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :project_id, :cache_time
+  #attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :project_id, :cache_time
   
   serialize :config, Hash
   serialize :filters

@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
    #GET /reports/:id
    def show
     begin
-      @report = find_report_for_current_user(params[:id])
+      @report = current_user.reports.find params[:id]
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
     rescue Exception => e
@@ -52,7 +52,7 @@ class ReportsController < ApplicationController
    #GET /reports/new
    def new
      set_active_menu_item 'new_report'
-     @report = Report.new
+     @report = current_user.reports.build 
      
      redis_config = ChaiIo::Application.config.redis_caching
      @caching_enabled = redis_config[:enabled]
@@ -62,11 +62,9 @@ class ReportsController < ApplicationController
    
    #POST /reports/
    def create
-     params[:report][:user_id] = current_user.id
-     @report = Report.new params[:report]
-     
+     @report = current_user.reports.build report_params
      if @report.save
-       redirect_to_listing
+       redirect_to projects_path
      else
        render :action => 'new'
      end
@@ -75,18 +73,16 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/edit
    def edit
-     @report = find_report_for_current_user params[:id]
+     @report = current_user.reports.find params[:id]
      render :action => 'new'
    end
    
 
    #PUT /reports/:id
    def update
-     @report = find_report_for_current_user params[:id]
-     
-     params[:report][:user_id] = current_user.id
-     if @report.update_attributes params[:report]
-       redirect_to_listing
+     @report = current_user.reports.find params[:id]
+     if @report.update_attributes report_params
+       redirect_to projects_path
      else 
        render :action => 'new'
      end
@@ -95,14 +91,14 @@ class ReportsController < ApplicationController
    
    #DELETE /reports/:id
    def destroy
-     find_report_for_current_user(params[:id]).destroy
-     redirect_to_listing
+     current_user.reports.find(params[:id]).destroy
+     redirect_to projects_path
    end
    
    
    #GET /reports/:id/share
    def share
-     @report = find_report_for_current_user(params[:report_id])
+     @report = current_user.reports.find params[:report_id]
      unless @report.sharing_enabled
        @report.enable_sharing params[:password]
      end  
@@ -119,7 +115,7 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/unshare
    def unshare
-     @report = find_report_for_current_user(params[:report_id])
+     @report = current_user.reports.find params[:report_id]
      @report.disable_sharing
      response = { :unshared => true }
      respond_to do |format|
@@ -129,15 +125,14 @@ class ReportsController < ApplicationController
 
      
    private
-   
-   def redirect_to_listing
-     redirect_to '/projects'
+
+   def report_params
+    params.require(:report).permit(
+      :datasource_id, :title, :report_type, :project_id, :cache_time,
+      config: [:query, :sum, :average, :link_column, :link_filter],
+      filters: [:type, :placeholder])
    end
    
-   
-   def find_report_for_current_user(id)
-     current_user.reports.find(id)
-   end
    
    # Load report data - need to re-factor this
    def load_report_data(report)

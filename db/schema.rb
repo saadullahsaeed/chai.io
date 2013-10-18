@@ -11,21 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230055245) do
-
-  create_table "dashboard_reports", :force => true do |t|
-    t.integer  "dashboard_id"
-    t.integer  "report_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "dashboards", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20131015053812) do
 
   create_table "datasource_types", :force => true do |t|
     t.string   "name"
@@ -51,15 +37,6 @@ ActiveRecord::Schema.define(:version => 20121230055245) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "report_snapshots", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "report_id"
-    t.text     "report_data"
-    t.date     "saved_on"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "reports", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -74,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20121230055245) do
     t.boolean  "sharing_enabled"
     t.text     "sharing_config"
     t.integer  "project_id"
+    t.text     "script"
   end
 
   create_table "users", :force => true do |t|

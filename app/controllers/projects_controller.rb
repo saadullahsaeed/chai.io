@@ -1,8 +1,6 @@
 class ProjectsController < ApplicationController
 	layout "dashboard"
 
-  before_filter :set_active_menu
-
 	def index
     set_active_menu_item "projects"
 		@projects = current_user.projects.all
@@ -10,16 +8,15 @@ class ProjectsController < ApplicationController
 	
   
 	def new 
-		@project = Project.new
+		@project = current_user.projects.build
 	end
 
 
 	def create
-		params[:project][:user_id] = current_user.id
-    @project = Project.new params[:project]
-     
-   	if @project.save
-     		redirect_to '/projects'
+    logger.info project_params
+    @project = current_user.projects.build project_params
+    if @project.save
+        redirect_to projects_path
    	else
      		render :action => 'new'
    	end
@@ -27,16 +24,15 @@ class ProjectsController < ApplicationController
 
 
   def edit
-    @project = find_user_project params[:id]
+    @project = current_user.projects.find params[:id]
     render :action => 'new'
   end
 
 
   def update
-   		@project = find_user_project params[:id]
-     
+   		@project = current_user.projects.find params[:id]
      	params[:project][:user_id] = current_user.id
-     	if @project.update_attributes params[:project]
+     	if @project.update_attributes project_params
        		redirect_to '/projects'
      	else 
        		render :action => 'new'
@@ -47,20 +43,16 @@ class ProjectsController < ApplicationController
   #DELETE /projects/:id
   def destroy
       return if params[:id] == 0
-    	find_user_project(params[:id]).destroy
-    	redirect_to '/projects'
+    	current_user.projects.find(params[:id]).destroy
+    	redirect_to projects_path
   end
 
 
   private
 
-   	def find_user_project project_id
-   		current_user.projects.find project_id
-   	end
-
-
-    def set_active_menu
-      #set_active_menu_item "projects"
+    def project_params
+      params.require(:project).permit(:description, :name)
     end
+
 
 end
