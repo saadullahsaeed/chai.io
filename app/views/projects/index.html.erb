@@ -32,21 +32,14 @@
 				<tr>
 					<td width="20"> 
 						<a href="#collapse_<%=p.id%>" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
-									+
+									
 						</a> 
 					</td>
 
 					<td>
-						<%= p.name %>
+						<%= link_to p.name, project_reports_path(p) %>
 					</td>
 					<td><%= p.description %></td>
-
-					<td style="text-align: center;">					
-						<div id="project-toolbar" class="settings-button">
-							<a href="#"><i class="icon-wrench"></i></a>
-						</div>
-					</td>
-
 					
 					<td>
 						<%= link_to 'Edit', edit_project_path(p) if p.id? %>
@@ -54,55 +47,13 @@
 					<td>
 						<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?" if p.id? %>
 					</td>
-					
 				
 				</tr>
-				<tr> 
-					<td class="more"></td> 
-					<td colspan="5" class="more"> <div class="accordion-body collapse" id="collapse_<%=p.id%>" style="height: 0px;"> 
-						<div class="accordion-inner"> 
-							
-							<table class="table table-striped table-hover">
-
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Type</th>
-										<th>Datasource</th>
-										<th></th>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-								
-								<tbody>
-									<% p.reports.each do |r|%>
-										<tr>
-											<td>
-												<%= link_to r.title, report_path(r) %>
-											</td>
-											<td><%=r.report_type%></td>
-											<td><%=r.datasource.name%></td>
-											<td>
-												<%= link_to 'Edit', edit_report_path(r) %>
-											</td>
-											<td>
-												<%= link_to 'Delete', report_path(r), :method => :delete, :confirm => "Are you sure?" %>
-											</td>
-										</tr>
-									<% end %>
-								</tbody>
-								
-							</table>
-						</div> 
-					</td> 
-				</tr>
-
+				
 			<% end %>
 		</tbody>
 	</table>
 </div>
-
 
 
 <div id="project-toolbar-options" style="display: none;">

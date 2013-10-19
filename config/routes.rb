@@ -21,7 +21,10 @@ ChaiIo::Application.routes.draw do
   resources :projects
   
   resources :projects do
-    resources :reports
+    resources :reports do
+      get 'share'
+      get 'unshare'
+    end
   end
 
 

@@ -35,7 +35,6 @@ class ReportsController < ApplicationController
     
     @data = load_report_data @report
     @report[:user_id] = @report[:config][:query] = @report[:datasource_id] = nil
-
     @report[:config][:link_report] = nil
 
     render :action => 'show', :layout => (@embed ? "embedded" : "public")
@@ -45,14 +44,14 @@ class ReportsController < ApplicationController
    #GET /reports
    def index
      set_active_menu_item 'reports'
-     @reports = current_user.reports.includes(:datasource)
+     @reports = current_project.reports.includes :datasource
    end
    
    
    #GET /reports/new
    def new
      set_active_menu_item 'new_report'
-     @report = current_user.reports.build 
+     @report = current_project.reports.build
      
      redis_config = ChaiIo::Application.config.redis_caching
      @caching_enabled = redis_config[:enabled]
@@ -62,9 +61,10 @@ class ReportsController < ApplicationController
    
    #POST /reports/
    def create
-     @report = current_user.reports.build report_params
+     @report = current_project.reports.build report_params
+     @report.user = current_project.user
      if @report.save
-       redirect_to projects_path
+       redirect_to project_reports_path(current_project)
      else
        render :action => 'new'
      end
@@ -128,7 +128,7 @@ class ReportsController < ApplicationController
 
    def report_params
     params.require(:report).permit(
-      :datasource_id, :title, :report_type, :project_id, :cache_time,
+      :datasource_id, :title, :description, :report_type, :project_id, :cache_time,
       config: [:query, :sum, :average, :link_column, :link_filter],
       filters: [:type, :placeholder])
    end

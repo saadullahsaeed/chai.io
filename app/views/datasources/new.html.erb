@@ -13,24 +13,25 @@
 	<% end %>
 	
 	  <label class="control-label">Name</label>
-	  <%= f.text_field :name %>
+	  <%= f.text_field :name, :class => 'form-control', :placeholder => 'Name' %>
 	
 	  <label class="control-label">Type</label>
 	  <%= f.collection_select(:datasource_type_id, DatasourceType.all, :id, :name) %>
 		
+		<br/>
 	  <%= f.fields_for :config do |c| %>
 	
 	  	  <label class="control-label">Host</label>
-	  	  <%= c.text_field :host, :value => (@datasource.config['host'] if @datasource.config?)%>
+	  	  <%= c.text_field :host, :value => (@datasource.config['host'] if @datasource.config?), :class => 'form-control', :placeholder => 'Host'%>
 		
 		  <label class="control-label">User</label>
-		  <%= c.text_field :user, :value => (@datasource.config['user'] if @datasource.config?) %>
+		  <%= c.text_field :user, :value => (@datasource.config['user'] if @datasource.config?), :class => 'form-control', :placeholder => 'User' %>
 			
 		  <label class="control-label">Password</label>
-		  <%= c.password_field :password, :value => (@datasource.config['password'] if @datasource.config?) %>
+		  <%= c.password_field :password, :value => (@datasource.config['password'] if @datasource.config?), :class => 'form-control', :placeholder => 'Password' %>
 
 		  <label class="control-label">Database</label>
-		  <%= c.text_field :database, :value => (@datasource.config['database'] if @datasource.config?) %>
+		  <%= c.text_field :database, :value => (@datasource.config['database'] if @datasource.config?), :class => 'form-control', :placeholder => 'Database' %>
 	  <% end %>
 	  
 	  <div class="form-actions">

@@ -2,6 +2,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   before_filter :require_login
+
+
+  def load_current_project
+    project_id = params[:project_id]
+    return nil unless project_id
+    @project = current_user.projects.find project_id
+    @project
+  end
+
+
+  def current_project
+    @project || load_current_project
+  end
+
   
   private
   

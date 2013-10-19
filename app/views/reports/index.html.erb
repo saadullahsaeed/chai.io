@@ -6,12 +6,20 @@
 <% end %>
 
 <div class="page-header">
-	<h1>Your Reports</h1>
+	<h1>Reports for Project: <%= @project.name %></h1>
 </div>
+
+<ul class="nav nav-pills">
+  <li class="active">
+  	<%= link_to 'New Report', new_project_report_path(@project) %>
+  </li>
+</ul>
+
+<br/>
 
 <div id="dv_report_list">
 	<form class="form-search">
-    	<input id="search_keywords" type="text" class="input-medium search-query" placeholder="Filter reports...">
+    	<input id="search_keywords" type="text" class="input-medium search-query form-control" placeholder="Filter reports...">
     </form>
 	<div id="dv_table">
 	</div>

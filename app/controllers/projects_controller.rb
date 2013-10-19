@@ -13,7 +13,6 @@ class ProjectsController < ApplicationController
 
 
 	def create
-    logger.info project_params
     @project = current_user.projects.build project_params
     if @project.save
         redirect_to projects_path

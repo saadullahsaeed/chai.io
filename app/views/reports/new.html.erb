@@ -8,27 +8,25 @@
 </div>
 
 
-<% if current_user.projects.length > 0 %>
+<% if @project %>
 
 	<div class="">
 		
-		<%= form_for @report, :html => {:class => "form", :method => @report.new_record? ? "post" : "put"} do |f| %>
+		<%= form_for [@project, @report], :html => {:class => "form", :method => @report.new_record? ? "post" : "put"} do |f| %>
 		<% @report.errors.full_messages.each do |msg| %>
 			<div class="alert alert-error"><%= msg %></div>
 		<% end %>
 		
 		  <label class="control-label">Title</label>
-		  <%= f.text_field :title %>
+		  <%= f.text_field :title, :class => 'form-control', :placeholder => 'Title' %>
 
 		  <label class="control-label">Description</label>
-		  <%= f.text_area :description, :size => '200x2'%>
+		  <%= f.text_area :description, :size => '100x2', :class => 'form-control', :placeholder => 'Description' %>
 
-		  <label class="control-label">Project</label>
-		  <%= f.collection_select(:project_id, current_user.projects, :id, :name) %>
-		
 		  <label class="control-label">Datasource</label>
 		  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
 
+		  <br/>
 		  <label class="control-label">Report Type</label>
 		  <div class="form-inline">	
 		  	  <%= f.radio_button(:report_type, "table", :checked => true) %>
@@ -66,13 +64,13 @@
 
 		  <!-- Button to trigger modal -->
 		  <div>
-		  	<a href="#myModal" style="margin-top: 232px !important;" role="button" class="btn" data-toggle="modal">Advanced Settings</a>
+		  	<a href="#myModal" style="margin-top: 232px !important;" role="button" class="btn btn-default" data-toggle="modal">Advanced Settings</a>
 		  </div>
 		
-
+			<br/>
 		  <div class="form-actions">
-			<button class="btn btn-primary" name="commit" id="commit" type="button">Save</button>
-			<button type="button" class="btn">Reset</button>
+				<button class="btn btn-primary" name="commit" id="commit" type="button">Save</button>
+				<button type="button" class="btn">Reset</button>
 		  </div>
 
 
