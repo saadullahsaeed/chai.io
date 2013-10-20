@@ -42,8 +42,8 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@$('#txt_public_url').val url
 		@$('#aSharingModal').click()
 	
-
 	renderSharingOptions: -> 
+		return unless ich.tpl_sharing
 		@$('#sharing_container').html(ich.tpl_sharing {report: @model.getReport()})
 		@$('#btn-enable-sharing').button 'reset'
 		@$('#btn-disable-sharing').button 'reset'
