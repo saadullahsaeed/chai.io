@@ -8,11 +8,13 @@ ChaiIo::Application.routes.draw do
 
 
   resources :sessions
-  
+
+  get '/reports/search' => 'reports#search'
   resources :reports do
     get 'share'
     get 'unshare'
   end
+ 
   
   match '/datasources/test' => 'datasources#test', :via => :post  
   resources :datasources

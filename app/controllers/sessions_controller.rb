@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to projects_path, :notice => "Logged in!"
     else
-      flash.now.alert = "Invalid email or password"
-      render root_url
+      #flash.now.alert = "Invalid email or password"
+      redirect_to root_url, :notice =>"Invalid email or password"
     end
   end
 

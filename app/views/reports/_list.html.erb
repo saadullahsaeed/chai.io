@@ -1,0 +1,49 @@
+<% content_for :js_init_code do %>
+  window.App = new ChaiIo.Views.ReportsListView({
+    el: $('#dv_report_list'), 
+    model: new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => :datasource).html_safe%>)})
+    .render();
+<% end %>
+
+<div id="dv_report_list">
+  <form class="form-search">
+      <input id="search_keywords" type="text" class="input-medium search-query form-control" placeholder="Filter reports...">
+    </form>
+  <div id="dv_table">
+  </div>
+</div>
+
+<script type="text/html" id="list_main">
+<table class="table table-striped table-hover">
+
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Datasource</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {{#reports}}
+      <tr>
+        <td>
+          <a href="/reports/{{id}}">{{title}}</a>
+        </td>
+        <td>{{report_type}}</td>
+        <td>{{#datasource}}{{name}}{{/datasource}}</td>
+        <td>
+          <a href="/reports/{{id}}/edit">Edit</a>
+        </td>
+        <td>
+          <a href="/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
+        </td>
+      </tr>
+    {{/reports}}
+  </tbody>
+  
+</table>
+</script>

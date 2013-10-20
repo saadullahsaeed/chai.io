@@ -18,7 +18,7 @@ module ChaiIo
       
       def generate_hash(reportId)
         require 'digest/md5'
-        Digest::MD5.hexdigest "#{reportId}-#{ChaiIo::Application.config.public_url_secret_token}"
+        Digest::MD5.hexdigest "#{reportId}-#{ChaiIo::Application.config.secret_token}"
       end   
       
     end #PublicReport

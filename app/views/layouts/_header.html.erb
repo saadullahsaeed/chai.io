@@ -22,26 +22,32 @@
           </ul>
         </li>
 
-        <li class="<%= @active == 'projects' ? 'active': ''%>"><a href="/projects">Projects</a></li>
-        <li class="<%= @active == 'datasources' ? 'active': ''%>"><a href="/datasources">Datasources</a></li>
+        <li class="<%= @active == 'projects' ? 'active': ''%>">
+          <%= link_to 'Projects', projects_path %>
+        </li>
+        <li class="<%= @active == 'datasources' ? 'active': ''%>">
+          <%= link_to 'Datasources', datasources_path %>
+        </li>
           
         <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="<%=edit_user_path(current_user)%>">Settings</a></li>
           <li>
-              <%= link_to 'Sign out', '/logout', :method => :delete %>
+              <%= link_to 'Sign out', session_path(current_user), :method => :delete %>
           </li>
-                    </ul>
+      </ul>
           </li>
       </ul>
      
+     <!-- Search -->
       <ul class="nav navbar-nav navbar-right">
-        <form class="navbar-form navbar-left" role="search">
+
+        <form class="navbar-form navbar-left" role="search" action="<%= reports_search_path %>">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input name="q" type="text" class="form-control" placeholder="Search">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">Search</button>
       </form>
       
       </ul>

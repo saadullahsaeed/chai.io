@@ -1,64 +1,68 @@
-<% content_for :js_init_code do %>
-	/*$('#project-toolbar').toolbar({
-		content: '#project-toolbar-options', 
-		position: 'top'
-	});*/	
-<% end %>
+<% if @projects.length == 0 %>
 
-<div class="page-header">
-	<h1>Your Projects</h1>
-</div>
+	<div class="page-header" style="align: center;">
+		No Projects found!
+		<%= link_to 'Click Here', new_project_path %> to get started
+	</div>
 
-<div class="">
-	<div id="accordion2" class="accordion"> </div>
-	<table class="table table-striped">
-		
-		<thead>
-			<tr>
-				<th></th>
-				<th>Name</th>
-				<th>Description</th>
-				<th></th>
-				
-				<th></th>
-				<th></th>
-				
-			</tr>
-		</thead>
-		
-		<tbody>
-			<% @projects.each do |p|%>
+<% else %>
 
+	<div class="page-header">
+		<h1>Your Projects</h1>
+	</div>
+
+	<div class="">
+		<div id="accordion2" class="accordion"> </div>
+		<table class="table table-striped">
+			
+			<thead>
 				<tr>
-					<td width="20"> 
-						<a href="#collapse_<%=p.id%>" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
-									
-						</a> 
-					</td>
-
-					<td>
-						<%= link_to p.name, project_reports_path(p) %>
-					</td>
-					<td><%= p.description %></td>
+					<th></th>
+					<th>Name</th>
+					<th>Description</th>
+					<th></th>
 					
-					<td>
-						<%= link_to 'Edit', edit_project_path(p) if p.id? %>
-					</td>
-					<td>
-						<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?" if p.id? %>
-					</td>
-				
+					<th></th>
+					<th></th>
+					
 				</tr>
-				
-			<% end %>
-		</tbody>
-	</table>
-</div>
+			</thead>
+			
+			<tbody>
+				<% @projects.each do |p|%>
+
+					<tr>
+						<td width="20"> 
+							<a href="#collapse_<%=p.id%>" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+										
+							</a> 
+						</td>
+
+						<td>
+							<%= link_to p.name, project_reports_path(p) %>
+						</td>
+						<td><%= p.description %></td>
+						
+						<td>
+							<%= link_to 'Edit', edit_project_path(p) if p.id? %>
+						</td>
+						<td>
+							<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?" if p.id? %>
+						</td>
+					
+					</tr>
+					
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 
 
-<div id="project-toolbar-options" style="display: none;">
-	<a href="#"><i class="icon-star"></i></a>
-	<a href="#"><i class="icon-edit"></i></a>
-	<a href="#"><i class="icon-pencil"></i></a>
-	<a href="#"><i class="icon-trash"></i></a>
-</div>	
+	<div id="project-toolbar-options" style="display: none;">
+		<a href="#"><i class="icon-star"></i></a>
+		<a href="#"><i class="icon-edit"></i></a>
+		<a href="#"><i class="icon-pencil"></i></a>
+		<a href="#"><i class="icon-trash"></i></a>
+	</div>	
+
+<% end %>

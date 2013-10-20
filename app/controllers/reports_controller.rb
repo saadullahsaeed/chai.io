@@ -123,6 +123,13 @@ class ReportsController < ApplicationController
       end
    end
 
+
+   #GET
+   def search
+    @query = params[:q]
+    @reports = current_user.reports.search_for @query
+   end
+
      
    private
 

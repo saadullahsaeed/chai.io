@@ -4,8 +4,6 @@ class Report < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   
-  #attr_accessible :config, :filters, :description, :datasource_id, :title, :report_type, :user_id, :project_id, :cache_time
-  
   serialize :config, Hash
   serialize :filters
   serialize :sharing_config
@@ -14,6 +12,9 @@ class Report < ActiveRecord::Base
 
   after_initialize :default_values
   before_save :default_values
+
+
+  scope :search_for, ->(query) { where("title LIKE ?", "%#{query}%") }
 
 
   def default_values
