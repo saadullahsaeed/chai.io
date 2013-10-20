@@ -19,7 +19,8 @@ class Report < ActiveRecord::Base
 
   def self.REPORT_TYPES
     {
-      :table => 'Tablsssse',
+      :table => 'Table',
+      :details => 'Details (Single Row)',
       :single_value => 'Single Value',
       :bar_chart => 'Bar Chart',
       :line_chart => 'Line Chart',

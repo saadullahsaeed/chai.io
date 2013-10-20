@@ -38,7 +38,10 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 			report_data.data[i].values[col_index] = @linkColumn column_value
 		report_data
 
-	linkColumn: (value)-> "<a href='/reports/#{@model.getLinkedReport()}?#{@model.getLinkedFilter()}=#{encodeURIComponent value}' target='_blank'>#{value}</a>"	
+	linkColumn: (value)-> 
+		linked_report_id = @model.getLinkedReport()
+		linked_filter_name = @model.getLinkedFilter()
+		"<a href='/reports/#{linked_report_id}?#{linked_filter_name}=#{encodeURIComponent value}' target='_blank'>#{value}</a>"	
 
 	setSummary: (data)-> @report_data.setSummaryRow(@getSummaryRow data) if @summaryEnabled() 
 
