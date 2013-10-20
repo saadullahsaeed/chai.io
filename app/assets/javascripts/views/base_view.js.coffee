@@ -6,6 +6,7 @@ class ChaiIo.Views.Base extends Backbone.View
 	getSearchFields: -> []	
 	
 	filterList: (searchTerm, data) ->
+		searchTerm = searchTerm.trim()
 		searchFields = @getSearchFields()
 		filtered = _.filter data, (item)=>
 			for field in searchFields

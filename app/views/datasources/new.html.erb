@@ -2,9 +2,7 @@
 	window.App = new ChaiIo.Views.NewDatasource({el: $('#dv_dsource')});
 <% end %>
 
-<div class="page-header">
-	<h1>New Datasource <small>Create a new datasource</small></h1>
-</div>
+<%= page_heading_for_resource @datasource %>
 
 <div id="dv_dsource">
 	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post"} do |f| %>

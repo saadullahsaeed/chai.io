@@ -17,6 +17,18 @@ class Report < ActiveRecord::Base
   scope :search_for, ->(query) { where("title LIKE ?", "%#{query}%") }
 
 
+  def self.REPORT_TYPES
+    {
+      :table => 'Tablsssse',
+      :single_value => 'Single Value',
+      :bar_chart => 'Bar Chart',
+      :line_chart => 'Line Chart',
+      :bar_line_chart => 'Bar Line Chart',
+      :pie_chart => 'Pie Chart'
+    }
+  end
+
+
   def default_values
     self.project_id ||= 0 
   end

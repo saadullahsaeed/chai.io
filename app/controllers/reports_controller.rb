@@ -56,6 +56,7 @@ class ReportsController < ApplicationController
      redis_config = ChaiIo::Application.config.redis_caching
      @caching_enabled = redis_config[:enabled]
      @default_expiry = redis_config[:default_expiry] if @caching_enabled
+
    end 
    
    

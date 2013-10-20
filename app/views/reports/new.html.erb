@@ -3,10 +3,7 @@
 	window.App.render();
 <% end %>
 
-<div class="page-header">
-	<h1><%=@report.new_record? ? 'New' : 'Edit'%> Report <small><%=@report.new_record? ? 'Create a new report' : ''%></small></h1>
-</div>
-
+<%= page_heading_for_resource @report %>
 
 <% if @project %>
 
@@ -27,30 +24,15 @@
 		  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
 
 		  <br/>
+
+		  
 		  <label class="control-label">Report Type</label>
-		  <div class="form-inline">	
-		  	  <%= f.radio_button(:report_type, "table", :checked => true) %>
-			  <%= label_tag(:table, "Table", :class=>'radio_label') %>
-
-			  <%= f.radio_button(:report_type, "single_value") %>
-			  <%= label_tag(:single_value, "Single Value", :class=>'radio_label') %>
-
-			  <%= f.radio_button(:report_type, "bar_chart") %>
-			  <%= label_tag(:bar_chart, "Bar Chart", :class=>'radio_label') %>
-
-			  <%= f.radio_button(:report_type, "line_chart") %>
-			  <%= label_tag(:bar_chart, "Line Chart", :class=>'radio_label') %>
-
-			  <%= f.radio_button(:report_type, "bar_line_chart") %>
-			  <%= label_tag(:bar_chart, "Bar and Line Chart", :class=>'radio_label') %>
-
-			  <%= f.radio_button(:report_type, "pie_chart") %>
-			  <%= label_tag(:bar_chart, "Pie Chart", :class=>'radio_label') %>
-		  </div>
+		  	<%= f.select(:report_type, Report.REPORT_TYPES.map { |key, value| [ value, key ] }) %>
+		  <br/>
 			
 		  <%= f.fields_for :config do |c| %>
-		  	  <label class="control-label">Query</label>
-			  <small>Prefix filter placeholders with a ':'. Do NOT put a placeholder in quotes, they are always added by the system.</small>
+		  	<label class="control-label">Query</label>
+			 	<small>Prefix filter placeholders with a ':'. Do NOT put a placeholder in quotes, they are always added by the system.</small>
 			
 		  	  <div id="editor"></div>
 			  <%= c.text_area :query, :size => '500x5', :class => 'span12 query', :id=>'query', :value => @report.config['query'] %>
