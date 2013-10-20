@@ -37,11 +37,16 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 				@model.updateReport 'sharing_enabled', yes
 				@renderSharingOptions()
 	
-		
 	showPublicURL: (url)->
 		@$('#txt_public_url').val url
+		@$('#clipboard-button').attr 'data-clipboard-text', url
 		@$('#aSharingModal').click()
-	
+		@initClipboard()
+		
+	initClipboard: ->
+		ZeroClipboard.setDefaults { moviePath: '/ZeroClipboard.swf' }
+		@clip = new ZeroClipboard($('#clipboard-button'))
+
 	renderSharingOptions: -> 
 		return unless ich.tpl_sharing
 		@$('#sharing_container').html(ich.tpl_sharing {report: @model.getReport()})

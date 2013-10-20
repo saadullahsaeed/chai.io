@@ -2,6 +2,7 @@
 //= require backbone
 //= require icanhaz
 //= require chai_io
+//= require ZeroClipboard.min
 //= require_tree ./util
 //= require_tree ./models
 //= require_tree ./collections
