@@ -1,6 +1,6 @@
-class ProjectsController < ApplicationController
-	layout "dashboard"
+class ProjectsController < DashboardController
 
+	
 	def index
     set_active_menu_item "projects"
 		@projects = current_user.projects.all
@@ -17,24 +17,23 @@ class ProjectsController < ApplicationController
     if @project.save
         redirect_to projects_path
    	else
-     		render :action => 'new'
+     		render 'new'
    	end
 	end
 
 
   def edit
     @project = current_user.projects.find params[:id]
-    render :action => 'new'
+    render 'new'
   end
 
 
   def update
    		@project = current_user.projects.find params[:id]
-     	params[:project][:user_id] = current_user.id
      	if @project.update_attributes project_params
-       		redirect_to '/projects'
+       		redirect_to projects_path
      	else 
-       		render :action => 'new'
+       		render 'new'
      	end
   end
 

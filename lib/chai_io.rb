@@ -11,3 +11,5 @@ require 'chai_io/filter/base'
 require 'chai_io/filter/date'
 require 'chai_io/filter/text'
 require 'chai_io/filter/number'
+
+require 'chai_io/report/report'

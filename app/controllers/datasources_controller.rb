@@ -1,7 +1,5 @@
-class DatasourcesController < ApplicationController
-  layout "dashboard"
+class DatasourcesController < DashboardController
   
-
   #GET /datasources/new
   def new  
     @datasource = current_user.datasources.build
