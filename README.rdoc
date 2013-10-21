@@ -5,7 +5,7 @@ A Rails app for Data Visualization. Interface to create reports with SQL queries
 
 = Report Screenshot
 
-![alt text](http://i.imgur.com/SB1XjVP.png "Screenshot")
+http://i.imgur.com/SB1XjVP.png
 
 
 == Copyright

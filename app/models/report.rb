@@ -15,6 +15,7 @@ class Report < ActiveRecord::Base
 
 
   scope :search_for, ->(query) { where("title LIKE ?", "%#{query}%") }
+  scope :all_starred, -> { where("starred = ?", true) }
 
 
   def self.REPORT_TYPES
@@ -54,5 +55,17 @@ class Report < ActiveRecord::Base
     self.sharing_config = {}
     self.save
   end  
+
+
+  def star
+    self.starred = true
+    self.save
+  end
+
+
+  def unstar
+    self.starred = false
+    self.save
+  end
 
 end

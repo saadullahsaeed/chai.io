@@ -33,13 +33,13 @@
 	<hr>
 	
 	<!-- Filters -->
-	<div id="dv_filters">
-	</div>
+  <div id="dv-report-filter-container">
+  	<div id="dv_filters"></div>
+    <div id="sharing_container"></div> 
+  </div>
 	<%= render :partial => "report_filters" %>
 	
 	<% unless @public_report %>
-		<div id="sharing_container">
-		</div> 
 		<hr/>
 	<% end %>
 

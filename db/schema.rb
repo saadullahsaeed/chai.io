@@ -9,42 +9,42 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131015053812) do
+ActiveRecord::Schema.define(version: 20131021013327) do
 
-  create_table "datasource_types", :force => true do |t|
+  create_table "datasource_types", force: true do |t|
     t.string   "name"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "datasource_class"
   end
 
-  create_table "datasources", :force => true do |t|
+  create_table "datasources", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.text     "encrypted_config"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "datasource_type_id"
   end
 
-  create_table "projects", :force => true do |t|
+  create_table "projects", force: true do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  create_table "reports", :force => true do |t|
+  create_table "reports", force: true do |t|
     t.integer  "user_id"
     t.string   "title"
     t.string   "report_type"
     t.integer  "datasource_id"
     t.text     "config"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "cache_time"
     t.string   "description"
     t.text     "filters"
@@ -52,13 +52,14 @@ ActiveRecord::Schema.define(:version => 20131015053812) do
     t.text     "sharing_config"
     t.integer  "project_id"
     t.text     "script"
+    t.boolean  "starred"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "name"
   end
 

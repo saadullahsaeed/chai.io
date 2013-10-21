@@ -3,6 +3,7 @@ class ChaiIo.Views.ReportsListView extends ChaiIo.Views.Base
 		@events = 
 			'keyup #search_keywords': 'search'
 			'keydown #search_keywords': 'search'
+			'click .star': 'starReport'
 		super options
 	
 	search: (event)->
@@ -14,6 +15,23 @@ class ChaiIo.Views.ReportsListView extends ChaiIo.Views.Base
 	
 	render: -> 
 		@showList @model.toJSON()
+		@delegateEvents()
 		@
 		
 	showList: (reportList)-> $('#dv_table').html(ich.list_main {reports: reportList})
+
+	starReport: (event)->
+		target = $ event.currentTarget
+		img = $(target.children()[0])
+		report_id = target.attr 'data-report-id'
+		report = @model.get report_id
+		@sendRequest "/reports/#{report_id}/star", {}, ()=> @starred()
+		if report.get 'starred'
+			img.attr 'src', '/assets/star4.png'
+		else
+			img.attr 'src', '/assets/star-lit4.png'
+		report.set {starred: !(report.get 'starred')}
+
+	starred: ->
+
+

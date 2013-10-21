@@ -10,9 +10,11 @@ ChaiIo::Application.routes.draw do
   resources :sessions
 
   get '/reports/search' => 'reports#search'
+  get '/reports/starred' => 'reports#starred'
   resources :reports do
     get 'share'
     get 'unshare'
+    get 'star'
   end
  
   

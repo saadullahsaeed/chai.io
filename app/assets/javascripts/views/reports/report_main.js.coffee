@@ -52,4 +52,6 @@ class ChaiIo.Views.ReportMain extends ChaiIo.Views.Base
 		@$('#sharing_container').html(ich.tpl_sharing {report: @model.getReport()})
 		@$('#btn-enable-sharing').button 'reset'
 		@$('#btn-disable-sharing').button 'reset'
+
+
 	

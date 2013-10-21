@@ -44,7 +44,7 @@ class ReportsController < ApplicationController
    #GET /reports
    def index
      set_active_menu_item 'reports'
-     @reports = current_project.reports.includes :datasource
+     @reports = current_project.reports.order('starred DESC').includes :datasource
      @reports.each do |r|
       r.report_type = r.report_type_text
      end
@@ -97,6 +97,22 @@ class ReportsController < ApplicationController
      current_project.reports.find(params[:id]).destroy
      redirect_to project_reports_path current_project
    end
+
+
+
+
+   #GET
+   def search
+    @query = params[:q]
+    @reports = current_user.reports.search_for @query
+   end
+
+
+   #GET
+   def starred
+    set_active_menu_item 'starred'
+    @reports = current_user.reports.all_starred
+   end
    
    
    #GET /reports/:id/share
@@ -126,11 +142,18 @@ class ReportsController < ApplicationController
       end
    end
 
-
    #GET
-   def search
-    @query = params[:q]
-    @reports = current_user.reports.search_for @query
+   def star
+    report = current_user.reports.find params[:report_id]
+    if report.starred
+      report.unstar
+    else
+      report.star
+    end
+    response = { :success => true }
+    respond_to do |format|
+        format.json { render :json => response }
+    end
    end
 
      

@@ -18,10 +18,10 @@
 
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Type</th>
       <th>Datasource</th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -30,16 +30,30 @@
   <tbody>
     {{#reports}}
       <tr>
+
+        <td>
+          {{#starred}}
+            <a href="javascript: void(0);" class="star" data-report-id="{{id}}">
+              <img src="/assets/star-lit4.png">
+            </a>
+          {{/starred}}
+          {{^starred}}
+            <a href="#" class="star" data-report-id="{{id}}">
+              <img src="/assets/star4.png">
+            </a>
+          {{/starred}}
+        </td>
+
         <td>
           <a href="/reports/{{id}}">{{title}}</a>
         </td>
         <td>{{report_type}}</td>
         <td>{{#datasource}}{{name}}{{/datasource}}</td>
         <td>
-          <a href="/projects/<%= @project.id %>/reports/{{id}}/edit">Edit</a>
+          <a href="/projects/{{project_id}}/reports/{{id}}/edit">Edit</a>
         </td>
         <td>
-          <a href="/projects/<%= @project.id %>/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
+          <a href="/projects/{{project_id}}/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
         </td>
       </tr>
     {{/reports}}
