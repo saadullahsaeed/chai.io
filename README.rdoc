@@ -3,6 +3,11 @@
 A Rails app for Data Visualization. Interface to create reports with SQL queries and data visualization via Graphs, Charts etc.
 
 
+= Report Screenshot
+
+![alt text](http://i.imgur.com/SB1XjVP.png "Screenshot")
+
+
 == Copyright
 
 Copyright (c) 2013 Saadullah Saeed. See LICENSE.txt for further details.
