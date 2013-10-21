@@ -1,7 +1,7 @@
 <% content_for :js_init_code do %>
   window.App = new ChaiIo.Views.ReportsListView({
     el: $('#dv_report_list'), 
-    model: new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => :datasource).html_safe%>)})
+    model: new ChaiIo.Collections.Reports(<%=@reports.to_json(:include => [:datasource, :tags]).html_safe%>)})
     .render();
 <% end %>
 
@@ -20,6 +20,7 @@
     <tr>
       <th></th>
       <th>Title</th>
+      <th>Tags</th>
       <th>Type</th>
       <th>Datasource</th>
       <th></th>
@@ -46,6 +47,11 @@
 
         <td>
           <a href="/reports/{{id}}">{{title}}</a>
+        </td>
+        <td>
+          {{#tags}}
+            <a href="/reports/tags/{{name}}">{{name}}</a>,
+          {{/tags}}
         </td>
         <td>{{report_type}}</td>
         <td>{{#datasource}}{{name}}{{/datasource}}</td>

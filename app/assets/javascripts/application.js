@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
+//= require nprogress
+//= require bootstrap-tokenfield.min
 //= require_tree ./parser
 //= require_tree ./alertify
 //= require_tree ./toolbar-js

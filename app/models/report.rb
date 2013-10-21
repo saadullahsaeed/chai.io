@@ -7,6 +7,8 @@ class Report < ActiveRecord::Base
   serialize :config, Hash
   serialize :filters
   serialize :sharing_config
+
+  acts_as_taggable
   
   validates_presence_of :title, :datasource_id, :report_type, :user_id, :config, :project_id
 
@@ -28,6 +30,11 @@ class Report < ActiveRecord::Base
       :bar_line_chart => 'Bar Line Chart',
       :pie_chart => 'Pie Chart'
     }
+  end
+
+
+  def self.search query
+    self.search_for(query) + self.tagged_with(query)
   end
 
 

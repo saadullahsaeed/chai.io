@@ -12,6 +12,8 @@
  *= require_tree .
  *= require bootstrap-datepicker
  *= require prettify
+ *= require nprogress
+ *= require bootstrap-tokenfield
  *= require bootstrap-multiselect
  *= require_tree ./alertify
  *= require_tree ./toolbar-js

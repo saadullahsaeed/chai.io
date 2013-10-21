@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-#gem 'rails', '3.2.9'
 gem 'rails', '4.0.0'
 
 gem 'mysql2'
@@ -13,8 +12,10 @@ gem "rspec-rails", "~> 2.12.0"
 gem "factory_girl_rails", "~> 3.2.0"
 gem 'redis', '3.0.2'
 gem 'therubyracer'
+gem 'acts-as-taggable-on'
 
-gem "better_errors"
+gem 'better_errors'
+gem "binding_of_caller"
 gem "rspec-rails", "~> 2.12.0"
 gem "factory_girl_rails", "~> 3.2.0"
 gem "guard-rspec", "~> 0.7.0"  

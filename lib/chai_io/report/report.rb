@@ -3,10 +3,6 @@ module ChaiIo
 
     private
 
-    def find_user_report report_id
-      current_user.reports.find report_id
-    end
-
     # Load report data - need to re-factor this
     def load_report_data(report)
      

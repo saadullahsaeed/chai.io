@@ -7,8 +7,15 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		super options
 	
 	render: -> 
+		@initTokenField()
 		@initQueryEditor()
 		@initAdvancedSettings()
+
+
+	initTokenField: ->
+		tf_options = 
+			allowDuplicates: no
+		$('#report_tag_list').tokenfield tf_options
 
 	initAdvancedSettings: ->
 		view = new ChaiIo.Views.ReportSettingsView({el: $('form')})

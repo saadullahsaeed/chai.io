@@ -1,3 +1,5 @@
+require 'chai_io/report/report'
+
 class ReportsController < DashboardController
   include ChaiIo::Report
    
@@ -43,11 +45,11 @@ class ReportsController < DashboardController
 
   #GET /reports
   def index
-   set_active_menu_item 'reports'
-   @reports = current_project.reports.order('starred DESC').includes :datasource
-   @reports.each do |r|
-    r.report_type = r.report_type_text
-   end
+    set_active_menu_item 'reports'
+    @reports = current_project.reports.order('starred DESC').includes :datasource
+    @reports.each do |r|
+      r.report_type = r.report_type_text
+    end
   end
 
 
@@ -85,7 +87,7 @@ class ReportsController < DashboardController
   def update
    @report = current_user.reports.find params[:id]
    if @report.update_attributes report_params
-     redirect_to projects_path
+     redirect_to project_reports_path(@report.project)
    else 
      render :action => 'new'
    end
@@ -101,32 +103,39 @@ class ReportsController < DashboardController
 
   #GET
   def search
-  @query = params[:q]
-  @reports = current_user.reports.search_for @query
+    @query = params[:q].strip
+    @reports = current_user.reports.search @query
   end
 
 
   #GET
   def starred
-  set_active_menu_item 'starred'
-  @reports = current_user.reports.all_starred
+    set_active_menu_item 'starred'
+    @reports = current_user.reports.all_starred
+  end
+
+
+  #GET 
+  def tagged_with
+    @tag = params[:tag]
+    @reports = current_user.reports.tagged_with @tag
   end
 
 
   #GET /reports/:id/share
   def share
-   @report = current_user.reports.find params[:report_id]
-   unless @report.sharing_enabled
-     @report.enable_sharing params[:password]
-   end  
+    @report = current_user.reports.find params[:report_id]
+    unless @report.sharing_enabled
+      @report.enable_sharing params[:password]
+    end  
    
-   public_report = ChaiIo::Export::PublicReport.new
-   public_report.report = @report
+    public_report = ChaiIo::Export::PublicReport.new
+    public_report.report = @report
    
-   response = { :public_url => "#{request.protocol}#{request.host_with_port}#{public_report.generate_url}" }
-   respond_to do |format|
-     format.json { render :json => response }
-   end
+    response = { :public_url => "#{request.protocol}#{request.host_with_port}#{public_report.generate_url}" }
+    respond_to do |format|
+      format.json { render :json => response }
+    end
   end
 
 
@@ -160,6 +169,7 @@ class ReportsController < DashboardController
 
     def report_params
     params.require(:report).permit(
+      :tag_list,
       :datasource_id, :title, :description, :report_type, :project_id, :cache_time,
       config: [:query, :sum, :average, :link_column, :link_filter],
       filters: [:type, :placeholder])
