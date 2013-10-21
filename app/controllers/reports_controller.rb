@@ -45,6 +45,9 @@ class ReportsController < ApplicationController
    def index
      set_active_menu_item 'reports'
      @reports = current_project.reports.includes :datasource
+     @reports.each do |r|
+      r.report_type = r.report_type_text
+     end
    end
    
    
@@ -56,7 +59,6 @@ class ReportsController < ApplicationController
      redis_config = ChaiIo::Application.config.redis_caching
      @caching_enabled = redis_config[:enabled]
      @default_expiry = redis_config[:default_expiry] if @caching_enabled
-
    end 
    
    
@@ -74,7 +76,7 @@ class ReportsController < ApplicationController
    
    #GET /reports/:id/edit
    def edit
-     @report = current_user.reports.find params[:id]
+     @report = current_project.reports.find params[:id]
      render :action => 'new'
    end
    
@@ -92,8 +94,8 @@ class ReportsController < ApplicationController
    
    #DELETE /reports/:id
    def destroy
-     current_user.reports.find(params[:id]).destroy
-     redirect_to projects_path
+     current_project.reports.find(params[:id]).destroy
+     redirect_to project_reports_path current_project
    end
    
    

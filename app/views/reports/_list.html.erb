@@ -36,10 +36,10 @@
         <td>{{report_type}}</td>
         <td>{{#datasource}}{{name}}{{/datasource}}</td>
         <td>
-          <a href="/reports/{{id}}/edit">Edit</a>
+          <a href="/projects/<%= @project.id %>/reports/{{id}}/edit">Edit</a>
         </td>
         <td>
-          <a href="/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
+          <a href="/projects/<%= @project.id %>/reports/{{id}}" data-method="delete" data-confirm="Are you sure?">Delete</a>
         </td>
       </tr>
     {{/reports}}

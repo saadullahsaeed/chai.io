@@ -3,6 +3,8 @@
 //= require icanhaz
 //= require chai_io
 //= require ZeroClipboard.min
+//= require bootstrap-multiselect
+//= require prettify
 //= require_tree ./util
 //= require_tree ./models
 //= require_tree ./collections

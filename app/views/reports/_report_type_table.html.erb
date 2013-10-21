@@ -1,16 +1,25 @@
 <script type="text/html" id="report_table">
+
 	<% unless @embed %>
-	<form class="form-search">
-    	<input id="search_keywords" type="text" class="form-control input-medium search-query" placeholder="Search">
-    </form>
+		<form class="form-search">
+	    	<input id="search_keywords" type="text" class="form-control input-medium search-query" placeholder="Search">
+	  </form>
 	<% end %>
-	
+
+	<br/>
+	<!-- Build your select: -->
+	Columns: 
+	<select class="multiselect" multiple="multiple">
+		{{#columns}}
+			<option value="{{.}}" SELECTED>{{.}}</option>
+		{{/columns}}
+	</select>
+
+	<br/>	
 	<table id="tbl_report" class="table table-striped">
-		<thead>
+		<thead id="thead">
 			<tr>
-			{{#columns}}
-				<th class="tbl_r_col">{{.}}</th>
-			{{/columns}}
+				{{>tpl_table_head_partial}}
 			</tr>
 		</thead>
 		
@@ -22,11 +31,20 @@
 	</table>
 </script>
 
+<script type="text/html" id="tpl_table_head">
+	{{>tpl_table_head_partial}}
+</script>
+
 
 <script type="text/html" id="tpl_table_body">
 	{{>tpl_table_body_partial}}
 </script>
 
+<script type="text/html" id="tpl_table_head_partial" class="partial">
+	{{#columns}}
+		<th class="tbl_r_col">{{.}}</th>
+	{{/columns}}
+</script>
 
 <script type="text/html" id="tpl_table_body_partial" class="partial">
 	{{#data}}

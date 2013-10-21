@@ -30,6 +30,11 @@ class Report < ActiveRecord::Base
   end
 
 
+  def report_type_text
+    Report.REPORT_TYPES[report_type.to_sym]
+  end
+
+
   def default_values
     self.project_id ||= 0 
   end

@@ -25,6 +25,7 @@ class ChaiIo.Views.ReportsIndex extends ChaiIo.Views.Base
 	
 	getReport: -> @model.getReport()
 
+	setColumns: (columns)-> @report_data.setColumns columns
 	getColumns: -> @report_data.getColumns()
 	getColumnIndex: (colText)-> @report_data.getColumnIndex colText
 	columnNameToIndexArray: (fields)-> @report_data.getColumnsIndices fields

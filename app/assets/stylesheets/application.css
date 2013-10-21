@@ -11,6 +11,8 @@
  *= require_self
  *= require_tree .
  *= require bootstrap-datepicker
+ *= require prettify
+ *= require bootstrap-multiselect
  *= require_tree ./alertify
  *= require_tree ./toolbar-js
  */

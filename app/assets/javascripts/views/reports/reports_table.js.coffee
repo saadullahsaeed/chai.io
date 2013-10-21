@@ -4,14 +4,19 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 			'click .tbl_r_col': 'sortHandler'
 			'keyup #search_keywords': 'search'
 			'keydown #search_keywords': 'search'
+			'change .multiselect': 'redoColumns'
 		super options
 
 	search: (event)->
 		search_term = @$('#search_keywords').val()
 		data = @getData()
 		return @showTable data if search_term is ''
-		@showTable(@report_data.filterData search_term)	
-	
+		@showTable(@report_data.filterData(search_term), no)	
+
+	redoColumns: (event)->
+		selected_cols = $('.multiselect').val()
+		@showTable(@report_data.filterForColumns(selected_cols), selected_cols)
+		
 	getTemplateName: -> "report_table"
 	hasNestedDataValues: -> yes
 
@@ -20,12 +25,20 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 		@setData @report_data.sortModel(@getColumnIndex col)
 		@reRenderTpl()
 		
-	showTable: (data)-> 
+	showTable: (data, newCols)-> 
 		@setSummary data
 		model_json = @reportDataToJSON()
 		model_json.data = data
+		unless newCols is no
+			@renderTpl 'tpl_table_head', @$('#thead'), {columns: newCols}
 		@renderTpl 'tpl_table_body', @$('#tbody'), model_json
 	
+	postRender: -> 
+		options = 
+			includeSelectAllOption: no
+			enableFiltering: no
+		$('.multiselect').multiselect options
+
 	preRender: -> 
 		@setSummary @getData()
 

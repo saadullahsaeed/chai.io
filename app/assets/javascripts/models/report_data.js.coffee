@@ -1,4 +1,5 @@
 class ChaiIo.Models.ReportData extends Backbone.Model
+	setColumns: (columns)-> @set {columns: columns}
 	getColumns: -> @get 'columns'
 	getColumnIndex: (column_name)-> _.indexOf @getColumns(), column_name.trim()
 	getColumnsIndices: (columns_list)-> 
@@ -34,6 +35,17 @@ class ChaiIo.Models.ReportData extends Backbone.Model
 			for val in item.values
 				val = "#{val}" if typeof val isnt 'string'
 				return yes if val.toLowerCase().indexOf(searchTerm.toLowerCase(0)) >= 0
+		filtered
+
+	filterForColumns: (include_cols)->
+		filtered = []
+		data = @getData()
+		for obj in data
+			v = []
+			for col in include_cols
+				index = @getColumnIndex col
+				v.push obj.values[index]
+			filtered.push {values: v}
 		filtered
 
 	setDataAsNestedValues: -> @setData @nestDataValues()
