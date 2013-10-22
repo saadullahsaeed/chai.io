@@ -14,6 +14,7 @@ gem 'redis', '3.0.2'
 gem 'therubyracer'
 gem 'acts-as-taggable-on'
 
+
 gem 'better_errors'
 gem "binding_of_caller"
 gem "rspec-rails", "~> 2.12.0"
@@ -28,6 +29,7 @@ gem "faker", "~> 1.0.1"
 gem "capybara", "~> 1.1.2"
 gem "database_cleaner", "~> 0.7.2"
 gem "launchy", "~> 2.1.0"
+
 
 # Gems used only for assets and not required
 # in production environments by default.

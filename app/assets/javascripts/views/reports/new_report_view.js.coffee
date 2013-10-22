@@ -21,7 +21,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		view = new ChaiIo.Views.ReportSettingsView({el: @form()})
 		view.render()
 		
-	initQueryEditor: ->
+	initAceEditor: ->
 		@editor = ace.edit "editor"
 		@editor.setTheme "ace/theme/textmate"
 		@editor.getSession().setMode "ace/mode/sql"
@@ -29,10 +29,22 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@editor.getSession().on('change', (e)=> )
 		unless @getEditorValue() is ''
 			@editor.selection.setSelectionRange {start:0, end:0}
+
+	initViewForMobile: ->
+		@getQueryTextArea().show()
+		@getEditorEl().hide()
+		$('#btn-advanced').css 'margin-top', '10px'
+
+	initQueryEditor: ->
+		unless @isMobile()
+			@initAceEditor()
+		else
+			@initViewForMobile()
 			
 
 	getQueryTextArea: -> $('#query')
 	getQueryTAValue: -> @getQueryTextArea().val()
+	getEditorEl: -> $('#editor')
 	getEditorValue: -> @editor.getValue()
 	copyQueryValue: (event)-> @getQueryTextArea().val @getEditorValue()
 

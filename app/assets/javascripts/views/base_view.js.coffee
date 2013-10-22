@@ -44,3 +44,6 @@ class ChaiIo.Views.Base extends Backbone.View
 	setThisAsParentView: (view)-> 
 		view.parentView = @
 		view
+
+	isMobile: -> jQuery.browser.mobile
+	#isMobile: -> yes

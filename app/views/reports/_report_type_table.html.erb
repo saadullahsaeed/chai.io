@@ -1,22 +1,24 @@
 <script type="text/html" id="report_table">
 
 	<% unless @embed %>
-		<form class="form-search">
+		<form class="form-search row">
 	    	<input id="search_keywords" type="text" class="form-control input-medium search-query" placeholder="Search">
-	  </form>
+	  	</form>
 	<% end %>
 
 	<br/>
 	<!-- Build your select: -->
-	Columns: 
-	<select class="multiselect" multiple="multiple">
-		{{#columns}}
-			<option value="{{.}}" SELECTED>{{.}}</option>
-		{{/columns}}
-	</select>
 
-	<br/>	
-	<table id="tbl_report" class="table table-striped">
+	<div class="row">
+		Columns: 
+		<select class="multiselect" multiple="multiple">
+			{{#columns}}
+				<option value="{{.}}" SELECTED>{{.}}</option>
+			{{/columns}}
+		</select>
+	</div>
+		
+	<table id="tbl_report" class="table table-striped row">
 		<thead id="thead">
 			<tr>
 				{{>tpl_table_head_partial}}

@@ -1,14 +1,12 @@
 <% if !@connection_error && !@query_error %>
 
 	<% content_for :js_init_code do %>
-	
 		var report_model = new ChaiIo.Models.Report().set({
 			report: <%= @report.to_json.html_safe %>,
 			report_type: '<%= @report.report_type %>',
 			qparams: <%= @query_params.to_json.html_safe %>,
 			filters: <%= @filters.to_json.html_safe %>,
-			embedded: <%= @embed %>
-		});
+			embedded: <%= @embed %>});
 
 		var report_data = new ChaiIo.Models.ReportData().set({
 			columns: <%= @columns.html_safe %>,
@@ -18,12 +16,10 @@
 		
 		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({ 
 			model: report_model, 
-			el: $('#content') 
-		}).setReportData(report_data);
+			el: $('#content')}).setReportData(report_data);
 
 		window.App.setReportTypeView(reportTypeView);
 		window.App.render();
-		
 	<% end %>
 	
 	<% unless @embed %>
@@ -33,9 +29,9 @@
 		<hr>
 		
 		<!-- Filters -->
-	  	<div id="dv-report-filter-container">
-	  		<div id="dv_filters"></div>
-	    	<div id="sharing_container"></div> 
+	  	<div id="dv-report-filter-container" class="row">
+	  		<div id="dv_filters" class="col-md-9"></div>
+	    	<div id="sharing_container" class="col-md-3"></div> 
 	  	</div>
 		<%= render :partial => "report_filters" %>
 		
@@ -68,22 +64,22 @@
 	</script>
 
 	<!-- Modal -->
-	<a data-toggle="modal" href="#sharingModal" id="aSharingModal" class="btn"></a>
+<a data-toggle="modal" href="#sharingModal" id="aSharingModal" class="btn"></a>
   <div class="modal fade" id="sharingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Modal title</h4>
+          <h4 class="modal-title">Report Sharing</h4>
         </div>
         <div class="modal-body">
-          <p>
-						Your report has been shared to the following URL:
-					</p>
-					<p>
-						<input id="txt_public_url" type="text" class="form-control" style="margin-left: 50px;">
-            <a id="clipboard-button" href="javascript: void(0);" data-clipboard-text="">Copy to Clipboard!</a>
-					</p>
+          	<p>
+				Your report has been shared to the following URL:
+			</p>
+			<p>
+				<input id="txt_public_url" type="text" class="form-control" style="margin-left: 50px;">
+            	<a id="clipboard-button" href="javascript: void(0);" data-clipboard-text="">Copy to Clipboard!</a>
+			</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

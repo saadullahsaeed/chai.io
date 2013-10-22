@@ -17,6 +17,4 @@ module ApplicationHelper
     page_heading "#{prefix} #{resource_name}", sub
   end
 
-
-
 end

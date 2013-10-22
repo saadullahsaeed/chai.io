@@ -15,6 +15,7 @@
 //= require bootstrap.min
 //= require nprogress
 //= require bootstrap-tokenfield.min
+//= require browser-detect
 //= require_tree ./parser
 //= require_tree ./alertify
 //= require_tree ./toolbar-js
