@@ -11,14 +11,14 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		@initQueryEditor()
 		@initAdvancedSettings()
 
-
 	initTokenField: ->
 		tf_options = 
 			allowDuplicates: no
 		$('#report_tag_list').tokenfield tf_options
 
+	form: -> $ '.form'
 	initAdvancedSettings: ->
-		view = new ChaiIo.Views.ReportSettingsView({el: $('form')})
+		view = new ChaiIo.Views.ReportSettingsView({el: @form()})
 		view.render()
 		
 	initQueryEditor: ->
@@ -40,7 +40,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 		
 	submitForm: ->
 		@copyQueryValue()
-		$('.form').submit() if @validated()
+		@form().submit() if @validated()
 		
 	reservedPlaceholders: -> ['id']
 	isReservedPlaceholder: (ph) -> _.indexOf(@reservedPlaceholders(), ph) >= 0

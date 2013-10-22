@@ -20,10 +20,10 @@ class ChaiIo.Views.Base extends Backbone.View
 			type: method || 'GET'
 			dataType: 'json'
 		xhr = $.ajax "#{url}.json", options
-		onSuccWrap = ()=>
+		onSuccWrap = (response)=>
 			@hideLoading()
-			onSucc() if onSucc
-		xhr.done onSuccWrap if onSucc
+			onSucc(response) if onSucc
+		xhr.done onSuccWrap
 		xhr.fail onFail if onFail
 	
 	requestPut: (url, params, onSucc, onFail)-> @sendRequest url, params, onSucc, onFail, 'PUT'

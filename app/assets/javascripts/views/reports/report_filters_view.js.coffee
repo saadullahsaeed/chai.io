@@ -2,7 +2,7 @@ class ChaiIo.Views.ReportFiltersView extends ChaiIo.Views.Base
 	constructor: (options)->
 		super options
 	
-	getFilterDateFormat: -> "yyyy-mm-dd H:i:s"
+	getFilterDateFormat: -> "yyyy-mm-dd"
 	initDateFilters: -> $('.datepicker').datepicker {"format": @getFilterDateFormat()}
 	
 	initFilters: -> @initDateFilters()

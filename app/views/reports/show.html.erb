@@ -27,21 +27,21 @@
 	<% end %>
 	
 	<% unless @embed %>
-	<h3><%= @report.title %></h3>
-	<%= @report.description %>
+		<h3><%= @report.title %></h3>
+		<%= @report.description %>
 
-	<hr>
-	
-	<!-- Filters -->
-  <div id="dv-report-filter-container">
-  	<div id="dv_filters"></div>
-    <div id="sharing_container"></div> 
-  </div>
-	<%= render :partial => "report_filters" %>
-	
-	<% unless @public_report %>
-		<hr/>
-	<% end %>
+		<hr>
+		
+		<!-- Filters -->
+	  	<div id="dv-report-filter-container">
+	  		<div id="dv_filters"></div>
+	    	<div id="sharing_container"></div> 
+	  	</div>
+		<%= render :partial => "report_filters" %>
+		
+		<% unless @public_report %>
+			<hr/>
+		<% end %>
 
 	<% end %>	
 	
