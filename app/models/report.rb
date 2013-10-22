@@ -12,9 +12,6 @@ class Report < ActiveRecord::Base
   
   validates_presence_of :title, :datasource_id, :report_type, :user_id, :config, :project_id
 
-  after_initialize :default_values
-  before_save :default_values
-
 
   scope :search_for, ->(query) { where("title LIKE ?", "%#{query}%") }
   scope :all_starred, -> { where("starred = ?", true) }
@@ -40,11 +37,6 @@ class Report < ActiveRecord::Base
 
   def report_type_text
     Report.REPORT_TYPES[report_type.to_sym]
-  end
-
-
-  def default_values
-    self.project_id ||= 0 
   end
 
   

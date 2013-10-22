@@ -46,7 +46,7 @@ class ReportsController < DashboardController
   #GET /reports
   def index
     set_active_menu_item 'reports'
-    @reports = current_project.reports.order('starred DESC').includes :datasource
+    @reports = current_project.reports.order('starred DESC, created_at DESC').includes :datasource
     @reports.each do |r|
       r.report_type = r.report_type_text
     end

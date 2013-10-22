@@ -20,25 +20,40 @@
 
 		window.App.setReportTypeView(reportTypeView);
 		window.App.render();
+
 	<% end %>
 	
 	<% unless @embed %>
-		<h3><%= @report.title %></h3>
-		<%= @report.description %>
+
+		<div class="row">
+			<div class="col-md-10">
+				<h3>
+					<%= @report.title %>
+				</h3>
+				<%= @report.description %>
+			</div>
+
+			<% unless @public_report %>
+				<div class="col-md-2"  style="margin-top: 30px;">
+					<%= link_to 'Edit', edit_project_report_path(@report.project, @report) %>
+				</div>
+			<% end %>
+		</div>
+		
 
 		<hr>
 		
 		<!-- Filters -->
 	  	<div id="dv-report-filter-container" class="row">
 	  		<div id="dv_filters" class="col-md-9"></div>
-	    	<div id="sharing_container" class="col-md-3"></div> 
+	  		<% unless @public_report %>
+	    		<div id="sharing_container" class="col-md-3"></div> 
+	    	<% end %>
 	  	</div>
 		<%= render :partial => "report_filters" %>
 		
-		<% unless @public_report %>
-			<hr/>
-		<% end %>
-
+		<hr/>
+		
 	<% end %>	
 	
 	<!-- Content -->
