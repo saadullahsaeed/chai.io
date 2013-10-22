@@ -46,7 +46,9 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 	getQueryTAValue: -> @getQueryTextArea().val()
 	getEditorEl: -> $('#editor')
 	getEditorValue: -> @editor.getValue()
-	copyQueryValue: (event)-> @getQueryTextArea().val @getEditorValue()
+	copyQueryValue: (event)-> 
+		return if @isMobile()
+		@getQueryTextArea().val @getEditorValue()
 
 	getConfigField: (field)-> $("#report_config_#{field}").val().trim()
 		
