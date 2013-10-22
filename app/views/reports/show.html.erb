@@ -26,7 +26,7 @@
 	<% unless @embed %>
 
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-9">
 				<h3>
 					<%= @report.title %>
 				</h3>
@@ -34,8 +34,8 @@
 			</div>
 
 			<% unless @public_report %>
-				<div class="col-md-2"  style="margin-top: 30px;">
-					<%= link_to 'Edit', edit_project_report_path(@report.project, @report) %>
+				<div class="col-md-3"  style="margin-top: 30px;">
+					<%= link_to_button 'Edit', edit_project_report_path(@report.project, @report) %>
 				</div>
 			<% end %>
 		</div>

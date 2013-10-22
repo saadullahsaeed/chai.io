@@ -17,4 +17,10 @@ module ApplicationHelper
     page_heading "#{prefix} #{resource_name}", sub
   end
 
+
+
+  def link_to_button text, path
+    link_to text, path, {:class => 'btn btn-default'}
+  end
+
 end
