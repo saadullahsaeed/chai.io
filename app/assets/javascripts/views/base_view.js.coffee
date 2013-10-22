@@ -45,5 +45,5 @@ class ChaiIo.Views.Base extends Backbone.View
 		view.parentView = @
 		view
 
-	#isMobile: -> jQuery.browser.mobile
-	isMobile: -> yes
+	isMobile: -> jQuery.browser.mobile
+	#isMobile: -> yes
