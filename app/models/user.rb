@@ -5,10 +5,22 @@ class User < ActiveRecord::Base
 
   
   attr_accessor :new_password, :new_password_confirm
-  #attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   validates_presence_of :password, :on => :create
   
   validates_presence_of :name, :email
   validates_uniqueness_of :email
+
+
+  def lock
+    self.locked = true
+    save
+  end
+
+
+  def unlock
+    self.locked = false
+    save
+  end
+  
 end

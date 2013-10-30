@@ -3,11 +3,20 @@ ChaiIo::Application.routes.draw do
   root :to => 'home#index'
   get '/' => 'home#index'
   
+
+  namespace :admin do
+    get '/' => 'admin#index'
+    resources :users do
+      put 'lock'
+      put 'unlock'
+    end
+  end
+
+
   get '/logout' => 'sessions#destroy'
   get '/r/:id/:hash' => 'reports#public'
-
-
   resources :sessions
+  
 
   get '/reports/search' => 'reports#search'
   get '/reports/starred' => 'reports#starred'
@@ -18,7 +27,6 @@ ChaiIo::Application.routes.draw do
     get 'star'
   end
  
-  
   match '/datasources/test' => 'datasources#test', :via => :post  
   resources :datasources
 
