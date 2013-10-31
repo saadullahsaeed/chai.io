@@ -18,7 +18,7 @@ class ChaiIo.Views.NewDatasource extends ChaiIo.Views.Base
 			database: @getDatabase()
 		cred
 
-	getParams: -> { datasource: @getCredentialsFromForm() }
+	getParams: -> { datasource: { config: @getCredentialsFromForm() } }
 	testConnection: -> @sendRequest('/datasources/test', @getParams(), ((json)=>@testOnLoad(json)), no, 'POST')
 	testOnLoad: (response)-> 
 		if response.success
