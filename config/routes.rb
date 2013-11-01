@@ -38,6 +38,7 @@ ChaiIo::Application.routes.draw do
       get 'share'
       get 'unshare'
     end
+    resources :dashboards
   end
 
 

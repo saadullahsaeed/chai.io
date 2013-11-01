@@ -6,4 +6,5 @@ class Datasource < ActiveRecord::Base
 
   serialize :config, Hash
   attr_encrypted :config, :key => ChaiIo::Application.config.secret_token, :marshal => true
+  
 end

@@ -8,13 +8,14 @@ describe ReportsController do
     before :each do
       @user = create(:user)
       @datasource = create(:datasource, user: @user)
+      @project = create(:project, user: @user)
       session[:user_id] = @user.id
     end
   
     describe 'GET #index' do
       
       it "renders the :index view" do
-        get :index
+        get_request_with_project :index
         response.should render_template :index
       end
     end
@@ -22,12 +23,12 @@ describe ReportsController do
     describe 'GET #new' do
     
       it "assigns a new Report to @report" do
-        get :new
+        get_request_with_project :new
         assigns(:report).should be_a_new(Report)
       end
     
       it "renders the :new template" do
-        get :new
+        get_request_with_project :new
         response.should render_template :new
       end
     end

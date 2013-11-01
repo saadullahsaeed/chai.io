@@ -168,12 +168,13 @@ class ReportsController < DashboardController
   private
 
     def report_params
-    params.require(:report).permit(
-      :tag_list,
-      :datasource_id, :title, :description, :report_type, :project_id, :cache_time,
-      config: [:query, :sum, :average, :link_column, :link_filter],
-      filters: [:type, :placeholder])
+      params.require(:report).permit(
+        :tag_list,
+        :datasource_id, :title, :description, :report_type, :project_id, :cache_time,
+        config: [:query, :sum, :average, :link_column, :link_filter],
+        filters: [:type, :placeholder])
     end
+
 
     def check_embed
       @embed = false

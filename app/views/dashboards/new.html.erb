@@ -1,0 +1,23 @@
+<%= page_heading_for_resource @dashboard %>
+
+<div class="">
+
+  <%= form_for [@project, @dashboard], :html => {:class => "form", :method => @project.new_record? ? "post" : "put"} do |f| %>
+
+    <% @project.errors.full_messages.each do |msg| %>
+    <div class="alert alert-error"><%= msg %></div>
+    <% end %>
+  
+    <label class="control-label">Name</label>
+    <%= f.text_field :title, :class => 'form-control', :placeholder => 'Name'%>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" name="commit" id="commit" type="submit">Save</button>
+    </div>
+
+    <%= fields_for @dashboard.dashboard_reports do |dr| %>
+    <% end %>
+  
+  <% end %>
+
+</div>
