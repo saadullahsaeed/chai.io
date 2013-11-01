@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20131030053458) do
 
   create_table "datasource_types", force: true do |t|
     t.string   "name"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "datasource_class"
   end
 
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20131030053458) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "encrypted_config"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "datasource_type_id"
   end
 
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20131030053458) do
     t.string   "name"
     t.string   "description"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "reports", force: true do |t|
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20131030053458) do
     t.string   "report_type"
     t.integer  "datasource_id"
     t.text     "config"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "cache_time"
     t.string   "description"
     t.text     "filters"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20131030053458) do
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.boolean  "admin"
     t.boolean  "locked"
