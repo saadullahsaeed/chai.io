@@ -2,21 +2,77 @@
 
 <div class="">
 
-  <%= form_for [@project, @dashboard], :html => {:class => "form", :method => @project.new_record? ? "post" : "put"} do |f| %>
+  <%= form_for [@project, @dashboard], :html => {:class => "form", :method => @dashboard.new_record? ? "post" : "put"} do |f| %>
 
-    <% @project.errors.full_messages.each do |msg| %>
-    <div class="alert alert-error"><%= msg %></div>
+    <% @dashboard.errors.full_messages.each do |msg| %>
+      <div class="alert alert-error"><%= msg %></div>
     <% end %>
   
-    <label class="control-label">Name</label>
-    <%= f.text_field :title, :class => 'form-control', :placeholder => 'Name'%>
+    <div>  
+      <label class="control-label">Title</label>
+      <%= f.text_field :title, :class => 'form-control', :placeholder => 'Title'%>
+    </div>
+
+    <br/>
+
+
+    <%= f.fields_for :dashboard_reports do |dr| %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                Report 1
+              </h3>
+            </div>
+            <div class="panel-body center-align">
+              <%= dr.collection_select(:report_id, @project_reports, :id, :title) %>
+              <%= dr.hidden_field :report_index, :value => 1 %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+
+    <div class="row">
+        <%= f.fields_for :dashboard_reports do |dr| %>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  Report 2
+                </h3>
+              </div>
+              <div class="panel-body center-align">
+                <%= dr.collection_select(:report_id, @project_reports, :id, :title) %>
+                <%= dr.hidden_field :report_index, :value => 1 %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+       <%= f.fields_for :dashboard_reports do |dr| %>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                Report 3
+              </h3>
+            </div>
+            <div class="panel-body center-align">
+              <%= dr.collection_select(:report_id, @project_reports, :id, :title) %>
+              <%= dr.hidden_field :report_index, :value => 1 %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
 
     <div class="form-actions">
       <button class="btn btn-primary" name="commit" id="commit" type="submit">Save</button>
     </div>
-
-    <%= fields_for @dashboard.dashboard_reports do |dr| %>
-    <% end %>
   
   <% end %>
 

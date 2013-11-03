@@ -12,28 +12,30 @@ class DashboardsController < DashboardController
 
   def new
     @dashboard = current_project.dashboards.build
+    @dashboard.dashboard_reports.build
+    @project_reports = current_project.reports
   end
 
 
   def create
-    @dashboard = current_project.dashboard.build dashboard_params
+    @dashboard = current_project.dashboards.build dashboard_params
+    @dashboard.user = current_project.user
     if @dashboard.save
       redirect_to project_path(current_project)
     else
-      render 'new'
+      render :new
     end 
   end
 
 
-  def edit
+  def update
     @dashboard = find_dashboard params[:id]
   end
 
 
-
   private
     def dashboard_params
-      params.require(:dashboard).permit(:title)
+      params.require(:dashboard).permit(:title, :dashboard_reports_attributes => [:report_id, :report_index])
     end
 
 
