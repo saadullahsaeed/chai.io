@@ -15,6 +15,6 @@
  *= require nprogress
  *= require bootstrap-tokenfield
  *= require bootstrap-multiselect
- *= require_tree ./alertify
- *= require_tree ./toolbar-js
+ *= require alertify/alertify.core
+ *= require alertify/alertify.bootstrap
  */

@@ -12,8 +12,8 @@
 //= require views/reports/reports_index
 //= require views/reports/report_filters_view
 //= require_tree ./views/reports
-//= require ./nvd3/d3.v2.min
-//= require ./nvd3/nv.d3
-//= require_tree ./nvd3
+//= require nvd3/d3.v2.min
+//= require nvd3/nv.d3
+//= require_tree ../../../vendor/assets/javascripts/nvd3
 //= require bootstrap-datepicker/core
-//= require_tree ./ace
+//= require_tree ../../../vendor/assets/javascripts/ace

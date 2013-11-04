@@ -1,15 +1,23 @@
 class ProjectsController < DashboardController
 
-	
+  def show
+    project = current_user.projects.find params[:id]
+    @reports = project.reports.all
+    @dashboards = project.dashboards.all
+  end
+
+
 	def index
     set_active_menu_item "projects"
 		@projects = current_user.projects.all
 	end
 	
+
   
 	def new 
 		@project = current_user.projects.build
 	end
+
 
 
 	def create
@@ -17,23 +25,25 @@ class ProjectsController < DashboardController
     if @project.save
         redirect_to projects_path
    	else
-     		render 'new'
+     		render :new
    	end
 	end
 
 
+  #GET
   def edit
     @project = current_user.projects.find params[:id]
     render 'new'
   end
 
 
+  #PUT
   def update
    		@project = current_user.projects.find params[:id]
      	if @project.update_attributes project_params
        		redirect_to projects_path
      	else 
-       		render 'new'
+       		render :new
      	end
   end
 
