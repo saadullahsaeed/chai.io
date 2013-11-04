@@ -1,9 +1,10 @@
 class ProjectsController < DashboardController
 
+
   def show
-    project = current_user.projects.find params[:id]
-    @reports = project.reports.all
-    @dashboards = project.dashboards.all
+    @project = current_user.projects.find params[:id]
+    @reports = @project.reports.all
+    @dashboards = @project.dashboards.all
   end
 
 

@@ -1,0 +1,16 @@
+<%= page_heading "Reports: #{@project.name}" %>
+
+<ul class="nav nav-pills">
+  <li class="active">
+    <%= link_to 'New Report', new_project_report_path(@project) %>
+  </li>
+</ul>
+
+<br/>
+<%= render 'reports/list' %>
+
+
+<%= page_heading "Dashboards" %>
+<br/>
+
+<%= render 'dashboards/list' %>

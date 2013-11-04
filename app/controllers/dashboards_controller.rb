@@ -2,6 +2,7 @@ class DashboardsController < DashboardController
 
   def show
     @dashboard = find_dashboard params[:id]
+    @reports = @dashboard.dashboard_reports
   end
 
 
