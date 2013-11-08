@@ -5,11 +5,11 @@ module ChaiIo
 
       # Load report data - need to re-factor this
       def load_report_data(report)
-       
+       logger.info report
         @query_params = get_query_params report.filters, params
         dsource = get_datasource_object report
         dsource.query_params = @query_params
-       
+        
         begin
          dsource.run_report
          @columns = dsource.columns.to_json
@@ -31,7 +31,8 @@ module ChaiIo
 
 
       def get_datasource_object(report)
-       dsource = ChaiIo::Datasource::Mysql.new
+       type = report.datasource.datasource_type.name
+       dsource = eval("ChaiIo::Datasource::#{type.capitalize}").new
        dsource.report = report
        dsource
       end
