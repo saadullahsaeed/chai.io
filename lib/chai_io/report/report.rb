@@ -5,7 +5,6 @@ module ChaiIo
 
       # Load report data - need to re-factor this
       def load_report_data(report)
-       logger.info report
         @query_params = get_query_params report.filters, params
         dsource = get_datasource_object report
         dsource.query_params = @query_params
@@ -45,8 +44,9 @@ module ChaiIo
        @filters = []
        filters.each do |i, fi|
          ph = fi['placeholder'].to_sym
+         type = fi['type']
          val = params.has_key?(ph) ? params[ph] : fi['default_value'] 
-         if ph
+         if ph && type
            filter_obj = get_filter_object fi['type'], fi['placeholder'], val
            filter_obj.value = val
            if filter_obj.validate

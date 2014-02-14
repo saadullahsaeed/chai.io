@@ -5,8 +5,15 @@
 			<label class="control-label">{{label}}</label>
 			{{{filter_control}}}
 		{{/filters}}
-		
-		<input type="submit" class="btn btn-primary" value="Refresh">
+    <input type="submit" class="btn btn-primary" value="Refresh">
+    
+    <br/><br/>
+    {{#filters}}
+      {{#pd_values}}
+        {{>f_ctl_pd_value}}
+      {{/pd_values}}
+    {{/filters}}
+    
 	</form>
 	
 </script>
@@ -17,4 +24,9 @@
 
 <script type="text/html" id="f_ctl_datepicker">
 	<input type="text" class="datepicker input-small" data-behaviour="datepicker" name="{{placeholder}}" value="{{value}}">
+</script>
+
+
+<script type="text/html" id="f_ctl_pd_value" class="partial">
+  <button type="button" class="btn btn-default btn-pd-filter" data-value="{{value}}" data-filter="{{placeholder}}">{{title}}</button>
 </script>

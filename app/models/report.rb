@@ -17,6 +17,7 @@ class Report < ActiveRecord::Base
   scope :all_starred, -> { where("starred = ?", true) }
 
 
+
   def self.REPORT_TYPES
     {
       :table => 'Table',
@@ -38,7 +39,7 @@ class Report < ActiveRecord::Base
   def report_type_text
     Report.REPORT_TYPES[report_type.to_sym]
   end
-
+  
   
   #Enable Sharing
   def enable_sharing(password)

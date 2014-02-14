@@ -4,6 +4,7 @@ class ChaiIo.Views.NewReport extends ChaiIo.Views.Base
 			'submit .form': 'copyQueryValue'
 			'click #commit': 'submitForm'
 			'change input[type=radio]': 'reportTypeChanged'
+      
 		super options
 	
 	render: -> 

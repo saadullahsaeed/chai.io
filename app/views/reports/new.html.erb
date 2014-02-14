@@ -50,7 +50,7 @@
 
 		  <!-- Button to trigger modal -->
 		  <div>
-		  	<a id="btn-advanced" data-toggle="modal" href="#myModal" class="btn btn-default" style="margin-top: 232px !important;">Advanced Settings</a>
+		  	<a id="btn-advanced" data-toggle="modal" href="#myModal" class="btn btn-default" style="margin-top: 10px !important;">Advanced Settings</a>
 		  </div>
 		
 			<br/>
@@ -77,58 +77,89 @@
 	        <div class="modal-body">
 
 	          	<ul class="nav nav-tabs" id="tabSettings">
-					<li class="active"><a href="#filters">Filters</a></li>
-				  	<li><a href="#aggregation">Aggregation</a></li>
-				  	<li><a href="#link">Link Report</a></li>
-				</ul> <!-- /tabSettings -->
+					      <li class="active"><a href="#filters">Filters</a></li>
+				        <li><a href="#aggregation">Aggregation</a></li>
+				  	    <li><a href="#link">Link Report</a></li>
+              </ul> <!-- /tabSettings -->
 
 				 
 				<div class="tab-content" style="align: center;">
-
+        
 				  <div class="tab-pane active" id="filters">
-
-				  	<label class="control-label filters">Filters</label>
+          	<label class="control-label filters">Filters</label>
 					  <small>You cannot use a filter with the placeholder 'id'</small>
+            
+            <div class="panel-group" id="accordion">
 					  <%= f.fields_for :filters do |fi| %>
-							<div class="form-inline">
-								<label class="control-label">Type</label>
-								<select class="input-medium" name="report[filters][0][type]">
-									<option value="date" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='date'%> >Date</option>
-									<option value="text" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='text'%>>Text</option>
-									<option value="number" <%="SELECTED" if @report.filters && @report.filters["0"]['type']=='number'%>>Number</option>
-								</select>
+              
+              <% [0,1].each do |i| %>
+                
+                <div class="panel panel-default">
+                 <div class="panel-heading">
+                   <h4 class="panel-title">
+                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i+1%>">
+                       Filter # <%=i+1%>
+                     </a>
+                   </h4>
+                 </div>
+                
+                   <div id="collapse<%=i+1%>" class="panel-collapse collapse <%= "in" if i == 0 %>">
+                       <div class="panel-body">
+                        
+            							<div class="form-inline">
+            								<label class="control-label">Type</label>
+            								<select class="input-medium" name="report[filters][<%=i%>][type]">
+            									<option value="date" <%="SELECTED" if @report.filters["#{i}"] && @report.filters["#{i}"]['type']=='date'%> >Date</option>
+            									<option value="text" <%="SELECTED" if @report.filters["#{i}"] && @report.filters["#{i}"]['type']=='text'%>>Text</option>
+            									<option value="number" <%="SELECTED" if @report.filters["#{i}"] && @report.filters["#{i}"]['type']=='number'%>>Number</option>
+            								</select>
 
-								<input type="text" size="30" 
-									name="report[filters][0][placeholder]" id="report_filters_placeholder1" 
-									value="<%=@report.filters["0"]['placeholder'] if @report.filters && @report.filters["0"]%>"
-									placeholder="Placeholder"
-									class="form-control"
-									style="">
+            								<input type="text" size="30" 
+            									name="report[filters][<%=i%>][placeholder]" id="report_filters_placeholder#{i+1}" 
+            									value="<%=@report.filters["#{i}"]['placeholder'] if @report.filters && @report.filters["#{i}"]%>"
+            									placeholder="Placeholder"
+            									class="form-control"
+            									style="">
 
-								<input type="text" size="30" name="report[filters][0][default_value]" id="report_filters_default1"
-									value="<%=@report.filters["0"]['default_value'] if @report.filters && @report.filters["0"]%>"
-									placeholder="Default Value" class="form-control">
-							</div>
-							
-							<div class="form-inline">
-								<label class="control-label">Type</label>
-								<select class="input-medium" name="report[filters][1][type]">
-									<option value="date" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='date'%> >Date</option>
-									<option value="text" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='text'%>>Text</option>
-									<option value="number" <%="SELECTED" if @report.filters && @report.filters["1"]['type']=='number'%>>Number</option>
-								</select>
+            								<input type="text" size="30" name="report[filters][<%=i%>][default_value]" id="report_filters_default#{i+1}"
+            									value="<%=@report.filters["#{i}"]['default_value'] if @report.filters && @report.filters["#{i}"]%>"
+            									placeholder="Default Value" class="form-control">
+                    
+                              <hr/>
+                              
+                              <% (0..2).to_a.each do |j| %>
+                                <%
+                                  @report.filters ||= {}
+                                  @report.filters["#{i}"] ||= {}
+                                  @report.filters["#{i}"]['pd_values'] ||= {}
+                                  @report.filters["#{i}"]['pd_values']["#{j}"] ||= {}
+                                %>
+                                <div class="row" style="margin: 5px 5px 5px 5px;">
+                                  
+                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Title" 
+                                  name="report[filters][<%=i%>][pd_values][<%=j%>][title]" 
+                                  value="<%=@report.filters["#{i}"]['pd_values']["#{j}"]['title']%>"/>
+                                  
+                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Value" 
+                                  name="report[filters][<%=i%>][pd_values][<%=j%>][value]" 
+                                  value="<%=@report.filters["#{i}"]['pd_values']["#{j}"]['value']%>"/>
+                                  
+                                </div>
+                              <% end %>
+                              
+            							</div>
+                
+                      </div>
+                      </div>
+                    </div>
+              <% end %>
 
-								<input type="text" size="30" name="report[filters][1][placeholder]" id="report_filters_placeholder2"
-									value="<%=@report.filters["1"]['placeholder'] if @report.filters && @report.filters["1"]%>"
-									placeholder="Placeholder" class="form-control"> 
-
-								<input type="text" size="30" name="report[filters][1][default_value]" id="report_filters_default2"
-									value="<%=@report.filters["1"]['default_value'] if @report.filters && @report.filters["1"]%>"
-									placeholder="Default Value" class="form-control">
-							</div>
 					  <% end %>
+            </div>
+            
 				 </div> <!-- /Filters -->
-				  
+         
+         
 
 				  <%= f.fields_for :config do |c| %>
 

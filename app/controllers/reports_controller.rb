@@ -13,7 +13,8 @@ class ReportsController < DashboardController
       @report = current_user.reports.find params[:id]
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
-    #rescue Exception => e
+      
+      #rescue Exception => e
       #return render_404
     end
 
@@ -66,6 +67,7 @@ class ReportsController < DashboardController
 
   #POST /reports/
   def create
+   logger.info report_params
    @report = current_project.reports.build report_params
    @report.user = current_project.user
    if @report.save
@@ -171,8 +173,8 @@ class ReportsController < DashboardController
       params.require(:report).permit(
         :tag_list,
         :datasource_id, :title, :description, :report_type, :project_id, :cache_time,
-        config: [:query, :sum, :average, :link_column, :link_filter],
-        filters: [:type, :placeholder])
+        config: [:query, :sum, :average, :link_column, :link_filter, :link_report],
+        filters: [:type, :placeholder, :default_value, pd_values: [:title, :value] ])
     end
 
 
