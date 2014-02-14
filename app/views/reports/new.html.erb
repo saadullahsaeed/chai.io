@@ -93,6 +93,10 @@
 					  <%= f.fields_for :filters do |fi| %>
               
               <% [0,1].each do |i| %>
+              <%
+                @report.filters ||= {}
+                @report.filters["#{i}"] ||= {}
+              %>
                 
                 <div class="panel panel-default">
                  <div class="panel-heading">
