@@ -5,7 +5,7 @@
 <%= page_heading_for_resource @datasource %>
 
 <div id="dv_dsource">
-	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post"} do |f| %>
+	<%= form_for @datasource, :html => {:class => "", :method => @datasource.id ? "put" : "post", :autocomplete => "off"} do |f| %>
 	<% @datasource.errors.full_messages.each do |msg| %>
 		<div class="alert alert-error"><%= msg %></div>
 	<% end %>

@@ -60,7 +60,6 @@ class DatasourcesController < DashboardController
     dsource = ChaiIo::Datasource::Mysql.new
     connection_works = dsource.test_connection datasource_params[:config]
     @data = { :success => connection_works }
-
     respond_to do |format|
        format.json { render :json => @data }
     end
