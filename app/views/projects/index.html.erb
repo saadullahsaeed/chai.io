@@ -22,6 +22,7 @@
 					
 					<th></th>
 					<th></th>
+          <th></th>
 				</tr>
 			</thead>
 			
@@ -39,12 +40,16 @@
 							<%= link_to p.name, project_reports_path(p) %>
 						</td>
 						<td><%= p.description %></td>
+            
+						<td>
+							<%= link_to 'New Report', new_project_report_path(p) %>
+						</td>
 						
 						<td>
-							<%= link_to 'Edit', edit_project_path(p) if p.id? %>
+							<%= link_to 'Edit', edit_project_path(p) %>
 						</td>
 						<td>
-							<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?" if p.id? %>
+							<%= link_to 'Delete', project_path(p), :method => :delete, :confirm => "Are you sure?"  %>
 						</td>
 					
 					</tr>
