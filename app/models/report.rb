@@ -26,7 +26,8 @@ class Report < ActiveRecord::Base
       :bar_chart => 'Bar Chart',
       :line_chart => 'Line Chart',
       :bar_line_chart => 'Bar Line Chart',
-      :pie_chart => 'Pie Chart'
+      :pie_chart => 'Pie Chart',
+      :scatter_chart => 'Scatter Chart'
     }
   end
 

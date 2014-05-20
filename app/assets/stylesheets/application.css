@@ -17,4 +17,5 @@
  *= require bootstrap-multiselect
  *= require alertify/alertify.core
  *= require alertify/alertify.bootstrap
+ *= require nv.d3.css
  */
