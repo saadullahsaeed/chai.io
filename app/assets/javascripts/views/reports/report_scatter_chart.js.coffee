@@ -12,12 +12,13 @@ class ChaiIo.Views.ReportsScatter_chart extends ChaiIo.Views.ReportsIndex
 			chart.color(d3.scale.category10().range())
 			chart.xAxis.tickFormat(d3.format ',').axisLabel(colX)
 			chart.yAxis.tickFormat(d3.format ',').axisLabel(colY)
+			chart.tooltipContent((key, x, y, e) -> e.point.size)
 			chart.showControls(false)
 			d3.fisheye = false # strange fix for fisheye causing issues with selecting legend elements
 			d3.select('#scatter_chart svg').datum(data).transition().duration(350).call(chart)
 			nv.utils.windowResize(chart.update)
 			chart
-	
+
 	prepareData: ->
 
 		data = @getData()
