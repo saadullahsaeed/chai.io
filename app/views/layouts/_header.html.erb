@@ -32,6 +32,10 @@
         <li class="<%= @active == 'starred' ? 'active': ''%>">
           <%= link_to 'Favorite Reports', reports_starred_path %>
         </li>
+        
+        <li class="<%= @active == 'shared' ? 'active': ''%>">
+          <%= link_to 'Shared Reports', reports_starred_path %>
+        </li>
           
         <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>

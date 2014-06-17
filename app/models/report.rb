@@ -15,7 +15,7 @@ class Report < ActiveRecord::Base
 
   scope :search_for, ->(query) { where("title LIKE ?", "%#{query}%") }
   scope :all_starred, -> { where("starred = ?", true) }
-
+  scope :all_shared, -> { where("sharing_enabled = ?", true) }
 
 
   def self.REPORT_TYPES

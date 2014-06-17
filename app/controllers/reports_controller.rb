@@ -14,8 +14,8 @@ class ReportsController < DashboardController
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
       
-      #rescue Exception => e
-      #return render_404
+    rescue Exception => e
+      return render_404
     end
 
     respond_to do |format|
@@ -114,6 +114,13 @@ class ReportsController < DashboardController
   def starred
     set_active_menu_item 'starred'
     @reports = current_user.reports.all_starred
+  end
+  
+  
+  #GET
+  def shared
+    set_active_menu_item 'shared'
+    @reports = current_user.reports.all_shared
   end
 
 

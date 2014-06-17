@@ -20,6 +20,7 @@ ChaiIo::Application.routes.draw do
 
   get '/reports/search' => 'reports#search'
   get '/reports/starred' => 'reports#starred'
+  get '/reports/shared' => 'reports#shared'
   get '/reports/tags/:tag' => 'reports#tagged_with'
   resources :reports do
     get 'share'
