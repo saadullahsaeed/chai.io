@@ -4,7 +4,8 @@ FactoryGirl.define do
     user
     datasource
     project
-
+    
+    datasource_id 1
     title "MyReport"
     description "This is a test report for Factory"
     report_type "table"

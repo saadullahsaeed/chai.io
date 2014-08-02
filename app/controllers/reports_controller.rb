@@ -10,6 +10,7 @@ class ReportsController < DashboardController
   #GET /reports/:id
   def show
     begin
+      
       @report = current_user.reports.find params[:id]
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
@@ -67,7 +68,6 @@ class ReportsController < DashboardController
 
   #POST /reports/
   def create
-   logger.info report_params
    @report = current_project.reports.build report_params
    @report.user = current_project.user
    if @report.save

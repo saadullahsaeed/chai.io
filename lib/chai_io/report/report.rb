@@ -12,7 +12,6 @@ module ChaiIo
         begin
          dsource.run_report
          @columns = dsource.columns.to_json
-         puts @columns
          @data = dsource.data.to_json
         rescue Sequel::DatabaseError => e
          @query_error = true

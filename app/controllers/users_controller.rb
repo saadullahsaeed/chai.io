@@ -19,6 +19,7 @@ class UsersController < DashboardController
      return
     end
     current_user.password = new_password
+    current_user.password_confirmation = new_password
     if current_user.save
       flash[:notice] = "Password changed!!"
     end
