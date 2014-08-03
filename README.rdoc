@@ -10,4 +10,4 @@ http://i.imgur.com/SB1XjVP.png
 
 == Copyright
 
-Copyright (c) 2013 Saadullah Saeed. See LICENSE.txt for further details.
+Copyright (c) 2014 Saadullah Saeed. See LICENSE.txt for further details.

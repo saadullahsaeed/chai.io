@@ -18,7 +18,7 @@ module ChaiIo
         rescue
           return false
         end
-        return true
+        true
       end
       
 

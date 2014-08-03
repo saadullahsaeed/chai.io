@@ -28,11 +28,9 @@ module ChaiIo
       end
 
 
+      #
       def get_datasource_object(report)
-       type = report.datasource.datasource_type.name
-       dsource = eval("ChaiIo::Datasource::#{type.capitalize}").new
-       dsource.report = report
-       dsource
+        ChaiIo::Datasource::Base.get_instance report
       end
 
 
@@ -65,9 +63,7 @@ module ChaiIo
 
       #Create an object for the filter
       def get_filter_object(type, placeholder, value)
-        fo = eval("ChaiIo::Filter::#{type.capitalize}").new
-        fo.value = value
-        fo
+        ChaiIo::Filter::Base.get_instance type, placeholder, value
       end
 
   end

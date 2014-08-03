@@ -5,6 +5,15 @@ module ChaiIo
     
     class Base
       
+      class << self
+        def get_instance(report)
+          type = report.datasource.datasource_type.name
+          dsource = eval("ChaiIo::Datasource::#{type.capitalize}").new
+          dsource.report = report
+          dsource
+        end
+      end
+      
       attr_accessor :report, :datasource_info, :query_params, :data, :columns 
       
       def init

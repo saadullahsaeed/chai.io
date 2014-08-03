@@ -3,6 +3,14 @@ module ChaiIo
     
     class Base 
       
+      class << self
+        def get_instance(type, placeholder, value)
+          fo = eval("ChaiIo::Filter::#{type.capitalize}").new
+          fo.value = value
+          fo
+        end
+      end
+      
       attr_accessor :value, :placeholder
       
       #Should return the default value for that filter type
