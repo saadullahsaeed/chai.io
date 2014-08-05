@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   has_many :reports, :dependent => :destroy
   has_many :datasources, :dependent => :destroy
 
-  
   attr_accessor :new_password, :new_password_confirm
   has_secure_password
   validates_presence_of :password, :on => :create
@@ -21,6 +20,11 @@ class User < ActiveRecord::Base
   def unlock
     self.locked = false
     save
+  end
+  
+  
+  def locked?
+    locked
   end
   
 end
