@@ -64,14 +64,14 @@ module ChaiIo
     
     #Set to true if you want to enable Caching using Redis
     config.redis_caching = {
-      :enabled => false, 
-      :host => 'localhost', 
+      :enabled => true, 
+      :host => 'trunk.com', 
       :port => 6379
     }
     
     #Query Timeout  (seconds)
     config.query = {
-      :timeout => 10
+      :timeout => 30
     }
     
     #

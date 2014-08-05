@@ -47,6 +47,11 @@
           </ul>
         </li>
 
+        <% if current_user.admin %>
+          <li>
+            <%= link_to 'Administrator', admin_path %>
+          </li>
+        <% end %>
 
       </ul>
      
