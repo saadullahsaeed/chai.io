@@ -21,7 +21,6 @@ class DatasourcesController < DashboardController
      else
        render :action => 'new'
      end
-     puts @datasource.errors.full_messages
   end
 
   
