@@ -16,14 +16,21 @@
   <div class="row">
     <div class="col-lg-12">
       <textarea class="query-editor" placeholder="Query here..."></textarea>
-      <button class="btn btn-primary" id="btn-run">Run</button>
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-1">
+      <button class="btn btn-primary" id="btn-run">Run</button>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-primary" id="btn-save-report">Save as Report</button>
+    </div>
+  </div>
 
   <div class="row">
-    <div class="col-lg-12">
-      Results here
+    <div class="col-lg-12" id="dv-results">
+      <%= render 'reports/report_type_table'%>
     </div>
   </div>
 

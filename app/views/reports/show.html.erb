@@ -13,17 +13,17 @@
 			data: <%= @data.html_safe %>});
 
 		window.App = new ChaiIo.Views.ReportMain({ model: report_model, el: $('#main_container') });
-		
-		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({ 
-			model: report_model, 
+
+		var reportTypeView = new ChaiIo.Views.Reports<%=@report.report_type.capitalize%>({
+			model: report_model,
 			el: $('#content')}).setReportData(report_data);
 
 		window.App.setReportTypeView(reportTypeView);
 		window.App.render();
 	<% end %>
-	
+
 	<% unless @embed %>
-    
+
 		<div class="row">
 			<div class="col-md-9">
 				<h3>
@@ -38,22 +38,22 @@
 				</div>
 			<% end %>
 		</div>
-		
+
 		<hr>
-		
+
 		<!-- Filters -->
 	  	<div id="dv-report-filter-container" class="row">
 	  		<div id="dv_filters" class="col-md-9"></div>
 	  		<% unless @public_report %>
-	    		<div id="sharing_container" class="col-md-3"></div> 
+	    		<div id="sharing_container" class="col-md-3"></div>
 	    	<% end %>
 	  	</div>
 		<%= render :partial => "report_filters" %>
-		
+
 		<hr/>
-		
-	<% end %>	
-	
+
+	<% end %>
+
 	<!-- Content -->
 	<div id="content"></div>
 
@@ -69,7 +69,7 @@
 				<a id="btn-disable-sharing" href="javascript: void(0);" role="button" class="btn btn-default" data-loading-text="Loading...">Disable Sharing</a>
 				<a id="btn-public-url" href="javascript: void(0);" role="button" class="btn btn-default">Public URL</a>
 			{{/sharing_enabled}}
-		
+
 			{{^sharing_enabled}}
 				<a id="btn-enable-sharing" href="javascript: void(0);" role="button" class="btn btn-default" data-loading-text="Loading...">Enable Sharing</a>
 			{{/sharing_enabled}}

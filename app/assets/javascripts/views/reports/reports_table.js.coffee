@@ -1,6 +1,6 @@
 class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 	constructor: (options)->
-		@events = 
+		@events =
 			'click .tbl_r_col': 'sortHandler'
 			'keyup #search_keywords': 'search'
 			'keydown #search_keywords': 'search'
@@ -11,12 +11,12 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 		search_term = @$('#search_keywords').val()
 		data = @getData()
 		return @showTable data if search_term is ''
-		@showTable(@report_data.filterData(search_term), no)	
+		@showTable(@report_data.filterData(search_term), no)
 
 	redoColumns: (event)->
 		selected_cols = $('.multiselect').val()
 		@showTable(@report_data.filterForColumns(selected_cols), selected_cols)
-		
+
 	getTemplateName: -> "report_table"
 	hasNestedDataValues: -> yes
 
@@ -24,25 +24,25 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 		col = $(event.currentTarget).text()
 		@setData @report_data.sortModel(@getColumnIndex col)
 		@reRenderTpl()
-		
-	showTable: (data, newCols)-> 
+
+	showTable: (data, newCols)->
 		@setSummary data
 		model_json = @reportDataToJSON()
 		model_json.data = data
 		unless newCols is no
 			@renderTpl 'tpl_table_head', @$('#thead'), {columns: newCols}
 		@renderTpl 'tpl_table_body', @$('#tbody'), model_json
-	
-	postRender: -> 
-		options = 
+
+	postRender: ->
+		options =
 			includeSelectAllOption: no
 			enableFiltering: no
 		$('.multiselect').multiselect options
 
-	preRender: -> 
+	preRender: ->
 		@setSummary @getData()
 
-	reportDataToJSON: -> 
+	reportDataToJSON: ->
 		report_data = super
 		return report_data unless @model.isReportLinked()
 		col_index = @getColumnIndex @model.getLinkedColumn()
@@ -51,12 +51,12 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 			report_data.data[i].values[col_index] = @linkColumn column_value
 		report_data
 
-	linkColumn: (value)-> 
+	linkColumn: (value)->
 		linked_report_id = @model.getLinkedReport()
 		linked_filter_name = @model.getLinkedFilter()
-		"<a href='/reports/#{linked_report_id}?#{linked_filter_name}=#{encodeURIComponent value}' target='_blank'>#{value}</a>"	
+		"<a href='/reports/#{linked_report_id}?#{linked_filter_name}=#{encodeURIComponent value}' target='_blank'>#{value}</a>"
 
-	setSummary: (data)-> @report_data.setSummaryRow(@getSummaryRow data) if @summaryEnabled() 
+	setSummary: (data)-> @report_data.setSummaryRow(@getSummaryRow data) if @summaryEnabled()
 
 	summaryEnabled: -> @getFieldsToSum() || @getFieldsToAverage()
 	getFieldsToSum: -> @model.getFieldsToSum()
@@ -74,4 +74,3 @@ class ChaiIo.Views.ReportsTable extends ChaiIo.Views.ReportsIndex
 			else if _.indexOf(avg_fields, columns[i]) >= 0
 				summary[i] = @report_data.getColumnAvg columns[i]
 		summary
-			

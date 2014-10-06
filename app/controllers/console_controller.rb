@@ -13,12 +13,14 @@ class ConsoleController < DashboardController
     report.datasource = datasource
     report.cache_time = 0
     report.config = { 'query' => query }
-
+    
     begin
       runner = ReportRunner.new(report, params)
-      @data = runner.run
-      @columns = runner.columns
-      @query_params = runner.query_params
+      results = runner.run
+      columns = runner.columns
+
+      @data = { data: results, columns: columns }
+
     rescue Sequel::DatabaseError => e
      @data = { error: "Query Error: #{e.message}" }
     rescue Timeout::Error => e
@@ -30,7 +32,7 @@ class ConsoleController < DashboardController
     respond_to do |format|
        format.json { render :json => @data }
     end
-    
+
   end
 
 
