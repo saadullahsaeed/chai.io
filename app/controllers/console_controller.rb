@@ -3,6 +3,7 @@ class ConsoleController < DashboardController
 
   #GET
   def index
+    @active = 'console'
   end
 
   #GET
@@ -13,7 +14,7 @@ class ConsoleController < DashboardController
     report.datasource = datasource
     report.cache_time = 0
     report.config = { 'query' => query }
-    
+
     begin
       runner = ReportRunner.new(report, params)
       results = runner.run

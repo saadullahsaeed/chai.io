@@ -10,7 +10,7 @@
     <a class="navbar-brand" href="#">chai.io</a>
   </div>
 
-  <% unless @public_report %> 
+  <% unless @public_report %>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
@@ -32,11 +32,15 @@
         <li class="<%= @active == 'starred' ? 'active': ''%>">
           <%= link_to 'Favorite Reports', reports_starred_path %>
         </li>
-        
+
         <li class="<%= @active == 'shared' ? 'active': ''%>">
           <%= link_to 'Shared Reports', reports_shared_path %>
         </li>
-          
+
+        <li class="<%= @active == 'console' ? 'active': ''%>">
+          <%= link_to 'Query Console', console_path %>
+        </li>
+
         <li class="dropdown <%= @active == 'account' ? 'active': ''%>">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -54,7 +58,7 @@
         <% end %>
 
       </ul>
-     
+
      <!-- Search -->
       <ul class="nav navbar-nav navbar-right">
 
@@ -64,7 +68,7 @@
         </div>
         <button type="submit" class="btn btn-default">Search</button>
       </form>
-      
+
       </ul>
     </div><!-- /.navbar-collapse -->
   <% end %>

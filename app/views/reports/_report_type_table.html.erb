@@ -10,27 +10,27 @@
 	<!-- Build your select: -->
 
 	<div class="row">
-		Columns: 
+		Columns:
 		<select class="multiselect" multiple="multiple">
 			{{#columns}}
 				<option value="{{.}}" SELECTED>{{.}}</option>
 			{{/columns}}
 		</select>
 	</div>
-	
-	
+
+
 	<table id="tbl_report" class="table table-striped">
 		<thead id="thead" style="">
 			<tr id="thead-tr">
 				{{>tpl_table_head_partial}}
 			</tr>
 		</thead>
-		
+
 		<tbody id="tbody">
 			{{>tpl_table_body_partial}}
 			{{>tpl_summary_row}}
 		</tbody>
-		
+
 	</table>
 
 </script>
