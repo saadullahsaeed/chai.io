@@ -7,10 +7,12 @@ class ChaiIo.Views.Console extends ChaiIo.Views.Base
     'command+shift+t': 'runQuery'
     'control+shift+t': 'runQuery'
 
+  getProjectId: -> @$el.find('#project_id').val()
   getDatasourceId: -> @$el.find('#datasource_id').val()
   getQuery: -> @$el.find('.query-editor').val().trim()
 
   handleError: (error)->
+    alert error
 
   prepareReportModel: ()->
     report = new ChaiIo.Models.Report()
@@ -25,7 +27,7 @@ class ChaiIo.Views.Console extends ChaiIo.Views.Base
   showResult: (response) ->
     NProgress.done()
     if response.error
-      @handlerError response.error
+      @handleError response.error
       return
     result_view = new ChaiIo.Views.ReportsTable({
       model: @prepareReportModel()
@@ -35,12 +37,28 @@ class ChaiIo.Views.Console extends ChaiIo.Views.Base
     result_view.render()
     @$el.find('.form-search').hide()
 
+  validateQuery: -> @getQuery() isnt ''
+
   runQuery: ->
+    unless @validateQuery()
+      alert "Invalid Query"
+      return
     NProgress.start()
     $.ajax '/console/run',
       data: { console: { query: @getQuery(), datasource_id: @getDatasourceId() }}
       dataType: 'json'
+      method: 'POST'
       success: (response) => @showResult(response)
 
   saveReport: ->
-    alert "sorry this is not yet implemented!"
+    unless @validateQuery()
+      alert "Invalid Query"
+      return
+    project_id = @getProjectId()
+    unless project_id
+      alert "Please select a project to proceed!"
+      return
+    query = encodeURIComponent window.btoa(@getQuery())
+    datasource_id = @getDatasourceId()
+    query_str = "q=#{query}&ds=#{datasource_id}"
+    top.location = "/projects/#{project_id}/reports/new?#{query_str}"

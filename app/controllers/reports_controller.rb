@@ -59,6 +59,11 @@ class ReportsController < DashboardController
   def new
    set_active_menu_item 'new_report'
    @report = current_project.reports.build
+   if params[:q] && params[:ds]
+     require "base64"
+     @report.config['query'] = Base64.decode64 params[:q]
+     @report.datasource = current_user.datasources.find params[:ds]
+   end
 
    redis_config = ChaiIo::Application.config.redis_caching
    @caching_enabled = redis_config[:enabled]

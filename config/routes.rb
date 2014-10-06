@@ -18,7 +18,7 @@ ChaiIo::Application.routes.draw do
   resources :sessions
 
   get '/console' => 'console#index'
-  get '/console/run' => 'console#run'
+  post '/console/run' => 'console#run'
 
   get '/reports/search' => 'reports#search'
   get '/reports/starred' => 'reports#starred'

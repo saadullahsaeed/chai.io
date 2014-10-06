@@ -6,7 +6,7 @@ class ConsoleController < DashboardController
     @active = 'console'
   end
 
-  #GET
+  #POST
   def run
     query = console_params[:query]
     datasource = current_user.datasources.find console_params[:datasource_id]

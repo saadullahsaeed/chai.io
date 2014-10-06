@@ -6,10 +6,12 @@
 
   <div class="row">
     <div class="col-md-2">
-      <h4>Query Console</h4>
-    </div>
-    <div class="col-md-2 pull-right">
+      Datasource:
       <%= select_tag(:datasource_id, options_from_collection_for_select(current_user.datasources, :id, :name)) %>
+    </div>
+    <div class="col-md-4 pull-right">
+      <%= select_tag(:project_id, options_from_collection_for_select(current_user.projects, :id, :name)) %>
+      <button class="btn" id="btn-save-report">Save as Report</button>
     </div>
   </div>
 
@@ -20,9 +22,8 @@
   </div>
 
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-1">
       <button class="btn btn-primary" id="btn-run">Run</button>
-      <button class="btn btn-primary" id="btn-save-report">Save as Report</button>
     </div>
   </div>
 
