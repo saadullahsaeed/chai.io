@@ -10,11 +10,9 @@ class ReportsController < DashboardController
   #GET /reports/:id
   def show
     begin
-
       @report = current_user.reports.find params[:id]
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
-
     rescue Exception => e
       return render_404
     end

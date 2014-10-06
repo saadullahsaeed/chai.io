@@ -1,6 +1,6 @@
 class ReportRunner
 
-  attr_accessor :query_params, :columns, :data
+  attr_accessor :query_params, :columns, :data, :filters
 
 
   def initialize(report, params)
