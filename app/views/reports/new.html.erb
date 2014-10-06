@@ -8,12 +8,12 @@
 <% if @project %>
 
 	<div class="">
-		
+
 		<%= form_for [@project, @report], :html => {:class => "form", :method => @report.new_record? ? "post" : "put"} do |f| %>
 		<% @report.errors.full_messages.each do |msg| %>
 			<div class="alert alert-error"><%= msg %></div>
 		<% end %>
-		
+
 		  <label class="control-label">Title</label>
 		  <%= f.text_field :title, :class => 'form-control', :placeholder => 'Title' %>
 
@@ -23,7 +23,7 @@
 
 		  <label class="control-label">Tags</label>
 		  <%= f.text_field :tag_list, :class => 'form-control' %>
-		  
+
 
 		  <label class="control-label">Datasource</label>
 		  <%= f.collection_select(:datasource_id, current_user.datasources, :id, :name) %>
@@ -33,18 +33,18 @@
 		  <label class="control-label">Report Type</label>
 		  	<%= f.select(:report_type, Report.REPORT_TYPES.map { |key, value| [ value, key ] }) %>
 		  <br/>
-			
+
 		  <%= f.fields_for :config do |c| %>
 		  	<label class="control-label">Query</label>
 			 	<small>Prefix filter placeholders with a ':'. Do NOT put a placeholder in quotes, they are always added by the system.</small>
-			
+
 		  	  <div id="editor"></div>
 			  <%= c.text_area :query, :class => 'query form-control', :id=>'query', :value => @report.config['query'] %>
 		  <% end %>
-		
-		
+
+
 		  <% if @caching_enabled %>
-			  <label class="control-label">Cache Time (Seconds)</label>	
+			  <label class="control-label">Cache Time (Seconds)</label>
 			  <%= f.text_field :cache_time, :value => '900' %>
 		  <% end %>
 
@@ -52,7 +52,7 @@
 		  <div>
 		  	<a id="btn-advanced" data-toggle="modal" href="#myModal" class="btn btn-default" style="margin-top: 10px !important;">Advanced Settings</a>
 		  </div>
-		
+
 			<br/>
 		  <div class="form-actions">
 				<button class="btn btn-primary" name="commit" id="commit" type="button">Save</button>
@@ -82,22 +82,22 @@
 				  	    <li><a href="#link">Link Report</a></li>
               </ul> <!-- /tabSettings -->
 
-				 
+
 				<div class="tab-content" style="align: center;">
-        
+
 				  <div class="tab-pane active" id="filters">
           	<label class="control-label filters">Filters</label>
 					  <small>You cannot use a filter with the placeholder 'id'</small>
-            
+
             <div class="panel-group" id="accordion">
 					  <%= f.fields_for :filters do |fi| %>
-              
+
               <% [0,1].each do |i| %>
               <%
                 @report.filters ||= {}
                 @report.filters["#{i}"] ||= {}
               %>
-                
+
                 <div class="panel panel-default">
                  <div class="panel-heading">
                    <h4 class="panel-title">
@@ -106,10 +106,10 @@
                      </a>
                    </h4>
                  </div>
-                
+
                    <div id="collapse<%=i+1%>" class="panel-collapse collapse <%= "in" if i == 0 %>">
                        <div class="panel-body">
-                        
+
             							<div class="form-inline">
             								<label class="control-label">Type</label>
             								<select class="input-medium" name="report[filters][<%=i%>][type]">
@@ -118,8 +118,8 @@
             									<option value="number" <%="SELECTED" if @report.filters["#{i}"] && @report.filters["#{i}"]['type']=='number'%>>Number</option>
             								</select>
 
-            								<input type="text" size="30" 
-            									name="report[filters][<%=i%>][placeholder]" id="report_filters_placeholder#{i+1}" 
+            								<input type="text" size="30"
+            									name="report[filters][<%=i%>][placeholder]" id="report_filters_placeholder#{i+1}"
             									value="<%=@report.filters["#{i}"]['placeholder'] if @report.filters && @report.filters["#{i}"]%>"
             									placeholder="Placeholder"
             									class="form-control"
@@ -128,9 +128,9 @@
             								<input type="text" size="30" name="report[filters][<%=i%>][default_value]" id="report_filters_default#{i+1}"
             									value="<%=@report.filters["#{i}"]['default_value'] if @report.filters && @report.filters["#{i}"]%>"
             									placeholder="Default Value" class="form-control">
-                    
+
                               <hr/>
-                              
+
                               <% (0..2).to_a.each do |j| %>
                                 <%
                                   @report.filters ||= {}
@@ -139,20 +139,20 @@
                                   @report.filters["#{i}"]['pd_values']["#{j}"] ||= {}
                                 %>
                                 <div class="row" style="margin: 5px 5px 5px 5px;">
-                                  
-                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Title" 
-                                  name="report[filters][<%=i%>][pd_values][<%=j%>][title]" 
+
+                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Title"
+                                  name="report[filters][<%=i%>][pd_values][<%=j%>][title]"
                                   value="<%=@report.filters["#{i}"]['pd_values']["#{j}"]['title']%>"/>
-                                  
-                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Value" 
-                                  name="report[filters][<%=i%>][pd_values][<%=j%>][value]" 
+
+                                  <input type="text" class="form-control" style="width: 200px;" placeholder="Value"
+                                  name="report[filters][<%=i%>][pd_values][<%=j%>][value]"
                                   value="<%=@report.filters["#{i}"]['pd_values']["#{j}"]['value']%>"/>
-                                  
+
                                 </div>
                               <% end %>
-                              
+
             							</div>
-                
+
                       </div>
                       </div>
                     </div>
@@ -160,10 +160,10 @@
 
 					  <% end %>
             </div>
-            
+
 				 </div> <!-- /Filters -->
-         
-         
+
+
 
 				  <%= f.fields_for :config do |c| %>
 
@@ -192,7 +192,7 @@
 						<%= c.text_field :link_filter, :value => @report.config['link_filter'], :class => 'form-control' %>
 					  </div>
 
-				 <% end %> 
+				 <% end %>
 	        </div> <!-- /.modal-body -->
 
 	        <div class="modal-footer">
@@ -205,15 +205,14 @@
 
 	</script>
 
-		
+
 		<% end %>
 	</div>
 
 <% else %>
-	
+
 	<div style="align: center;">
 		You need to create a project before you can create a New Report. <%= link_to 'Click Here', new_project_path %> to get started.
 	</div>
 
 <% end %>
-

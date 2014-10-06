@@ -1,8 +1,8 @@
 ChaiIo::Application.routes.draw do
-  
+
   root :to => 'home#index'
   get '/' => 'home#index'
-  
+
 
   namespace :admin do
     get '/' => 'admin#index'
@@ -16,7 +16,9 @@ ChaiIo::Application.routes.draw do
   get '/logout' => 'sessions#destroy'
   get '/r/:id/:hash' => 'reports#public'
   resources :sessions
-  
+
+  get '/console' => 'console#index'
+  get '/console/run' => 'console#run'
 
   get '/reports/search' => 'reports#search'
   get '/reports/starred' => 'reports#starred'
@@ -27,13 +29,13 @@ ChaiIo::Application.routes.draw do
     get 'unshare'
     get 'star'
   end
- 
-  match '/datasources/test' => 'datasources#test', :via => :post  
+
+  match '/datasources/test' => 'datasources#test', :via => :post
   resources :datasources
 
   resources :users
   resources :projects
-  
+
   resources :projects do
     resources :reports do
       get 'share'

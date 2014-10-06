@@ -1,0 +1,30 @@
+<% content_for :js_init_code do %>
+  window.App = new ChaiIo.Views.Console({ el: $('.console') });
+<% end %>
+
+<div class="container-fluid console">
+
+  <div class="row">
+    <div class="col-md-2">
+      <h4>Query Console</h4>
+    </div>
+    <div class="col-md-2 pull-right">
+      <%= select_tag(:datasource_id, options_from_collection_for_select(current_user.datasources, :id, :name)) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <textarea class="query-editor" placeholder="Query here..."></textarea>
+      <button class="btn btn-primary" id="btn-run">Run</button>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-12">
+      Results here
+    </div>
+  </div>
+
+</div>

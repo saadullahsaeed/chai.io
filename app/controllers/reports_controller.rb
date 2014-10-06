@@ -2,7 +2,7 @@ require 'chai_io/report/report'
 
 class ReportsController < DashboardController
   include ChaiIo::Report
-   
+
   before_filter :require_login, :except => [:public]
   before_filter :check_embed
 
@@ -10,11 +10,11 @@ class ReportsController < DashboardController
   #GET /reports/:id
   def show
     begin
-      
+
       @report = current_user.reports.find params[:id]
       @data = load_report_data @report
       @page_title = "chai.io - #{@report[:title]}"
-      
+
     rescue Exception => e
       return render_404
     end
@@ -59,11 +59,11 @@ class ReportsController < DashboardController
   def new
    set_active_menu_item 'new_report'
    @report = current_project.reports.build
-   
+
    redis_config = ChaiIo::Application.config.redis_caching
    @caching_enabled = redis_config[:enabled]
    @default_expiry = redis_config[:default_expiry] if @caching_enabled
-  end 
+  end
 
 
   #POST /reports/
@@ -75,7 +75,7 @@ class ReportsController < DashboardController
    else
      render :action => 'new'
    end
-  end 
+  end
 
 
   #GET /reports/:id/edit
@@ -90,7 +90,7 @@ class ReportsController < DashboardController
    @report = current_user.reports.find params[:id]
    if @report.update_attributes report_params
      redirect_to project_reports_path(@report.project)
-   else 
+   else
      render :action => 'new'
    end
   end
@@ -115,8 +115,8 @@ class ReportsController < DashboardController
     set_active_menu_item 'starred'
     @reports = current_user.reports.all_starred
   end
-  
-  
+
+
   #GET
   def shared
     set_active_menu_item 'shared'
@@ -124,7 +124,7 @@ class ReportsController < DashboardController
   end
 
 
-  #GET 
+  #GET
   def tagged_with
     @tag = params[:tag]
     @reports = current_user.reports.tagged_with @tag
@@ -136,11 +136,11 @@ class ReportsController < DashboardController
     @report = current_user.reports.find params[:report_id]
     unless @report.sharing_enabled
       @report.enable_sharing params[:password]
-    end  
-   
+    end
+
     public_report = ChaiIo::Export::PublicReport.new
     public_report.report = @report
-   
+
     response = { :public_url => "#{request.protocol}#{request.host_with_port}#{public_report.generate_url}" }
     respond_to do |format|
       format.json { render :json => response }
@@ -173,7 +173,7 @@ class ReportsController < DashboardController
     end
   end
 
-   
+
   private
 
     def report_params

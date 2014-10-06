@@ -18,6 +18,4 @@
 //= require browser-detect
 //= require_tree ./parser
 //= require alertify/alertify.min
-
-
-
+//= require mousetrap/mousetrap.min
