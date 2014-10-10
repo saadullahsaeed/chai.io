@@ -64,8 +64,8 @@ module ChaiIo
     
     #Set to true if you want to enable Caching using Redis
     config.redis_caching = {
-      :enabled => true, 
-      :host => 'trunk.com', 
+      :enabled => false, 
+      :host => '', 
       :port => 6379
     }
     
