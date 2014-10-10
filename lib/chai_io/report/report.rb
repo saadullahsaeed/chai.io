@@ -18,7 +18,9 @@ module ChaiIo
          @query_error = true
          flash.now[:error] = "Query timed out."
         rescue => e
-         flash.now[:error] = "Error: Error connecting to the database!"
+        
+         #flash.now[:error] = "Error: Error connecting to the database!"
+         flash.now[:error] = "Error: #{e.message}!"
          @connection_error = true
         end
 
